@@ -1,11 +1,14 @@
 package com.example.todoapp.core
 
+import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.datasource.tasks.cache.TaskCache
+
 fun testTaskCache(
     id: Long = 1, text: String = "text",
     importance: String = "basic", deadline: Long = 0L,
     isDone: Boolean = false, createdAt: Long = 0L, changedAt: Long = 0L
 ): TaskCache {
-    return TaskCahce(
+    return TaskCache(
         id = id, text = text, importance = importance, deadline = deadline,
         isDone = isDone, createdAt = createdAt, changedAt = changedAt
     )
@@ -33,13 +36,13 @@ fun testTaskData(
     )
 }
 
-fun testTaskDomain(
-    id: Long = 1, text: String = "text",
-    importance: String = "basic", deadline: Long = 0L,
-    isDone: Boolean = false, createdAt: Long = 0L, changedAt: Long = 0L
-): TaskDomain {
-    return TaskDomain(
-        id = id, text = text, importance = importance, deadline = deadline,
-        isDone = isDone, createdAt = createdAt, changedAt = changedAt
-    )
-}
+//fun testTaskDomain(
+//    id: Long = 1, text: String = "text",
+//    importance: String = "basic", deadline: Long = 0L,
+//    isDone: Boolean = false, createdAt: Long = 0L, changedAt: Long = 0L
+//): TaskDomain {
+//    return TaskDomain(
+//        id = id, text = text, importance = importance, deadline = deadline,
+//        isDone = isDone, createdAt = createdAt, changedAt = changedAt
+//    )
+//}
