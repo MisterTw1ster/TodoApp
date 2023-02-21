@@ -9,9 +9,9 @@ class TaskCacheToDataMapperTest {
 
     @Test
     fun `transform task cache to task data return TaskData`() {
-        val taskData = testTaskCache()
+        val taskCache = testTaskCache()
 
-        val expected = TaskCacheToDataMapper().transform(taskData)
+        val expected = TaskCacheToDataMapper().transform(taskCache)
         val actual = testTaskData()
 
         assertEquals(expected, actual)

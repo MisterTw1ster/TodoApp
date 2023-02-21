@@ -1,6 +1,7 @@
 package com.example.todoapp.core
 
 import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.datasource.TaskDataParams
 import com.example.todoapp.datasource.tasks.cache.TaskCache
 
 fun testTaskCache(
@@ -11,6 +12,16 @@ fun testTaskCache(
     return TaskCache(
         id = id, text = text, importance = importance, deadline = deadline,
         isDone = isDone, createdAt = createdAt, changedAt = changedAt
+    )
+}
+
+fun testTaskDataParams(
+    text: String = "text", importance: String = "basic",
+    deadline: Long = 0L, isDone: Boolean = false, time: Long = 0L
+): TaskDataParams {
+    return TaskDataParams(
+        text = text, importance = importance, deadline = deadline,
+        isDone = isDone, time = time
     )
 }
 

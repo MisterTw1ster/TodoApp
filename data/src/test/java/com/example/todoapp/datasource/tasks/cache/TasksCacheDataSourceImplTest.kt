@@ -22,10 +22,8 @@ class TasksCacheDataSourceImplTest {
 
     @MockK
     lateinit var testDao: TasksDao
-
     @MockK
     lateinit var testTaskDataParamsToCacheMapper: TaskDataParamsToCacheMapper
-
     @MockK
     lateinit var testTaskCacheToDataMapper: TaskCacheToDataMapper
 
@@ -58,10 +56,10 @@ class TasksCacheDataSourceImplTest {
         }
 
         val tasks = testDataSource.observeTasks().toList()
-        val expectedFirst = tasks[0]
-        val actualFirst = listOf(testTaskData(id = 1), testTaskData(id = 2))
-        val expectedSecond = tasks[1]
-        val actualSecond = listOf(testTaskData(id = 1), testTaskData(id = 3))
+        val expectedFirst = listOf(testTaskData(id = 1), testTaskData(id = 2))
+        val actualFirst = tasks[0]
+        val expectedSecond = listOf(testTaskData(id = 1), testTaskData(id = 3))
+        val actualSecond = tasks[1]
 
         assertEquals(expectedFirst, actualFirst)
         assertEquals(expectedSecond, actualSecond)
@@ -81,8 +79,8 @@ class TasksCacheDataSourceImplTest {
         coEvery { testDao.getTaskById(id) } returns testTaskCache(id = id)
         coEvery { testTaskCacheToDataMapper.transform(any()) } returns testTaskData(id)
 
-        val expected = testDataSource.getTaskById(id)
-        val actual = testTaskData(id = 5L)
+        val expected = testTaskData(id = 5L)
+        val actual = testDataSource.getTaskById(id)
 
         assertEquals(expected, actual)
     }
@@ -108,8 +106,8 @@ class TasksCacheDataSourceImplTest {
             firstArg<TaskCache>().id
         }
 
-        val expected = testDataSource.addTask(params)
-        val actual = 0L
+        val expected = 0L
+        val actual = testDataSource.addTask(params)
 
         assertEquals(expected, actual)
     }
@@ -133,8 +131,8 @@ class TasksCacheDataSourceImplTest {
         }
         coEvery { testDao.editTask(any()) } just Runs
 
-        val expected = testDataSource.editTask(id, params)
-        val actual = true
+        val expected = true
+        val actual = testDataSource.editTask(id, params)
 
         assertEquals(expected, actual)
         coVerify(exactly = 1) { testDao.editTask(any()) }
@@ -157,8 +155,8 @@ class TasksCacheDataSourceImplTest {
             id = id, text = "edit text", importance = "low", isDone = true
         )
 
-        val expected = testDataSource.editTask(id, params)
-        val actual = false
+        val expected = false
+        val actual = testDataSource.editTask(id, params)
 
         assertEquals(expected, actual)
         coVerify(exactly = 0) { testDao.editTask(any()) }
