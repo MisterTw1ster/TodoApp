@@ -1,5 +1,6 @@
 package com.example.todoapp.datasource.tasks.cloud.mappers
 
+import com.example.todoapp.core.testTaskCloud
 import com.example.todoapp.core.testTaskData
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -12,7 +12,7 @@ class TaskDataParamsToCacheMapper {
             deadline = params.deadline,
             isDone = params.isDone,
             createdAt = createdAt,
-            changedAt = changedAt,
+            changedAt = changedAt
         )
     }
 }

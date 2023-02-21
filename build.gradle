@@ -10,6 +10,9 @@ buildscript {
     ext.mockk_version = "1.13.4"
     ext.coroutines_test_version = "1.3.9"
     ext.room_version = "2.4.3"
+    ext.okhttp_version = "4.9.1"
+    ext.retrofit_version = "2.9.0"
+
 
 }
 
