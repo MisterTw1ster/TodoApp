@@ -6,6 +6,6 @@ data class TaskData(
     val importance: String,
     val deadline: Long,
     val isDone: Boolean,
-    val createdAt: Long,
-    val changedAt: Long
+    val createdAt: Long = 0L,
+    val changedAt: Long = 0L
 )

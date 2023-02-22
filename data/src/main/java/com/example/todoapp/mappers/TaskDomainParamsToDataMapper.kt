@@ -4,7 +4,7 @@ import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.models.TaskDomainParams
 
 class TaskDomainParamsToDataMapper {
-    fun transform(params: TaskDomainParams, createdAt: Long, changedAt: Long): TaskData {
+    fun transform(params: TaskDomainParams, createdAt: Long = 0L, changedAt: Long): TaskData {
         return TaskData(
             id = params.id,
             text = params.text,

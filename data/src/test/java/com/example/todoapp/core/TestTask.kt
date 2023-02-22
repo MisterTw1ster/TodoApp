@@ -4,6 +4,8 @@ import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.datasource.TaskDataParams
 import com.example.todoapp.datasource.tasks.cache.TaskCache
 import com.example.todoapp.datasource.tasks.cloud.TaskCloud
+import com.example.todoapp.models.TaskDomain
+import com.example.todoapp.models.TaskDomainParams
 
 fun testTaskCache(
     id: Long = 1, text: String = "text",
@@ -48,13 +50,24 @@ fun testTaskData(
     )
 }
 
-//fun testTaskDomain(
-//    id: Long = 1, text: String = "text",
-//    importance: String = "basic", deadline: Long = 0L,
-//    isDone: Boolean = false, createdAt: Long = 0L, changedAt: Long = 0L
-//): TaskDomain {
-//    return TaskDomain(
-//        id = id, text = text, importance = importance, deadline = deadline,
-//        isDone = isDone, createdAt = createdAt, changedAt = changedAt
-//    )
-//}
+fun testTaskDomain(
+    id: Long = 1, text: String = "text",
+    importance: String = "basic", deadline: Long = 0L,
+    isDone: Boolean = false, createdAt: Long = 0L, changedAt: Long = 0L
+): TaskDomain {
+    return TaskDomain(
+        id = id, text = text, importance = importance, deadline = deadline,
+        isDone = isDone, createdAt = createdAt, changedAt = changedAt
+    )
+}
+
+fun testTaskDomainParams(
+    id: Long = 1, text: String = "text",
+    importance: String = "basic", deadline: Long = 0L,
+    isDone: Boolean = false
+): TaskDomainParams {
+    return TaskDomainParams(
+        id = id, text = text, importance = importance, deadline = deadline,
+        isDone = isDone
+    )
+}

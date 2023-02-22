@@ -32,17 +32,21 @@ class TasksRepositoryImpl(
         val time = System.currentTimeMillis()
         val taskData =
             domainParamsToDataMapper.transform(params = params, createdAt = time, changedAt = time)
-        val taskDataCache = cacheDataSource.addTask(taskData)
-        val taskDataCloud = cloudDataSource.addTask(taskDataCache)
-        dataToDomainMapper.transform(taskDataCloud)
+        val taskDataFromCache = cacheDataSource.addTask(taskData)
+        val taskDataFromCloud = cloudDataSource.addTask(taskDataFromCache)
+        dataToDomainMapper.transform(taskDataFromCloud)
     }
 
     override suspend fun editTask(params: TaskDomainParams): TaskDomain = handleDataRequest.handle {
         val time = System.currentTimeMillis()
         val taskData =
-            domainParamsToDataMapper.transform(params = params, createdAt = time, changedAt = time)
-        val taskDataCache = cacheDataSource.editTask(taskData)
-        val taskDataCloud = cloudDataSource.editTask(taskDataCache)
-        dataToDomainMapper.transform(taskDataCloud)
+            domainParamsToDataMapper.transform(params = params, changedAt = time)
+        val taskDataFromCache = cacheDataSource.editTask(taskData)
+        if (taskData != taskDataFromCache) {
+            dataToDomainMapper.transform(taskDataFromCache)
+        } else {
+            val taskDataFromCloud = cloudDataSource.editTask(taskDataFromCache)
+            dataToDomainMapper.transform(taskDataFromCloud)
+        }
     }
 }
