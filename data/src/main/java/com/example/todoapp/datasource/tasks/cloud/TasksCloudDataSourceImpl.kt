@@ -6,30 +6,33 @@ import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
 import com.example.todoapp.repository.TasksCloudDataSource
 
 class TasksCloudDataSourceImpl(
-    private val service: TasksService,
+    private val api: TasksService,
     private val cloudToDataMapper: TaskCloudToDataMapper,
     private val dataToCloudMapper: TaskDataToCloudMapper
 ): TasksCloudDataSource {
     override suspend fun fetchTasks(): List<TaskData> {
-        return service.fetchTasks().map { task ->
+        return api.fetchTasks().map { task ->
             cloudToDataMapper.transform(task)
         }
     }
 
-    override suspend fun addTask(task: TaskData): String {
+    override suspend fun addTask(task: TaskData): TaskData {
         val taskCloud = dataToCloudMapper.transform(task)
-        return service.addTask(taskCloud)
+        val taskCloudNew = api.addTask(taskCloud)
+        return cloudToDataMapper.transform(taskCloudNew)
     }
 
-    override suspend fun editTask(id: Long, task: TaskData): String {
+    override suspend fun editTask(task: TaskData): TaskData {
         val taskCloud = dataToCloudMapper.transform(task)
-        return service.editTask(taskCloud.id, taskCloud)
+        val taskCloudNew = api.editTask(taskCloud.id, taskCloud)
+        return cloudToDataMapper.transform(taskCloudNew)
     }
 
-    override suspend fun addTasks(tasks: List<TaskData>): List<String> {
+    override suspend fun addTasks(tasks: List<TaskData>): List<TaskData> {
         val tasksCloud = tasks.map { task ->
             dataToCloudMapper.transform(task)
         }
-        return service.addTasks(tasksCloud)
+        val tasksCloudNew = api.addTasks(tasksCloud)
+        return tasksCloudNew.map { task -> cloudToDataMapper.transform(task) }
     }
 }

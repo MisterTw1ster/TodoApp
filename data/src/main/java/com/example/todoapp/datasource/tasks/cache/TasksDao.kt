@@ -13,9 +13,9 @@ interface TasksDao {
     suspend fun getTaskById(taskID: Long): TaskCache
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addTask(task: TaskCache): Long
+    suspend fun addTask(task: TaskCache): TaskCache
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun editTask(task: TaskCache)
+    suspend fun editTask(task: TaskCache): TaskCache
 
 }

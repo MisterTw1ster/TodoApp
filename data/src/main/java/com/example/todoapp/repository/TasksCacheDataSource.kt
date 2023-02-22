@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface TasksCacheDataSource {
     suspend fun observeTasks(): Flow<List<TaskData>>
     suspend fun getTaskById(id: Long): TaskData
-    suspend fun addTask(params: TaskDataParams): Long
-    suspend fun editTask(id: Long, params: TaskDataParams): Boolean
+    suspend fun addTask(task: TaskData): TaskData
+    suspend fun editTask(task: TaskData): TaskData
 }
