@@ -1,14 +1,11 @@
 package com.example.todoapp
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import com.example.todoapp.datasource.TaskDataParams
-import com.example.todoapp.datasource.tasks.cache.TasksCacheDataSourceImpl
-import com.example.todoapp.datasource.tasks.cache.mappers.TaskCacheToDataMapper
-import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataParamsToCacheMapper
-import kotlinx.coroutines.flow.collect
+import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.datasource.tasks.cloud.TasksCloudDataSourceImpl
+import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
+import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -39,5 +36,28 @@ class MainActivity : AppCompatActivity() {
 //            text.setText(id.toString())
 //        }
 
+        runBlocking {
+            val cloudDataSource = TasksCloudDataSourceImpl(
+                RetrofitBuild().providesApiService(),
+                TaskCloudToDataMapper(),
+                TaskDataToCloudMapper()
+            )
+
+            val taskData1 = TaskData(
+                id = 15L, text = "new new text", importance = "low",
+                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
+            )
+            val taskData2 = TaskData(
+                id = 25L, text = "new text", importance = "basic",
+                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
+            )
+//            cloudDataSource.addTask(taskData)
+            try {
+                cloudDataSource.editTasks(listOf(taskData1, taskData2))
+            } catch (e: Exception) {
+                println(1)
+            }
+
+        }
     }
 }

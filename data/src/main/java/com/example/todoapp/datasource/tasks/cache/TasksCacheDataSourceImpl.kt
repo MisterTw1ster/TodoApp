@@ -1,9 +1,7 @@
 package com.example.todoapp.datasource.tasks.cache
 
 import com.example.todoapp.datasource.TaskData
-import com.example.todoapp.datasource.TaskDataParams
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskCacheToDataMapper
-import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataParamsToCacheMapper
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataToCacheMapper
 import com.example.todoapp.repository.TasksCacheDataSource
 import kotlinx.coroutines.flow.Flow
@@ -44,8 +42,14 @@ class TasksCacheDataSourceImpl(
         dao.markIsSyncTask(id)
     }
 
-    override suspend fun fetchOutOfSync(): List<TaskData> {
-        return dao.fetchOutOfSync().map { taskCache ->
+    override suspend fun fetchOutOfSyncNewTasks(): List<TaskData> {
+        return dao.fetchOutOfSyncNewTasks().map { taskCache ->
+            cacheToDataMapper.transform(taskCache)
+        }
+    }
+
+    override suspend fun fetchOutOfSyncEditTasks(): List<TaskData> {
+        return dao.fetchOutOfSyncEditTasks().map { taskCache ->
             cacheToDataMapper.transform(taskCache)
         }
     }

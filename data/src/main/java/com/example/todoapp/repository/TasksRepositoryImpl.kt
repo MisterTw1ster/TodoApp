@@ -15,7 +15,11 @@ class TasksRepositoryImpl(
     private val domainParamsToDataMapper: TaskDomainParamsToDataMapper,
     private val handleDataRequest: HandleDataRequest
 ): TasksRepository {
+    private var stateCloud: Int = 0
+
     override suspend fun observeTasks(): Flow<List<TaskDomain>> {
+        syncCacheToCloud()
+
         return cacheDataSource.observeTasks().map { tasks ->
             tasks.map { task ->
                 dataToDomainMapper.transform(task)
@@ -64,8 +68,19 @@ class TasksRepositoryImpl(
 
     override suspend fun syncCacheToCloud() {
         try {
-            val tasksDataFromCache = cacheDataSource.fetchOutOfSync()
-            cloudDataSource.
+            val editTasksData = cacheDataSource.fetchOutOfSyncEditTasks()
+            if (editTasksData.isNotEmpty() && cloudDataSource.editTasks(editTasksData)) {
+                editTasksData.forEach { task -> cacheDataSource.markAsSync(task.id) }
+            }
+            val newTasksData = cacheDataSource.fetchOutOfSyncNewTasks()
+            if (newTasksData.isNotEmpty()) {
+                newTasksData.forEach { task ->
+                    cloudDataSource.addTask(task)
+                    cacheDataSource.markAsSync(task.id)
+                }
+            }
+        } catch (e: Exception) {
+            stateCloud = 0
         }
     }
 

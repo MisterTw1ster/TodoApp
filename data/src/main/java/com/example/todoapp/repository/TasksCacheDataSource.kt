@@ -1,7 +1,6 @@
 package com.example.todoapp.repository
 
 import com.example.todoapp.datasource.TaskData
-import com.example.todoapp.datasource.TaskDataParams
 import kotlinx.coroutines.flow.Flow
 
 interface TasksCacheDataSource {
@@ -11,5 +10,7 @@ interface TasksCacheDataSource {
     suspend fun editTask(task: TaskData): TaskData
 
     suspend fun markAsSync(id: Long)
-    suspend fun fetchOutOfSync(): List<TaskData>
+    suspend fun fetchOutOfSyncNewTasks(): List<TaskData>
+    suspend fun fetchOutOfSyncEditTasks(): List<TaskData>
+
 }

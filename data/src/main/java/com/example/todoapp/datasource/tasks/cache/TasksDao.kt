@@ -15,14 +15,16 @@ interface TasksDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTask(task: TaskCache): Long
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun editTask(task: TaskCache)
+
 
     @Query("UPDATE tasks_table SET is_sync = 1 WHERE id == :id")
     suspend fun markIsSyncTask(id: Long)
 
-    @Query("SELECT * FROM tasks_table WHERE is_sync == 0")
-    fun fetchOutOfSync(): List<TaskCache>
+    @Query("SELECT * FROM tasks_table WHERE is_sync == 0 AND created_at == changed_at")
+    fun fetchOutOfSyncNewTasks(): List<TaskCache>
 
-
+    @Query("SELECT * FROM tasks_table WHERE is_sync == 0 AND created_at != changed_at")
+    fun fetchOutOfSyncEditTasks(): List<TaskCache>
 }
