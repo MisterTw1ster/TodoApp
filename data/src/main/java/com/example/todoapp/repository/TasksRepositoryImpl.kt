@@ -34,6 +34,7 @@ class TasksRepositoryImpl(
             domainParamsToDataMapper.transform(params = params, createdAt = time, changedAt = time)
         val taskDataFromCache = cacheDataSource.addTask(taskData)
         val taskDataFromCloud = cloudDataSource.addTask(taskDataFromCache)
+        cacheDataSource.markAsSync(taskDataFromCache.id)
         dataToDomainMapper.transform(taskDataFromCloud)
     }
 
@@ -57,7 +58,15 @@ class TasksRepositoryImpl(
             )
         val taskDataFromCache = cacheDataSource.editTask(taskData)
         val taskDataFromCloud = cloudDataSource.editTask(taskDataFromCache)
+        cacheDataSource.markAsSync(taskDataFromCache.id)
         dataToDomainMapper.transform(taskDataFromCloud)
+    }
+
+    override suspend fun syncCacheToCloud() {
+        try {
+            val tasksDataFromCache = cacheDataSource.fetchOutOfSync()
+            cloudDataSource.
+        }
     }
 
 }

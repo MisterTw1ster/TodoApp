@@ -39,4 +39,14 @@ class TasksCacheDataSourceImpl(
         dao.editTask(taskCache)
         return task
     }
+
+    override suspend fun markAsSync(id: Long) {
+        dao.markIsSyncTask(id)
+    }
+
+    override suspend fun fetchOutOfSync(): List<TaskData> {
+        return dao.fetchOutOfSync().map { taskCache ->
+            cacheToDataMapper.transform(taskCache)
+        }
+    }
 }

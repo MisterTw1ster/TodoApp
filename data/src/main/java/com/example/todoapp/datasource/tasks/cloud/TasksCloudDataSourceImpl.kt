@@ -10,11 +10,11 @@ class TasksCloudDataSourceImpl(
     private val cloudToDataMapper: TaskCloudToDataMapper,
     private val dataToCloudMapper: TaskDataToCloudMapper
 ): TasksCloudDataSource {
-    override suspend fun fetchTasks(): List<TaskData> {
-        return api.fetchTasks().map { task ->
-            cloudToDataMapper.transform(task)
-        }
-    }
+//    override suspend fun fetchTasks(): List<TaskData> {
+//        return api.fetchTasks().map { task ->
+//            cloudToDataMapper.transform(task)
+//        }
+//    }
 
     override suspend fun addTask(task: TaskData): TaskData {
         val taskCloud = dataToCloudMapper.transform(task)
@@ -28,11 +28,11 @@ class TasksCloudDataSourceImpl(
         return cloudToDataMapper.transform(taskCloudNew)
     }
 
-    override suspend fun addTasks(tasks: List<TaskData>): List<TaskData> {
-        val tasksCloud = tasks.map { task ->
-            dataToCloudMapper.transform(task)
+    override suspend fun syncTasks(tasks: List<TaskData>) {
+        val tasksCloud = tasks.associate { task ->
+            task.id.toString() to dataToCloudMapper.transform(task)
         }
-        val tasksCloudNew = api.addTasks(tasksCloud)
-        return tasksCloudNew.map { task -> cloudToDataMapper.transform(task) }
+        api.syncTasks(tasksCloud)
+//        return tasksCloudNew.map { task -> cloudToDataMapper.transform(task) }
     }
 }

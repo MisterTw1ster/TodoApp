@@ -7,7 +7,7 @@ sealed class TasksDomain {
         fun map(): List<TaskDomain> = emptyList()
     }
 
-    data class Failure(private val message: String) : TasksDomain() {
+    object Empty : TasksDomain() {
         //        fun map(mapper: Mapper<T>): T = mapper.map(message)
         fun map(): String = "mapper.map(message)"
     }
