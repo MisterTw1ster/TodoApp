@@ -51,12 +51,12 @@ class TasksRepositoryImplTest {
             )
 
         coEvery { testCacheDataSource.observeTasks() } returns flow {
-            emit(listOf(testTaskData(id = 1),testTaskData(id = 2)))
-            emit(listOf(testTaskData(id = 1),testTaskData(id = 3)))
+            emit(listOf(testTaskData(id = 1), testTaskData(id = 2)))
+            emit(listOf(testTaskData(id = 1), testTaskData(id = 3)))
         }
 
         coEvery { testDataToDomainMapper.transform(any()) } answers {
-            testTaskDomain(id = firstArg<TaskCache>().id)
+            testTaskDomain(id = firstArg<TaskData>().id)
         }
 
         val tasks = testRepository.observeTasks().toList()
@@ -83,10 +83,10 @@ class TasksRepositoryImplTest {
 
         coEvery { testCacheDataSource.getTaskById(id) } returns testTaskData(id = id)
         coEvery { testDataToDomainMapper.transform(any()) } answers {
-            testTaskDomain(id = firstArg<TaskCache>().id)
+            testTaskDomain(id = firstArg<TaskData>().id)
         }
 
-        val expected = testTaskData(id = id)
+        val expected = testTaskDomain(id = id)
         val actual = testRepository.getTaskById(id)
 
         assertEquals(expected, actual)
@@ -94,6 +94,7 @@ class TasksRepositoryImplTest {
 
     @Test
     fun `add new task with params result success`() = runTest {
+//        val handleError =
         val handleDataRequest = HandleDataRequest(testHandleError)
         val testRepository =
             TasksRepositoryImpl(
@@ -103,7 +104,7 @@ class TasksRepositoryImplTest {
                 testDomainParamsToDataMapper,
                 handleDataRequest
             )
-        val time = System.currentTimeMillis()
+        val time = 100L
         val taskDomainParams = testTaskDomainParams(id = 0L)
         val newId = 2L
 
@@ -172,23 +173,26 @@ class TasksRepositoryImplTest {
                 handleDataRequest
             )
         val newCreatedAt = 100L
-        val newChangedAt = System.currentTimeMillis()
+        val newChangedAt = 200L
         val newText = "new text"
         val taskDomainParams = testTaskDomainParams(text = newText)
 
+        coEvery { testCacheDataSource.getTaskById(any()) } answers {
+            testTaskData(text = "old text", createdAt = newCreatedAt)
+        }
         coEvery { testDomainParamsToDataMapper.transform(any(), newCreatedAt, newChangedAt) } answers {
             testTaskData(text = newText, changedAt = newChangedAt)
         }
         coEvery { testCacheDataSource.editTask(any()) } answers {
-            firstArg<TaskData>().copy(createdAt = newCreatedAt)
+            firstArg()
+        }
+        coEvery { testCloudDataSource.addTask(any()) } answers {
+            firstArg()
         }
         coEvery { testDataToDomainMapper.transform(any()) } answers {
             with (firstArg<TaskData>()) {
                 testTaskDomain(text = text, createdAt = createdAt, changedAt = changedAt)
             }
-        }
-        coEvery { testCloudDataSource.addTask(any()) } answers {
-            firstArg()
         }
 
         val expected = testTaskDomain(text = newText, createdAt = newCreatedAt, changedAt = newChangedAt)
@@ -209,15 +213,18 @@ class TasksRepositoryImplTest {
                 handleDataRequest
             )
         val newCreatedAt = 100L
-        val newChangedAt = System.currentTimeMillis()
+        val newChangedAt = 200L
         val newText = "new text"
         val taskDomainParams = testTaskDomainParams(text = newText)
 
+        coEvery { testCacheDataSource.getTaskById(any()) } answers {
+            testTaskData(text = "old text", createdAt = newCreatedAt)
+        }
         coEvery { testDomainParamsToDataMapper.transform(any(), newCreatedAt, newChangedAt) } answers {
             testTaskData(text = newText, changedAt = newChangedAt)
         }
         coEvery { testCacheDataSource.editTask(any()) } answers {
-            firstArg<TaskData>().copy(createdAt = newCreatedAt)
+            firstArg()
         }
         coEvery { testCloudDataSource.addTask(any()) } answers {
             throw NoInternetConnectionException()

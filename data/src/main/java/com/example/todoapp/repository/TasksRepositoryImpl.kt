@@ -23,9 +23,9 @@ class TasksRepositoryImpl(
         }
     }
 
-    override suspend fun getTaskById(id: Long): TaskDomain = handleDataRequest.handle {
+    override suspend fun getTaskById(id: Long): TaskDomain {
         val taskData = cacheDataSource.getTaskById(id)
-        dataToDomainMapper.transform(taskData)
+        return dataToDomainMapper.transform(taskData)
     }
 
     override suspend fun addTask(params: TaskDomainParams): TaskDomain = handleDataRequest.handle {
@@ -38,15 +38,26 @@ class TasksRepositoryImpl(
     }
 
     override suspend fun editTask(params: TaskDomainParams): TaskDomain = handleDataRequest.handle {
+        val currentTaskDataFromCache = cacheDataSource.getTaskById(params.id)
+
+        if (currentTaskDataFromCache.text == params.text &&
+            currentTaskDataFromCache.importance == params.importance &&
+            currentTaskDataFromCache.deadline == params.deadline &&
+            currentTaskDataFromCache.isDone == params.isDone
+        ) {
+            return@handle dataToDomainMapper.transform(currentTaskDataFromCache)
+        }
+
         val time = System.currentTimeMillis()
         val taskData =
-            domainParamsToDataMapper.transform(params = params, changedAt = time)
+            domainParamsToDataMapper.transform(
+                params = params,
+                createdAt = currentTaskDataFromCache.createdAt,
+                changedAt = time
+            )
         val taskDataFromCache = cacheDataSource.editTask(taskData)
-        if (taskData != taskDataFromCache) {
-            dataToDomainMapper.transform(taskDataFromCache)
-        } else {
-            val taskDataFromCloud = cloudDataSource.editTask(taskDataFromCache)
-            dataToDomainMapper.transform(taskDataFromCloud)
-        }
+        val taskDataFromCloud = cloudDataSource.editTask(taskDataFromCache)
+        dataToDomainMapper.transform(taskDataFromCloud)
     }
+
 }

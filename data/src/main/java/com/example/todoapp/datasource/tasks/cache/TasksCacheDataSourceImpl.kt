@@ -30,22 +30,13 @@ class TasksCacheDataSourceImpl(
 
     override suspend fun addTask(task: TaskData): TaskData {
         val taskCache = dataToCacheMapper.transform(task)
-        val taskCacheNew = dao.addTask(taskCache)
-        return cacheToDataMapper.transform(taskCacheNew)
+        val id = dao.addTask(taskCache)
+        return task.copy(id = id)
     }
 
     override suspend fun editTask(task: TaskData): TaskData {
-        val currentTaskCache = dao.getTaskById(task.id)
-        val taskData = task.copy(createdAt = currentTaskCache.createdAt)
-
-        if (currentTaskCache.text == task.text &&
-            currentTaskCache.importance == task.importance &&
-            currentTaskCache.deadline == task.deadline &&
-            currentTaskCache.isDone == task.isDone) {
-            return taskData
-        }
-        val taskCache = dataToCacheMapper.transform(taskData)
-        val taskCacheNew = dao.editTask(taskCache)
-        return cacheToDataMapper.transform(taskCacheNew)
+        val taskCache = dataToCacheMapper.transform(task)
+        dao.editTask(taskCache)
+        return task
     }
 }

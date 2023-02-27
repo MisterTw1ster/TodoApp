@@ -5,6 +5,7 @@ import com.example.todoapp.core.testTaskData
 import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
+import com.example.todoapp.exception.NoInternetConnectionException
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -19,27 +20,27 @@ class TasksCloudDataSourceImplTest {
     val rule = MockKRule(this)
 
     @MockK
-    lateinit var testService: TasksService
+    lateinit var api: TasksService
 
     @MockK
-    lateinit var testTaskDataToCloudMapper: TaskDataToCloudMapper
+    lateinit var testDataToCloudMapper: TaskDataToCloudMapper
 
     @MockK
-    lateinit var testTaskCloudToDataMapper: TaskCloudToDataMapper
+    lateinit var testCloudToDataMapper: TaskCloudToDataMapper
 
     @Test
     fun `fetch tasks return TaskData list result success`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
-        coEvery { testService.fetchTasks() } answers {
+        coEvery { api.fetchTasks() } answers {
             listOf(testTaskCloud(id = "1"), testTaskCloud(id = "2"))
         }
-        coEvery { testTaskCloudToDataMapper.transform(any()) } answers {
+        coEvery { testCloudToDataMapper.transform(any()) } answers {
             testTaskData(id = firstArg<TaskCloud>().id.toLong())
         }
 
@@ -49,20 +50,17 @@ class TasksCloudDataSourceImplTest {
         assertEquals(expected, actual)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = NoInternetConnectionException::class)
     fun `fetch tasks return TaskData list result failed`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
-        coEvery { testService.fetchTasks() } answers {
-            listOf(testTaskCloud(id = "1"), testTaskCloud(id = "2"))
-        }
-        coEvery { testTaskCloudToDataMapper.transform(any()) } answers {
-            testTaskData(id = firstArg<TaskCloud>().id.toLong())
+        coEvery { api.fetchTasks() } answers {
+            throw NoInternetConnectionException()
         }
 
         testDataSource.fetchTasks()
@@ -70,47 +68,44 @@ class TasksCloudDataSourceImplTest {
     }
 
     @Test
-    fun `add new task return id result success`() = runTest {
+    fun `add new task return TaskData result success`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
         val taskData = testTaskData()
-        val id = "1"
 
-        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-            testTaskCloud(id = firstArg<TaskData>().id.toString())
-        }
-        coEvery { testService.addTask(any()) } returns id
+        coEvery { testDataToCloudMapper.transform(any()) } returns testTaskCloud()
+        coEvery { api.addTask(any()) } returns testTaskCloud()
+        coEvery { testCloudToDataMapper.transform(any()) } returns testTaskData()
 
-        val expected = 1
+        val expected = testTaskData()
         val actual = testDataSource.addTask(taskData)
 
         assertEquals(expected, actual)
 
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = NoInternetConnectionException::class)
     fun `add new task return id result failed`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
         val taskData = testTaskData()
-        val id = "1"
 
-        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-            testTaskCloud(id = firstArg<TaskData>().id.toString())
+        coEvery { testDataToCloudMapper.transform(any()) } returns testTaskCloud()
+        coEvery { api.addTask(any()) } answers {
+            throw NoInternetConnectionException()
         }
-        coEvery { testService.addTask(any()) } returns id
 
-        testDataSource.addTask(taskData)
+       testDataSource.addTask(taskData)
 
     }
 
@@ -118,78 +113,87 @@ class TasksCloudDataSourceImplTest {
     fun `edit task return id result success`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
         val taskData = testTaskData()
-        val id = "1"
 
-        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-            testTaskCloud(id = firstArg<TaskData>().id.toString())
-        }
-        coEvery { testService.addTask(any()) } returns id
+        coEvery { testDataToCloudMapper.transform(any()) } returns testTaskCloud()
+        coEvery { api.editTask(any(), any()) } returns testTaskCloud()
+        coEvery { testCloudToDataMapper.transform(any()) } returns testTaskData()
 
-        val expected = 1
-        val actual = testDataSource.addTask(taskData)
+        val expected = testTaskData()
+        val actual = testDataSource.editTask(taskData)
 
         assertEquals(expected, actual)
 
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = NoInternetConnectionException::class)
     fun `edit task return id result failed`() = runTest {
         val testDataSource =
             TasksCloudDataSourceImpl(
-                testService,
-                testTaskCloudToDataMapper,
-                testTaskDataToCloudMapper
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
             )
 
         val taskData = testTaskData()
-        val id = "1"
 
-        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-            testTaskCloud(id = firstArg<TaskData>().id.toString())
+        coEvery { testDataToCloudMapper.transform(any()) } returns testTaskCloud()
+        coEvery { api.editTask(any(), any()) } answers {
+            throw NoInternetConnectionException()
         }
-        coEvery { testService.addTask(any()) } returns id
 
-        testDataSource.addTask(taskData)
+        testDataSource.editTask(taskData)
 
     }
 
     @Test
     fun `add tasks result success`() = runTest {
-//        val testDataSource =
-//            TasksCloudDataSourceImpl(
-//                testService,
-//                testTaskCloudToDataMapper,
-//                testTaskDataToCloudMapper
-//            )
-//        val tasksData = listOf(testTaskData(id = 1), testTaskData(id = 2))
-//
-//        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-//            testTaskCloud(id = firstArg<TaskCloud>().id)
-//        }
-//        coEvery { testService.addTasks(any()) } just runs
+        val testDataSource =
+            TasksCloudDataSourceImpl(
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
+            )
+        val tasksData = listOf(testTaskData(id = 1L), testTaskData(id = 2L))
+
+        coEvery { testDataToCloudMapper.transform(any()) } answers {
+            testTaskCloud(id = firstArg<TaskData>().id.toString())
+        }
+        coEvery { api.addTasks(any()) } returns listOf(testTaskCloud(id = "1"), testTaskCloud(id = "2"))
+        coEvery { testCloudToDataMapper.transform(any()) } answers {
+            testTaskData(id = firstArg<TaskCloud>().id.toLong())
+        }
+
+        val expected = listOf(testTaskData(id = 1L), testTaskData(id = 2L))
+        val actual = testDataSource.addTasks(tasksData)
+
+        assertEquals(expected, actual)
 
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = NoInternetConnectionException::class)
     fun `add tasks result failed`() = runTest {
-//        val testDataSource =
-//            TasksCloudDataSourceImpl(
-//                testService,
-//                testTaskCloudToDataMapper,
-//                testTaskDataToCloudMapper
-//            )
-//        val tasksData = listOf(testTaskData(id = 1), testTaskData(id = 2))
-//
-//        coEvery { testTaskDataToCloudMapper.transform(any()) } answers {
-//            testTaskCloud(id = firstArg<TaskData>().id.toString())
-//        }
-//        coEvery { testService.addTasks(any()) } just Runs
+        val testDataSource =
+            TasksCloudDataSourceImpl(
+                api,
+                testCloudToDataMapper,
+                testDataToCloudMapper
+            )
+        val tasksData = listOf(testTaskData(id = 1L), testTaskData(id = 2L))
+
+        coEvery { testDataToCloudMapper.transform(any()) } answers {
+            testTaskCloud(id = firstArg<TaskData>().id.toString())
+        }
+        coEvery { api.addTasks(any()) } answers {
+            throw NoInternetConnectionException()
+        }
+
+        testDataSource.addTasks(tasksData)
 
     }
 

@@ -5,7 +5,7 @@ import com.example.todoapp.models.TaskDomain
 class HandleDataRequest(
     private val handleError: HandleError<Exception>
 ) {
-    suspend fun handle(block: suspend () -> TaskDomain) = try {
+    suspend fun handle(block: suspend () -> TaskDomain): TaskDomain = try {
         block.invoke()
     } catch (e: Exception) {
         throw handleError.handle(e)
