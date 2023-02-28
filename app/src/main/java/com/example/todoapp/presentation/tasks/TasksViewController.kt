@@ -39,7 +39,7 @@ class TasksViewController @AssistedInject constructor(
             state.apply(
                 binding.rvList.rvListAndTasks,
                 binding.rvList.tvEmptyList,
-                binding.rvList.tvLoadingList
+                binding.tvLoadingList
             )
 //       }
 
@@ -57,7 +57,7 @@ class TasksViewController @AssistedInject constructor(
 
             binding.fabAddTask.setOnClickListener {
                 val bundle =
-                    bundleOf("taskID" to null)
+                    bundleOf("taskID" to 0L)
                 fragment.findNavController().navigate(
                     R.id.action_tasks_to_detailsFragment,
                     bundle

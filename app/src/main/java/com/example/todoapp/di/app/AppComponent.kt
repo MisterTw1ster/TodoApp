@@ -2,6 +2,7 @@ package com.example.todoapp.di.app
 
 import android.app.Application
 import com.example.todoapp.App
+import com.example.todoapp.di.detailsFragment.DetailsFragmentComponent
 import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.BindsInstance
@@ -18,5 +19,5 @@ interface AppComponent {
     }
     fun inject(app: App)
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
-//    fun taskDetailsComponent(): DetailsFragmentComponent.Factory
+    fun taskDetailsComponent(): DetailsFragmentComponent.Factory
 }

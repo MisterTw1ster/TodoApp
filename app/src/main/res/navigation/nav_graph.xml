@@ -21,7 +21,6 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="taskID"
-            app:argType="string"
-            app:nullable="true" />
+            app:argType="long" />
     </fragment>
 </navigation>
