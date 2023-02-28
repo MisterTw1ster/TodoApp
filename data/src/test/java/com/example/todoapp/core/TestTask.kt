@@ -1,7 +1,7 @@
 package com.example.todoapp.core
 
-import com.example.todoapp.datasource.TaskData
-import com.example.todoapp.datasource.TaskDataParams
+import com.example.todoapp.models.TaskData
+import com.example.todoapp.models.TaskDataParams
 import com.example.todoapp.datasource.tasks.cache.TaskCache
 import com.example.todoapp.datasource.tasks.cloud.TaskCloud
 import com.example.todoapp.models.TaskDomain

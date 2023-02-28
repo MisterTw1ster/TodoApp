@@ -1,11 +1,10 @@
 package com.example.todoapp.datasource.tasks.cache
 
-import android.util.Log
-import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskCacheToDataMapper
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataToCacheMapper
 import com.example.todoapp.di.DataScope
-import com.example.todoapp.repository.TasksCacheDataSource
+import com.example.todoapp.repository.tasks.TasksCacheDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -17,21 +16,10 @@ class TasksCacheDataSourceImpl @Inject constructor(
     private val dataToCacheMapper: TaskDataToCacheMapper
 ) : TasksCacheDataSource {
 
-    val t = dao.observeTasks().map { tasksCache ->
-        tasksCache.map { taskCache ->
-            Log.d("observe_task", taskCache.toString())
-            cacheToDataMapper.transform(taskCache)
-        }
-    }
-
     override suspend fun observeTasks(): Flow<List<TaskData>> {
-//        t = dao.observeTasks().map { tasksCache ->
-//            tasksCache.map { taskCache ->
-//                Log.d("observe_task", taskCache.toString())
-//                cacheToDataMapper.transform(taskCache)
-//            }
-//        }
-        return t
+        return dao.observeTasks().map { tasksCache ->
+            tasksCache.map { taskCache -> cacheToDataMapper.transform(taskCache) }
+        }
     }
 
     override suspend fun getTaskById(id: Long): TaskData {

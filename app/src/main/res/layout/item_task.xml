@@ -21,7 +21,7 @@
         android:button="@drawable/is_done_checkbox"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
@@ -40,49 +40,17 @@
             android:textColor="?android:attr/textColorPrimary"
             tools:text="Task" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.example.todoapp.presentation.tasks.view.CustomDateTextView
+            android:id="@+id/tv_deadline_task"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_cnt_subtask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Subhead"
-                android:textColor="?android:attr/textColorTertiary"
-                android:text="1 of 2" />
-
-            <TextView
-                android:id="@+id/tv_deadline_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                tools:text="22.01.2022"
-                app:drawableLeftCompat="@drawable/ic_calendar"
-                android:textAppearance="@style/TextAppearance.Subhead"
-                android:textColor="?android:attr/textColorTertiary"
-                android:drawablePadding="4dp" />
-
-            <TextView
-                android:id="@+id/tv_attach_file"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                app:drawableLeftCompat="@drawable/ic_attach_file"
-                android:textAppearance="@style/TextAppearance.Subhead"
-                android:textColor="?android:attr/textColorTertiary" />
-
-        </LinearLayout>
+            android:paddingStart="4dp"
+            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textColor="?android:attr/textColorTertiary"
+            android:drawablePadding="4dp"
+            tools:text="22.01.2022"/>
 
 
     </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/cb_is_favorite"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:button="@drawable/is_favorite_checkbox"/>
 
 </LinearLayout>

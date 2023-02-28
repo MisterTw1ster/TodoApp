@@ -2,7 +2,7 @@ package com.example.todoapp.datasource.tasks.cloud
 
 import com.example.todoapp.core.testTaskCloud
 import com.example.todoapp.core.testTaskData
-import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
 import com.example.todoapp.exception.NoInternetConnectionException

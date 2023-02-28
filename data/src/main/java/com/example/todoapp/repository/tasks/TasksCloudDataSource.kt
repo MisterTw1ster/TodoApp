@@ -1,6 +1,6 @@
-package com.example.todoapp.repository
+package com.example.todoapp.repository.tasks
 
-import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.models.TaskData
 
 interface TasksCloudDataSource {
     suspend fun fetchTasks(): List<TaskData>

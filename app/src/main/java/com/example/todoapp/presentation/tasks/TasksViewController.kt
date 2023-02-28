@@ -41,19 +41,14 @@ class TasksViewController @AssistedInject constructor(
                 binding.tvEmptyList,
                 binding.tvLoadingList
             )
-//       }
 
-//        viewModel.observeStatus(lifecycleOwner) { state ->
-//            state.apply(binding.tvError)
-//        }
-//
-//        viewModel.observeFilterCompleted(lifecycleOwner) { state ->
-//            state.apply(binding.cbHideCompleted)
-//        }
-//
-//        viewModel.observeTitle(lifecycleOwner) { state ->
-//            state.apply(binding.tvTitle)
-//        }
+            viewModel.observeFilterCompleted(lifecycleOwner) { state ->
+                state.apply(binding.cbHideCompleted)
+            }
+
+            viewModel.observeTitle(lifecycleOwner) { state ->
+                state.apply(binding.tvTitle)
+            }
 
             binding.fabAddTask.setOnClickListener {
                 val bundle =
@@ -64,9 +59,9 @@ class TasksViewController @AssistedInject constructor(
                 )
             }
 
-//        binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
-//            viewModel.saveSettingHideCompleted(isChecked)
-//        }
+            binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.saveSettingHideCompleted(isChecked)
+            }
         }
 
     }

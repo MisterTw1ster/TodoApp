@@ -1,4 +1,4 @@
-package com.example.todoapp.datasource
+package com.example.todoapp.models
 
 data class TaskDataParams(
     val text: String,

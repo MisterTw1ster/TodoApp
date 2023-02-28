@@ -81,7 +81,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun setIsDone(task: TaskUI, value: Boolean) {
-//        viewModel.setIsDoneTask(task, value)
+        viewModel.setIsDoneTask(task, value)
     }
 
 

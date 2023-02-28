@@ -1,4 +1,4 @@
-package com.example.todoapp.datasource
+package com.example.todoapp.models
 
 data class TaskData(
     val id: Long,

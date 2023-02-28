@@ -2,8 +2,7 @@ package com.example.todoapp.datasource.tasks.cache
 
 import com.example.todoapp.core.testTaskCache
 import com.example.todoapp.core.testTaskData
-import com.example.todoapp.datasource.TaskData
-import com.example.todoapp.datasource.TaskDataParams
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskCacheToDataMapper
 import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataToCacheMapper
 import io.mockk.*

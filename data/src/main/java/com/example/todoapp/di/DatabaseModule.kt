@@ -11,7 +11,6 @@ import dagger.Provides
 class DatabaseModule {
 
     @Provides
-    //    @DataScope
     @DataScope
     fun getTasksDatabase(context: Context): TasksDatabase {
         return Room.databaseBuilder(
@@ -22,7 +21,6 @@ class DatabaseModule {
     }
 
     @Provides
-//    @DataScope
     @DataScope
     fun provideTasksDao(db: TasksDatabase): TasksDao {
         return db.tasksDao()

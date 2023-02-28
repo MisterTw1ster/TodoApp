@@ -1,6 +1,6 @@
 package com.example.todoapp.datasource.tasks.cache.mappers
 
-import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cache.TaskCache
 import javax.inject.Inject
 

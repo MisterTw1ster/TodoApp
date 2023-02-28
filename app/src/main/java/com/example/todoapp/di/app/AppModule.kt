@@ -11,10 +11,10 @@ import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module(
-    includes = [DatabaseModule::class, NetworkModule::class, DataBindModule::class, DomainBindModule::class],
+    includes = [DatabaseModule::class, NetworkModule::class,
+                DataBindModule::class, DomainBindModule::class],
     subcomponents = [TasksFragmentComponent::class, DetailsFragmentComponent::class]
 )
 class AppModule {

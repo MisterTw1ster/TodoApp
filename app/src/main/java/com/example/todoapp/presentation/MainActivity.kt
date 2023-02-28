@@ -3,12 +3,6 @@ package com.example.todoapp.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.todoapp.R
-import com.example.todoapp.RetrofitBuild
-import com.example.todoapp.datasource.TaskData
-import com.example.todoapp.datasource.tasks.cloud.TasksCloudDataSourceImpl
-import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
-import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

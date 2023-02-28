@@ -1,4 +1,4 @@
-package com.example.todoapp.repository
+package com.example.todoapp.repository.tasks
 
 import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
@@ -6,6 +6,7 @@ import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
 import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
+import com.example.todoapp.repository.TasksRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -8,5 +8,6 @@ data class TaskUI(
     val importance: String,
     val deadline: Long,
     val isDone: Boolean,
-    val color: String
+    val color: Int,
+    val deadlineText: String?
 ): Item

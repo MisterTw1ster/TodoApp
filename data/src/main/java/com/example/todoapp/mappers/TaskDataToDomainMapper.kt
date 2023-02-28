@@ -1,6 +1,6 @@
 package com.example.todoapp.mappers
 
-import com.example.todoapp.datasource.TaskData
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.models.TaskDomain
 import javax.inject.Inject
 
