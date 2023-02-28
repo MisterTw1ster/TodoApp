@@ -38,7 +38,7 @@ class TasksViewController @AssistedInject constructor(
         viewModel.observeTasks(lifecycleOwner) { state ->
             state.apply(
                 binding.rvList.rvListAndTasks,
-                binding.rvList.tvEmptyList,
+                binding.tvEmptyList,
                 binding.tvLoadingList
             )
 //       }

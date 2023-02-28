@@ -35,7 +35,7 @@ class DetailsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         taskDetailsComponent =
-            context.appComponent.taskDetailsComponent().create()
+            context.appComponent.detailsFragmentComponent().create()
         taskDetailsComponent.inject(this)
         super.onAttach(context)
     }

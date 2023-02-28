@@ -1,5 +1,6 @@
 package com.example.todoapp.repository
 
+import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+@DataScope
 class TasksRepositoryImpl @Inject constructor(
     private val cacheDataSource: TasksCacheDataSource,
     private val cloudDataSource: TasksCloudDataSource,

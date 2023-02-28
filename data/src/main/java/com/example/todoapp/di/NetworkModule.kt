@@ -1,7 +1,6 @@
 package com.example.todoapp.di
 
 import com.example.todoapp.datasource.tasks.cloud.TasksService
-import com.example.todoapp.di.scope.DataScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

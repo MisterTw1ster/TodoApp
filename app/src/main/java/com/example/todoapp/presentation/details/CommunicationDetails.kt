@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.todoapp.models.TaskDomain
+import com.example.todoapp.models.TaskDomainParams
 import com.example.todoapp.presentation.details.models.StateDeadlineUI
 
 interface CommunicationDetails {
@@ -18,11 +19,11 @@ interface CommunicationDetails {
     fun mapText(source: String)
     fun mapImportance(source: String)
     fun mapIsClose(source: Boolean)
-//    fun mapValueToNewTask(): NewTaskDomainParam
+    fun getTaskDomainParams(): TaskDomainParams
 //    fun mapValueToEditTask(): EditTaskDomainParam
 
     class Base (
-        private val taskId: MutableLiveData<Long> = MutableLiveData(),
+        private val taskId: MutableLiveData<Long> = MutableLiveData(0L),
         private val deadline: MutableLiveData<StateDeadlineUI> = MutableLiveData(),
         private val text: MutableLiveData<String> = MutableLiveData(""),
         private val importance: MutableLiveData<String> = MutableLiveData("low"),
@@ -72,16 +73,15 @@ interface CommunicationDetails {
             isClose.postValue(source)
         }
 
-//        override fun mapValueToNewTask(): NewTaskDomainParam {
-//            return NewTaskDomainParam(
-//                text = text.value!!, // TODO
-//                importance = importance.value!!, // TODO
-//                deadline = 0L, // TODO
-//                isDone = false,
-//                color = "FFFFFF",
-//                isFavorite = false
-//            )
-//        }
+        override fun getTaskDomainParams(): TaskDomainParams {
+            return TaskDomainParams(
+                id = taskId.value!!,
+                text = text.value!!, // TODO
+                importance = importance.value!!, // TODO
+                deadline = 0L, // TODO
+                isDone = false
+            )
+        }
 //
 //        override fun mapValueToEditTask(): EditTaskDomainParam {
 //            return EditTaskDomainParam(

@@ -64,9 +64,11 @@ class DetailsViewModel(
 
     fun saveTask() {
         viewModelScope.launch(Dispatchers.IO) {
+            val taskSaveParam = communicationDetails.getTaskDomainParams()
+//
             val isDone = if (taskId == 0L) {
 //                val taskSaveParam = communicationDetails.mapValueToNewTask()
-//                addTaskUseCase(taskSaveParam)
+                addTaskUseCase(taskSaveParam)
             } else {
 //                val taskSaveParam = communicationDetails.mapValueToEditTask()
 //                editTaskUseCase(taskSaveParam)

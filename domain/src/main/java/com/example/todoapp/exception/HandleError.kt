@@ -1,7 +1,9 @@
 package com.example.todoapp.exception
 
+import com.example.todoapp.di.DomainScope
 import javax.inject.Inject
 
+@DomainScope
 interface HandleError<T> {
 
     fun handle(e: Exception): T
