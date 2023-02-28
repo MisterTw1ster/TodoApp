@@ -6,8 +6,9 @@ import com.example.todoapp.datasource.tasks.cache.mappers.TaskDataToCacheMapper
 import com.example.todoapp.repository.TasksCacheDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class TasksCacheDataSourceImpl(
+class TasksCacheDataSourceImpl @Inject constructor(
     private val dao: TasksDao,
     private val cacheToDataMapper: TaskCacheToDataMapper,
     private val dataToCacheMapper: TaskDataToCacheMapper

@@ -2,8 +2,9 @@ package com.example.todoapp.mappers
 
 import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.models.TaskDomain
+import javax.inject.Inject
 
-class TaskDataToDomainMapper {
+class TaskDataToDomainMapper @Inject constructor() {
     fun transform(task: TaskData): TaskDomain {
         return TaskDomain(
             id = task.id,

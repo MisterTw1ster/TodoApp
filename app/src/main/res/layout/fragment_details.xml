@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/back_primary"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/mt_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/back_primary"
+        app:navigationIconTint="@color/label_primary"
+        app:titleTextColor="@color/label_primary">
+
+        <ImageButton
+            android:id="@+id/ib_closeToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:gravity="center_vertical"
+            android:background="@color/back_primary"
+            android:src="@drawable/ic_close"
+            app:tint="@color/label_tertiary" />
+
+        <TextView
+            android:id="@+id/tv_saveToolbar"
+            style="@style/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
+            android:paddingEnd="16dp"
+            android:text="@string/button_save"
+            android:textColor="@color/color_blue" />
+
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
+
+                <EditText
+                    android:id="@+id/et_titleTask"
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape"
+                    android:hint="тема"
+                    android:inputType="textMultiLine"/>
+
+                <EditText
+                    android:id="@+id/et_textTask"
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape"
+                    android:gravity="top|start"
+                    android:hint="описание"
+                    android:inputType="textMultiLine"
+                    android:minLines="3" />
+
+                <TextView
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="28dp"
+                    android:text="Важность" />
+
+                <Spinner
+                    android:id="@+id/spin_importanceTask"
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" />
+
+                <include
+                    layout="@layout/view_separator"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/sm_deadlineSwitch"
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="43dp"
+                    android:checked="true"
+                    android:text="Сделать до" />
+
+                <TextView
+                    android:id="@+id/tv_deadlineDate"
+                    style="@style/color_blue_subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:text="2 июля 2021" />
+<!--                <com.example.todolistsandtasks.presentation.taskdetails.viewstate.DeadlineTextView-->
+<!--                    android:id="@+id/tv_deadlineDate"-->
+<!--                    style="@style/color_blue_subhead"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="4dp"-->
+<!--                    tools:text="2 июля 2021" />-->
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/view_separator"/>
+
+            <LinearLayout
+                android:id="@+id/ll_deleteTaskButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_deleteTaskIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_delete" />
+
+                <TextView
+                    android:id="@+id/tv_deleteTaskText"
+                    style="@style/label_primary_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="16dp"
+                    android:gravity="center_vertical"
+                    android:text="Удалить"
+                    android:textColor="@color/color_red" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

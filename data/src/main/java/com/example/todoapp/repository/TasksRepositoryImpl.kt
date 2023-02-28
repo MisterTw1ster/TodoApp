@@ -7,8 +7,9 @@ import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class TasksRepositoryImpl(
+class TasksRepositoryImpl @Inject constructor(
     private val cacheDataSource: TasksCacheDataSource,
     private val cloudDataSource: TasksCloudDataSource,
     private val dataToDomainMapper: TaskDataToDomainMapper,

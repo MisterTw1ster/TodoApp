@@ -2,8 +2,9 @@ package com.example.todoapp.datasource.tasks.cache.mappers
 
 import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.datasource.tasks.cache.TaskCache
+import javax.inject.Inject
 
-class TaskCacheToDataMapper {
+class TaskCacheToDataMapper @Inject constructor(){
     fun transform(task: TaskCache): TaskData {
         return TaskData(
             id = task.id,

@@ -38,28 +38,28 @@ class MainActivity : AppCompatActivity() {
 //            text.setText(id.toString())
 //        }
 
-        runBlocking {
-            val cloudDataSource = TasksCloudDataSourceImpl(
-                RetrofitBuild().providesApiService(),
-                TaskCloudToDataMapper(),
-                TaskDataToCloudMapper()
-            )
-
-            val taskData1 = TaskData(
-                id = 15L, text = "new new text", importance = "low",
-                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
-            )
-            val taskData2 = TaskData(
-                id = 25L, text = "new text", importance = "basic",
-                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
-            )
-//            cloudDataSource.addTask(taskData)
-            try {
-                cloudDataSource.editTasks(listOf(taskData1, taskData2))
-            } catch (e: Exception) {
-                println(1)
-            }
-
-        }
+//        runBlocking {
+//            val cloudDataSource = TasksCloudDataSourceImpl(
+//                RetrofitBuild().providesApiService(),
+//                TaskCloudToDataMapper(),
+//                TaskDataToCloudMapper()
+//            )
+//
+//            val taskData1 = TaskData(
+//                id = 15L, text = "new new text", importance = "low",
+//                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
+//            )
+//            val taskData2 = TaskData(
+//                id = 25L, text = "new text", importance = "basic",
+//                deadline = 0L, isDone = false, createdAt = 100L, changedAt = 400L
+//            )
+////            cloudDataSource.addTask(taskData)
+//            try {
+//                cloudDataSource.editTasks(listOf(taskData1, taskData2))
+//            } catch (e: Exception) {
+//                println(1)
+//            }
+//
+//        }
     }
 }

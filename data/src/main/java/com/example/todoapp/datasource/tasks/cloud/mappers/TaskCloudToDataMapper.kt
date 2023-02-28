@@ -2,8 +2,9 @@ package com.example.todoapp.datasource.tasks.cloud.mappers
 
 import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.datasource.tasks.cloud.TaskCloud
+import javax.inject.Inject
 
-class TaskCloudToDataMapper {
+class TaskCloudToDataMapper @Inject constructor(){
     fun transform(task: TaskCloud): TaskData {
         return TaskData(
             id = task.id.toLong(),

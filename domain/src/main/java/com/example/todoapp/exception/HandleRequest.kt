@@ -1,6 +1,8 @@
 package com.example.todoapp.exception
 
-class HandleRequest (
+import javax.inject.Inject
+
+class HandleRequest  @Inject constructor(
     private val handleError: HandleError<String>
 )  {
 

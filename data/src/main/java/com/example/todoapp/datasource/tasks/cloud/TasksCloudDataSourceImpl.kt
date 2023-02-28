@@ -4,8 +4,9 @@ import com.example.todoapp.datasource.TaskData
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
 import com.example.todoapp.repository.TasksCloudDataSource
+import javax.inject.Inject
 
-class TasksCloudDataSourceImpl(
+class TasksCloudDataSourceImpl @Inject constructor(
     private val api: TasksService,
     private val cloudToDataMapper: TaskCloudToDataMapper,
     private val dataToCloudMapper: TaskDataToCloudMapper

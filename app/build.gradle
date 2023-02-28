@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'androidx.navigation.safeargs'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
@@ -65,6 +66,9 @@ dependencies {
     // Mockk
     testImplementation "io.mockk:mockk:$mockk_version"
 
-    //coroutines
+//    // coroutines
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_test_version"
+
+    //coroutines test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
 }

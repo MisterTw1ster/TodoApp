@@ -2,11 +2,8 @@ package com.example.todoapp
 
 import android.app.Application
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.example.todolistsandtasks.di.app.AppComponent
-import com.example.todolistsandtasks.di.app.DaggerAppComponent
+import com.example.todoapp.di.app.AppComponent
+import com.example.todoapp.di.app.DaggerAppComponent
 
 class App : Application() {
 
@@ -27,4 +24,4 @@ val Context.appComponent: AppComponent
     }
 
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+//val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
