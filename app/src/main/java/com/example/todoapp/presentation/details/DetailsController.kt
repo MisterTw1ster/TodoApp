@@ -5,8 +5,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.fragment.findNavController
 import com.example.todoapp.databinding.FragmentDetailsBinding
+import com.example.todoapp.presentation.common.Navigation
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -14,13 +14,14 @@ import dagger.assisted.AssistedInject
 
 
 class DetailsController @AssistedInject constructor(
-    @Assisted("taskDetailsFragment")  private val fragmentContext: DetailsFragment,
+    @Assisted("taskDetailsFragment")  private val fragment: DetailsFragment,
     @Assisted("taskDetailsFragmentBinding") private val binding: FragmentDetailsBinding,
     @Assisted("taskDetailsLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("taskDetailsViewModel") private val viewModel: DetailsViewModel,
     @Assisted("taskDetailsArgs") private val args: DetailsFragmentArgs,
     @Assisted("taskDetailsSpinnerAdapter")private val spinnerAdapter: ArrayAdapter<String>,
     @Assisted("taskDetailsDatePicker")private val datePicker: MaterialDatePicker<Long>,
+    private val navigation: Navigation
 //    private val longDateToString: LongDateToString
 ) {
 
@@ -109,7 +110,7 @@ class DetailsController @AssistedInject constructor(
 
     private fun setupCloseScreen() {
         viewModel.observeIsClose(lifecycleOwner) { close ->
-            if (close) fragmentContext.findNavController().popBackStack()
+            if (close) navigation.closeDetailsFragment(fragment)
         }
     }
 
@@ -123,7 +124,7 @@ class DetailsController @AssistedInject constructor(
         }
         datePicker.addOnCancelListener {
         }
-        datePicker.show(fragmentContext.parentFragmentManager, datePicker.toString())
+        datePicker.show(fragment.parentFragmentManager, datePicker.toString())
     }
 
 }

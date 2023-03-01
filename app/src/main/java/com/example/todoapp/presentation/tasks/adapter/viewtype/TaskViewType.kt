@@ -1,15 +1,14 @@
 package com.example.todoapp.presentation.tasks.adapter.viewtype
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ItemTaskBinding
-import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.example.todoapp.presentation.tasks.adapter.BaseViewHolder
 import com.example.todoapp.presentation.tasks.adapter.Item
 import com.example.todoapp.presentation.tasks.adapter.ItemViewType
+import com.example.todoapp.presentation.tasks.models.TaskUI
 
 class TaskViewType(
     private val showDetails: (TaskUI) -> Unit,

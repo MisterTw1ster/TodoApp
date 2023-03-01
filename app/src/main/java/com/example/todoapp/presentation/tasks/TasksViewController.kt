@@ -1,12 +1,9 @@
 package com.example.todoapp.presentation.tasks
 
-import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.fragment.findNavController
-import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentTasksBinding
+import com.example.todoapp.presentation.common.Navigation
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
-import com.example.todoapp.presentation.tasks.models.StateTasksUI
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +13,8 @@ class TasksViewController @AssistedInject constructor(
     @Assisted("tasksFragmentBinding") private val binding: FragmentTasksBinding,
     @Assisted("tasksLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("tasksViewModel") private val viewModel: TasksViewModel,
-    @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter
+    @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter,
+    private val navigation: Navigation
 ) {
 
     @AssistedFactory
@@ -51,10 +49,8 @@ class TasksViewController @AssistedInject constructor(
             }
 
             binding.fabAddTask.setOnClickListener {
-                fragment.findNavController().navigate(
-                    R.id.action_tasks_to_detailsFragment,
-                )
-            }
+                navigation.newDetailsFragment(fragment)
+           }
 
             binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.saveSettingHideCompleted(isChecked)

@@ -24,4 +24,3 @@ val Context.appComponent: AppComponent
     }
 
 
-//val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
