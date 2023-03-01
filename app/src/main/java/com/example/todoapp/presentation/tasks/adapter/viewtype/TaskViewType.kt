@@ -58,17 +58,9 @@ class TaskViewHolder(
             ivImportanceTask.setBackgroundColor(item.color)
             tvDeadlineTask.text = item.deadlineText
 
-//            when (item.deadline) {
-//               0L -> binding.tvDeadlineTask.visibility = View.GONE
-//               else -> {
-//                   binding.tvDeadlineTask.text = item.deadline.toString()
-//                   binding.tvDeadlineTask.visibility = View.VISIBLE
-//                   binding.tvDeadlineTask.visibility = View.VISIBLE
-//               }
-//            }
-//            root.setOnClickListener {
-//                showDetails(item)
-//            }
+            root.setOnClickListener {
+                showDetails(item)
+            }
             cbIsDoneTask.setOnCheckedChangeListener { _, isChecked ->
                 setIsDone(item, isChecked)
             }

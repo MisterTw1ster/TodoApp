@@ -51,11 +51,8 @@ class TasksViewController @AssistedInject constructor(
             }
 
             binding.fabAddTask.setOnClickListener {
-                val bundle =
-                    bundleOf("taskID" to 0L)
                 fragment.findNavController().navigate(
                     R.id.action_tasks_to_detailsFragment,
-                    bundle
                 )
             }
 

@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_tasks" >
         <action
             android:id="@+id/action_tasks_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -21,6 +25,7 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="taskID"
+            android:defaultValue="0L"
             app:argType="long" />
     </fragment>
 </navigation>
