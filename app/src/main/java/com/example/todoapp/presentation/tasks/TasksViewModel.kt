@@ -48,7 +48,7 @@ class TasksViewModel(
             observeSettingHideCompletedUseCase().collect { isEnabled ->
                 communication.mapFilterCompleted(
                     StateSettingHideCompletedUI.Initial(
-                        isEnabled, ChooseStateShowOnlyNotDoneUI().map(isEnabled)
+                        isEnabled, ChooseStateHideCompletedTaskUI().map(isEnabled)
                     )
                 )
             }
@@ -82,7 +82,7 @@ class TasksViewModel(
     }
 }
 
-class ChooseStateShowOnlyNotDoneUI {
+class ChooseStateHideCompletedTaskUI {
     private val on: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.On }
     private val off: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.Off }
     fun map(source: Boolean): StateSettingHideCompletedUI = if (source) on else off

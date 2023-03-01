@@ -14,11 +14,10 @@ class ObserveTasksUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(): Flow<List<TaskDomain>> {
-//        repository.observeTasks()
         val tasksDomain = tasksRepository.observeTasks()
         val hideCompleted = settingsRepository.observeSettingHideCompleted()
         return tasksDomain.combine(hideCompleted) { tasks, filter ->
-            tasks.takeIf { filter }?.filter { !it.isDone } ?: tasks
+            tasks.takeIf { !filter }?.filter { !it.isDone } ?: tasks
         }
     }
 }
