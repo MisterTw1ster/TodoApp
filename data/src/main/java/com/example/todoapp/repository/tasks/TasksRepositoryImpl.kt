@@ -4,7 +4,6 @@ import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
-import com.example.todoapp.models.TaskData
 import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
 import com.example.todoapp.repository.TasksRepository
@@ -89,15 +88,11 @@ class TasksRepositoryImpl @Inject constructor(
                 if (cloudDataSource.deleteTask(task.id)) cacheDataSource.deleteTask(task.id)
             }
 
-            val editTasksData = cacheDataSource.fetchOutOfSyncEditTasks()
-            if (editTasksData.isNotEmpty() && cloudDataSource.editTasks(editTasksData)) {
-                editTasksData.forEach { task -> cacheDataSource.markAsSync(task.id) }
+            val outOfSyncTasksData = cacheDataSource.fetchOutOfSyncTasks()
+            if (outOfSyncTasksData.isNotEmpty() && cloudDataSource.saveTasks(outOfSyncTasksData)) {
+                outOfSyncTasksData.forEach { task -> cacheDataSource.markAsSync(task.id) }
             }
 
-            val newTasksData = cacheDataSource.fetchOutOfSyncNewTasks()
-            newTasksData.forEach { task ->
-                if (cloudDataSource.addTask(task) is TaskData) cacheDataSource.markAsSync(task.id)
-            }
         } catch (e: Exception) {
             stateCloud = 0
         }

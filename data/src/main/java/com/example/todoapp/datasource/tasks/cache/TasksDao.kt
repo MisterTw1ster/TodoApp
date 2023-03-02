@@ -32,9 +32,6 @@ interface TasksDao {
     @Query("SELECT * FROM tasks_table WHERE delete_after_sync == 1")
     fun fetchOutOfSyncMarkDeleteTasks(): List<TaskCache>
 
-    @Query("SELECT * FROM tasks_table WHERE is_sync == 0 AND created_at == changed_at")
-    fun fetchOutOfSyncNewTasks(): List<TaskCache>
-
-    @Query("SELECT * FROM tasks_table WHERE is_sync == 0 AND created_at != changed_at")
-    fun fetchOutOfSyncEditTasks(): List<TaskCache>
+    @Query("SELECT * FROM tasks_table WHERE is_sync == 0")
+    fun fetchOutOfSyncTasks(): List<TaskCache>
 }

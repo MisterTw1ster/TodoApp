@@ -36,11 +36,11 @@ class TasksCloudDataSourceImpl @Inject constructor(
         return true
     }
 
-    override suspend fun editTasks(tasks: List<TaskData>): Boolean {
+    override suspend fun saveTasks(tasks: List<TaskData>): Boolean {
         val tasksCloud = tasks.associate { task ->
             task.id.toString() to dataToCloudMapper.transform(task)
         }
-        api.editTasks(tasksCloud)
+        api.saveTasks(tasksCloud)
         return true
     }
 }

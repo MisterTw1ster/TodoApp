@@ -7,5 +7,5 @@ interface TasksCloudDataSource {
     suspend fun addTask(task: TaskData): TaskData
     suspend fun editTask(task: TaskData): TaskData
     suspend fun deleteTask(id: Long): Boolean
-    suspend fun editTasks(tasks: List<TaskData>): Boolean
+    suspend fun saveTasks(tasks: List<TaskData>): Boolean
 }

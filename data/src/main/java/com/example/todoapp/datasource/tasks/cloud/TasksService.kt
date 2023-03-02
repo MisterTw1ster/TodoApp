@@ -14,7 +14,7 @@ interface TasksService {
     suspend fun editTask(@Path("id") id: String, @Body task: TaskCloud): TaskCloud
 
     @PATCH("me/tasks.json")
-    suspend fun editTasks(@Body param: Map<String, TaskCloud>)
+    suspend fun saveTasks(@Body param: Map<String, TaskCloud>)
 
     @DELETE("me/tasks/{id}.json")
     suspend fun deleteTask(@Path("id") id: String)

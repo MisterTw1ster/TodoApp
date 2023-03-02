@@ -170,7 +170,7 @@ class TasksCloudDataSourceImplTest {
         }
 
         val expected = listOf(testTaskData(id = 1L), testTaskData(id = 2L))
-        val actual = testDataSource.editTasks(tasksData)
+        val actual = testDataSource.saveTasks(tasksData)
 
         assertEquals(expected, actual)
 
@@ -193,7 +193,7 @@ class TasksCloudDataSourceImplTest {
             throw NoInternetConnectionException()
         }
 
-        testDataSource.editTasks(tasksData)
+        testDataSource.saveTasks(tasksData)
 
     }
 

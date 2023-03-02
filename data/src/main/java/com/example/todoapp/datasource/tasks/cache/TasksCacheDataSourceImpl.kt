@@ -58,14 +58,9 @@ class TasksCacheDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchOutOfSyncNewTasks(): List<TaskData> {
-        return dao.fetchOutOfSyncNewTasks().map { taskCache ->
-            cacheToDataMapper.transform(taskCache)
-        }
-    }
 
-    override suspend fun fetchOutOfSyncEditTasks(): List<TaskData> {
-        return dao.fetchOutOfSyncEditTasks().map { taskCache ->
+    override suspend fun fetchOutOfSyncTasks(): List<TaskData> {
+        return dao.fetchOutOfSyncTasks().map { taskCache ->
             cacheToDataMapper.transform(taskCache)
         }
     }
