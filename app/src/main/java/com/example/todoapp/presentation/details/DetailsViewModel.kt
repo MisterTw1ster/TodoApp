@@ -5,7 +5,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todoapp.presentation.details.models.StateDeadlineUI
 import com.example.todoapp.usecase.AddTaskUseCase
+import com.example.todoapp.usecase.DeleteTaskByIdUseCase
 import com.example.todoapp.usecase.EditTaskUseCase
 import com.example.todoapp.usecase.GetTaskByIdUseCase
 import kotlinx.coroutines.Dispatchers
@@ -17,73 +19,62 @@ class DetailsViewModel(
     private val addTaskUseCase: AddTaskUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val getTaskByIDUseCase: GetTaskByIdUseCase,
-//    private val deleteTaskById: DeleteTaskByIdUseCase,
-//    private val longDateToString: LongDateToString
+    private val deleteTaskById: DeleteTaskByIdUseCase
 ) : ViewModel() {
 
     init {
-
-        if (taskId == 0L) {
-//            communicationDetails.mapDeadline(
-//                StateDeadlineUI.Initial(
-//                    false,
-//                    StateDeadlineUI.Off()
-//                )
-//            )
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var deadlineInit = NEW_TASK_DEADLINE
+            if (taskId != NEW_TASK_ID) {
                 val taskDomain = getTaskByIDUseCase(taskId)
-                communicationDetails.initTask(taskDomain)
+                with(taskDomain) {
+                    communicationDetails.mapTaskID(id)
+                    communicationDetails.mapText(text)
+                    communicationDetails.mapImportance(importance)
+                    deadlineInit = deadline
+
+                }
             }
+            communicationDetails.initDeadline(deadlineInit)
         }
     }
 
-//    fun observeStateDeadline(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) {
-//        communicationDetails.observeDeadline(owner, observer)
-//    }
 
-    fun observeIsClose(owner: LifecycleOwner, observer: Observer<Boolean>) {
-        communicationDetails.observeIsClose(owner, observer)
+    fun observeImportance(owner: LifecycleOwner, observer: Observer<String>) {
+        communicationDetails.observeImportance(owner, observer)
+    }
+
+    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        communicationDetails.observeCloseScreen(owner, observer)
+    }
+
+    fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) {
+        communicationDetails.observeDeadlineState(owner, observer)
     }
 
     fun observeText(owner: LifecycleOwner, observer: Observer<String>) {
         communicationDetails.observeText(owner, observer)
     }
 
-    fun observeImportance(owner: LifecycleOwner, observer: Observer<String>) {
-        communicationDetails.observeImportance(owner, observer)
-    }
-
-//    fun changeEnabled(enabled: Boolean) {
-//        communicationDetails.mapDeadline(
-//            if (enabled) StateDeadlineUI.On(
-//                "дата"
-//            ) else StateDeadlineUI.Off()
-//        )
-//    }
-
     fun saveTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val taskSaveParam = communicationDetails.getTaskDomainParams()
-//
-            val isDone = if (taskId == 0L) {
-//                val taskSaveParam = communicationDetails.mapValueToNewTask()
+            if (taskId == NEW_TASK_ID) {
                 addTaskUseCase(taskSaveParam)
             } else {
-//                val taskSaveParam = communicationDetails.mapValueToEditTask()
-//                editTaskUseCase(taskSaveParam)
+                editTaskUseCase(taskSaveParam)
             }
             closeScreen()
 //            if (isDone is TaskResult.Success) closeScreen()
         }
     }
 
-//    fun deleteTask() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val isDone = deleteTaskById(taskId)
-//            if (isDone) closeScreen()
-//        }
-//    }
+    fun deleteTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isDone = deleteTaskById(taskId)
+            if (isDone) closeScreen()
+        }
+    }
 
     @MainThread
     fun setTextTask(text: String) {
@@ -96,12 +87,17 @@ class DetailsViewModel(
     }
 
     @MainThread
-    fun setDeadlineTask(time: Long) {
+    fun setDeadlineTask(time: Long = 0L) {
+        communicationDetails.mapDeadline(time)
     }
 
     @MainThread
     fun closeScreen() {
-        communicationDetails.mapIsClose(true)
+        communicationDetails.mapCloseScreen(true)
     }
 
+    companion object {
+        private const val NEW_TASK_ID = 0L
+        private const val NEW_TASK_DEADLINE = 0L
+    }
 }

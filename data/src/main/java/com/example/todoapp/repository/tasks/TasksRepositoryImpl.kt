@@ -4,6 +4,7 @@ import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
 import com.example.todoapp.repository.TasksRepository
@@ -70,18 +71,32 @@ class TasksRepositoryImpl @Inject constructor(
         dataToDomainMapper.transform(taskDataFromCloud)
     }
 
+    override suspend fun deleteTaskById(id: Long): Boolean {
+        return try {
+            if (cloudDataSource.deleteTask(id)) cacheDataSource.deleteTask(id)
+            true
+        } catch (e: Exception) {
+            cacheDataSource.markDeleteAfterSync(id)
+            stateCloud = 0
+            false
+        }
+    }
+
     override suspend fun syncCacheToCloud() {
         try {
+            val markDeleteTasksData = cacheDataSource.fetchOutOfSyncMarkDeleteTasks()
+            markDeleteTasksData.forEach { task ->
+                if (cloudDataSource.deleteTask(task.id)) cacheDataSource.deleteTask(task.id)
+            }
+
             val editTasksData = cacheDataSource.fetchOutOfSyncEditTasks()
             if (editTasksData.isNotEmpty() && cloudDataSource.editTasks(editTasksData)) {
                 editTasksData.forEach { task -> cacheDataSource.markAsSync(task.id) }
             }
+
             val newTasksData = cacheDataSource.fetchOutOfSyncNewTasks()
-            if (newTasksData.isNotEmpty()) {
-                newTasksData.forEach { task ->
-                    cloudDataSource.addTask(task)
-                    cacheDataSource.markAsSync(task.id)
-                }
+            newTasksData.forEach { task ->
+                if (cloudDataSource.addTask(task) is TaskData) cacheDataSource.markAsSync(task.id)
             }
         } catch (e: Exception) {
             stateCloud = 0

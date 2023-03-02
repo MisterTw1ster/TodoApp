@@ -1,13 +1,11 @@
 package com.example.todoapp.presentation.tasks.mappers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.todoapp.R
 import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.models.TaskDomain
-import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.example.todoapp.presentation.common.LongDateToString
 import com.example.todoapp.presentation.common.ManageResources
+import com.example.todoapp.presentation.tasks.models.TaskUI
 import javax.inject.Inject
 
 @AppScope

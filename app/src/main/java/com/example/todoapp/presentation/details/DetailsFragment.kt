@@ -28,9 +28,12 @@ class DetailsFragment : Fragment() {
     private var detailsController: DetailsController? = null
 
     @Inject
+    lateinit var communicationDetails: CommunicationDetails.Base.Factory
+
+    @Inject
     lateinit var detailsViewModelFactory: DetailsViewModelFactory.Factory
     private val viewModel: DetailsViewModel by viewModels {
-        detailsViewModelFactory.create(args.taskID, CommunicationDetails.Base())
+        detailsViewModelFactory.create(args.taskID, communicationDetails.create())
     }
 
     override fun onAttach(context: Context) {
@@ -63,8 +66,6 @@ class DetailsFragment : Fragment() {
             .datePicker()
             .setTitleText("Select date of deadline")
             .build()
-
-//        val longDateToString = LongDateToString()
 
         detailsController =
             detailsControllerFactory.create(

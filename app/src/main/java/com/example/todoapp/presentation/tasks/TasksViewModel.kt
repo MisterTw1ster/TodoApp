@@ -29,7 +29,6 @@ class TasksViewModel(
     init {
         viewModelScope.launch((Dispatchers.IO)) {
             communication.mapTasks(StateTasksUI.Loading)
-            delay(1000)
             observeTasksUseCase().collect { tasksDomain ->
                 val tasksUI = tasksDomain.map { taskDomain -> domainToUIMapper.transform(taskDomain)}
                 communication.mapTasks(ChooseStateTaskUI(tasksUI).map())
@@ -38,7 +37,6 @@ class TasksViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             communication.mapTitle(StateTitleUI.Loading)
-            delay(1000)
             observeCompletedTasksUseCase().collect { completedTasks ->
                 communication.mapTitle(ChooseStateTitleUI(completedTasks).map())
             }
@@ -48,7 +46,7 @@ class TasksViewModel(
             observeSettingHideCompletedUseCase().collect { isEnabled ->
                 communication.mapFilterCompleted(
                     StateSettingHideCompletedUI.Initial(
-                        isEnabled, ChooseStateHideCompletedTaskUI().map(isEnabled)
+                        isEnabled, ChooseStateHideCompletedTaskUI(isEnabled).map()
                     )
                 )
             }
@@ -82,10 +80,11 @@ class TasksViewModel(
     }
 }
 
-class ChooseStateHideCompletedTaskUI {
+
+class ChooseStateHideCompletedTaskUI(private val source: Boolean) {
     private val on: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.On }
     private val off: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.Off }
-    fun map(source: Boolean): StateSettingHideCompletedUI = if (source) on else off
+    fun map(): StateSettingHideCompletedUI = if (source) on else off
 }
 
 class ChooseStateTaskUI(private val source: List<TaskUI>) {

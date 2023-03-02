@@ -3,6 +3,7 @@ package com.example.todoapp.presentation.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.usecase.AddTaskUseCase
+import com.example.todoapp.usecase.DeleteTaskByIdUseCase
 import com.example.todoapp.usecase.EditTaskUseCase
 import com.example.todoapp.usecase.GetTaskByIdUseCase
 import dagger.assisted.Assisted
@@ -15,8 +16,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
     private val addTaskUseCase: AddTaskUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val getTaskById: GetTaskByIdUseCase,
-//    private val deleteTaskById: DeleteTaskByIdUseCase,
-//    private val longDateToString: LongDateToString
+    private val deleteTaskById: DeleteTaskByIdUseCase
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -27,8 +27,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
             addTaskUseCase,
             editTaskUseCase,
             getTaskById,
-//            deleteTaskById,
-//            longDateToString
+            deleteTaskById
         ) as T
     }
 

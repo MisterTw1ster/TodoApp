@@ -4,9 +4,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
-import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 
 
 sealed class StateTasksUI {

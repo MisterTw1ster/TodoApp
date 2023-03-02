@@ -10,18 +10,15 @@ import com.example.todoapp.presentation.tasks.models.StateTitleUI
 interface CommunicationTasks {
 
     fun observeTasks(owner: LifecycleOwner, observer: Observer<StateTasksUI>)
-//    fun observeStatus(owner: LifecycleOwner, observer: Observer<StateErrorUI>)
     fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>)
     fun observeTitle(owner: LifecycleOwner, observer: Observer<StateTitleUI>)
 
     fun mapTasks(source: StateTasksUI)
-//    fun mapStatus(source: StateErrorUI)
     fun mapFilterCompleted(source: StateSettingHideCompletedUI)
     fun mapTitle(source: StateTitleUI)
 
     class Base (
         private val tasks: MutableLiveData<StateTasksUI> = MutableLiveData(),
-//        private val status: MutableLiveData<StateErrorUI> = MutableLiveData(StateErrorUI.Hide),
         private val filterCompleted: MutableLiveData<StateSettingHideCompletedUI> = MutableLiveData(),
         private val title: MutableLiveData<StateTitleUI> = MutableLiveData()
     ): CommunicationTasks {
@@ -30,10 +27,6 @@ interface CommunicationTasks {
             tasks.observe(owner, observer)
         }
 
-//        override fun observeStatus(owner: LifecycleOwner, observer: Observer<StateErrorUI>) {
-//            status.observe(owner, observer)
-//        }
-//
         override fun observeFilterCompleted(
             owner: LifecycleOwner,
             observer: Observer<StateSettingHideCompletedUI>
@@ -49,14 +42,10 @@ interface CommunicationTasks {
             tasks.postValue(source)
         }
 
-//        override fun mapStatus(source: StateErrorUI) {
-//            status.postValue(source)
-//        }
-//
         override fun mapFilterCompleted(source: StateSettingHideCompletedUI) {
             filterCompleted.postValue(source)
         }
-//
+
         override fun mapTitle(source: StateTitleUI) {
             title.postValue(source)
         }

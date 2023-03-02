@@ -1,9 +1,9 @@
 package com.example.todoapp.datasource.tasks.cloud
 
-import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskCloudToDataMapper
 import com.example.todoapp.datasource.tasks.cloud.mappers.TaskDataToCloudMapper
 import com.example.todoapp.di.DataScope
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.repository.tasks.TasksCloudDataSource
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class TasksCloudDataSourceImpl @Inject constructor(
 
     override suspend fun addTask(task: TaskData): TaskData {
         val taskCloud = dataToCloudMapper.transform(task)
-        val taskCloudNew = api.addTask(taskCloud)
+        val taskCloudNew = api.addTask(mapOf(taskCloud.id to taskCloud))
         return cloudToDataMapper.transform(taskCloudNew)
     }
 
@@ -31,12 +31,16 @@ class TasksCloudDataSourceImpl @Inject constructor(
         return cloudToDataMapper.transform(taskCloudNew)
     }
 
+    override suspend fun deleteTask(id: Long): Boolean {
+        api.deleteTask(id.toString())
+        return true
+    }
+
     override suspend fun editTasks(tasks: List<TaskData>): Boolean {
         val tasksCloud = tasks.associate { task ->
             task.id.toString() to dataToCloudMapper.transform(task)
         }
         api.editTasks(tasksCloud)
         return true
-//        return tasksCloudNew.map { task -> cloudToDataMapper.transform(task) }
     }
 }

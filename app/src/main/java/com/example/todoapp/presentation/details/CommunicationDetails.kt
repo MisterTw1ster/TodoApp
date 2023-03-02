@@ -3,35 +3,78 @@ package com.example.todoapp.presentation.details
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
+import com.example.todoapp.presentation.common.LongDateToString
 import com.example.todoapp.presentation.details.models.StateDeadlineUI
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
 interface CommunicationDetails {
 
-    fun observeDeadline(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
+    fun getTaskDomainParams(): TaskDomainParams
     fun observeText(owner: LifecycleOwner, observer: Observer<String>)
-    fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
-    fun observeIsClose(owner: LifecycleOwner, observer: Observer<Boolean>)
 
-    fun initTask(task: TaskDomain)
-    fun mapDeadline(source: StateDeadlineUI)
+    fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
+    fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
+    fun mapTaskID(source: Long)
+
     fun mapText(source: String)
     fun mapImportance(source: String)
-    fun mapIsClose(source: Boolean)
-    fun getTaskDomainParams(): TaskDomainParams
-//    fun mapValueToEditTask(): EditTaskDomainParam
+    fun mapDeadline(source: Long)
+    fun initDeadline(source: Long)
 
-    class Base (
-        private val taskId: MutableLiveData<Long> = MutableLiveData(0L),
-        private val deadline: MutableLiveData<StateDeadlineUI> = MutableLiveData(),
-        private val text: MutableLiveData<String> = MutableLiveData(""),
-        private val importance: MutableLiveData<String> = MutableLiveData("low"),
-        private val isClose: MutableLiveData<Boolean> = MutableLiveData(false)
+    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
+    fun mapCloseScreen(source: Boolean)
+
+    class Base @AssistedInject constructor(
+        @Assisted("taskId") private val taskId: MutableLiveData<Long> = MutableLiveData(0L),
+        @Assisted("deadline") private val deadline: MutableLiveData<Long> = MutableLiveData(0L),
+        @Assisted("text") private val text: MutableLiveData<String> = MutableLiveData(""),
+        @Assisted("importance") private val importance: MutableLiveData<String> = MutableLiveData("low"),
+        @Assisted("isDone") private val isDone: MutableLiveData<Boolean> = MutableLiveData(false),
+        @Assisted("isClose") private val isClose: MutableLiveData<Boolean> = MutableLiveData(false),
+        private val longDateToString: LongDateToString
     ) : CommunicationDetails {
 
-        override fun observeDeadline(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) =
-            deadline.observe(owner, observer)
+        @AssistedFactory
+        interface Factory {
+            fun create(
+                @Assisted("taskId") taskId: MutableLiveData<Long> = MutableLiveData(0L),
+                @Assisted("deadline") deadline: MutableLiveData<Long> = MutableLiveData(0L),
+                @Assisted("text") text: MutableLiveData<String> = MutableLiveData(""),
+                @Assisted("importance") importance: MutableLiveData<String> = MutableLiveData("low"),
+                @Assisted("isDone") isDone: MutableLiveData<Boolean> = MutableLiveData(false),
+                @Assisted("isClose") isClose: MutableLiveData<Boolean> = MutableLiveData(false),
+            ): Base
+        }
+
+        private val deadlineState: MutableLiveData<StateDeadlineUI> = MutableLiveData(
+//            StateDeadlineUI.Initial(false, StateDeadlineUI.Off)
+        )
+
+        override fun initDeadline(source: Long) {
+            deadline.postValue(source)
+            val time = longDateToString.ddMMMMyyyy(source)
+            val initStateDeadline =
+                if (time != null) StateDeadlineUI.On(time) else StateDeadlineUI.Off
+            deadlineState.postValue(
+                StateDeadlineUI.Initial(source != 0L, initStateDeadline)
+            )
+        }
+
+        override fun getTaskDomainParams(): TaskDomainParams {
+            return TaskDomainParams(
+                id = taskId.value!!, // TODO
+                text = text.value!!, // TODO
+                importance = importance.value!!, // TODO
+                deadline = deadline.value!!, // TODO
+                isDone = isDone.value!! // TODO
+            )
+        }
+
+        override fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) =
+            deadlineState.observe(owner, observer)
 
         override fun observeText(owner: LifecycleOwner, observer: Observer<String>) {
             text.observe(owner, observer)
@@ -41,24 +84,18 @@ interface CommunicationDetails {
             importance.observe(owner, observer)
         }
 
-        override fun observeIsClose(owner: LifecycleOwner, observer: Observer<Boolean>) {
-            isClose.observe(owner, observer)
-        }
-
-        override fun initTask(task: TaskDomain) {
-            taskId.postValue(task.id)
-            text.postValue(task.text)
-            importance.postValue(task.importance)
-            val time = task.deadline.toString()//longDateToString.ddMMMMyyyy(task.deadline) // TODO
-            val initStateDeadline =
-                if (task.deadline != 0L) StateDeadlineUI.On(time) else StateDeadlineUI.Off()
-            deadline.postValue(
-                StateDeadlineUI.Initial(task.deadline != 0L, initStateDeadline)
-            )
-        }
-
-        override fun mapDeadline(source: StateDeadlineUI) {
+        override fun mapDeadline(source: Long) {
             deadline.postValue(source)
+            val deadlineText = longDateToString.ddMMMMyyyy(source)
+            if (deadlineText == null) {
+                deadlineState.postValue((StateDeadlineUI.Off))
+            } else {
+                deadlineState.postValue(StateDeadlineUI.On(deadlineText))
+            }
+        }
+
+        override fun mapTaskID(source: Long) {
+            taskId.postValue(source)
         }
 
         override fun mapText(source: String) {
@@ -69,31 +106,19 @@ interface CommunicationDetails {
             importance.postValue(source)
         }
 
-        override fun mapIsClose(source: Boolean) {
+        override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
+            isClose.observe(owner, observer)
+        }
+
+        override fun mapCloseScreen(source: Boolean) {
             isClose.postValue(source)
         }
 
-        override fun getTaskDomainParams(): TaskDomainParams {
-            return TaskDomainParams(
-                id = taskId.value!!,
-                text = text.value!!, // TODO
-                importance = importance.value!!, // TODO
-                deadline = 0L, // TODO
-                isDone = false
-            )
-        }
-//
-//        override fun mapValueToEditTask(): EditTaskDomainParam {
-//            return EditTaskDomainParam(
-//                id = taskId.value!!, // TODO
-//                text = text.value!!, // TODO
-//                importance = importance.value!!, // TODO
-//                deadline = 0L, //deadline.value!!, // TODO
-//                isDone = false,
-//                color = "FFFFFF",
-//                isFavorite = false
-//            )
-//        }
-
     }
+}
+
+class ChooseStateDeadlineTask(private val source: String) {
+    private val on: StateDeadlineUI by lazy { StateDeadlineUI.On(source) }
+    private val off: StateDeadlineUI by lazy { StateDeadlineUI.Off }
+    fun map(): StateDeadlineUI = if (source.isEmpty()) off else on
 }

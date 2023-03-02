@@ -39,8 +39,23 @@ class TasksCacheDataSourceImpl @Inject constructor(
         return task
     }
 
+    override suspend fun deleteTask(id: Long): Boolean {
+        dao.deleteTask(id)
+        return true
+    }
+
     override suspend fun markAsSync(id: Long) {
         dao.markIsSyncTask(id)
+    }
+
+    override suspend fun markDeleteAfterSync(id: Long) {
+        dao.markDeleteAfterSyncTask(id)
+    }
+
+    override suspend fun fetchOutOfSyncMarkDeleteTasks(): List<TaskData> {
+        return dao.fetchOutOfSyncMarkDeleteTasks().map { taskCache ->
+            cacheToDataMapper.transform(taskCache)
+        }
     }
 
     override suspend fun fetchOutOfSyncNewTasks(): List<TaskData> {

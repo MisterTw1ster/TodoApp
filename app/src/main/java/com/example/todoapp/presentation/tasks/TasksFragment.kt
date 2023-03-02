@@ -73,6 +73,7 @@ class TasksFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        tasksViewController = null
         binding = null
     }
 

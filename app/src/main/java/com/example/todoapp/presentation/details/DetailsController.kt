@@ -7,6 +7,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentDetailsBinding
 import com.example.todoapp.presentation.common.Navigation
+import com.example.todoapp.presentation.details.models.StateDeadlineUI
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -22,7 +23,6 @@ class DetailsController @AssistedInject constructor(
     @Assisted("taskDetailsSpinnerAdapter")private val spinnerAdapter: ArrayAdapter<String>,
     @Assisted("taskDetailsDatePicker")private val datePicker: MaterialDatePicker<Long>,
     private val navigation: Navigation
-//    private val longDateToString: LongDateToString
 ) {
 
     @AssistedFactory
@@ -42,8 +42,8 @@ class DetailsController @AssistedInject constructor(
         setupToolbar()
         setupText()
         setupImportance()
-//        setupDeadline()
-//        setupDelete()
+        setupDeadline()
+        setupDelete()
         setupCloseScreen()
     }
 
@@ -89,36 +89,42 @@ class DetailsController @AssistedInject constructor(
             }
     }
 
-//    private fun setupDeadline() {
-//        viewModel.observeStateDeadline(lifecycleOwner) { state ->
-//            state.apply(binding.tvDeadlineDate, binding.smDeadlineSwitch)
+    private fun setupDeadline() {
+//        viewModel.observeDeadline(lifecycleOwner) {
+//            binding.tvDeadlineDate.text = it.toString()
+//        }
+        viewModel.observeDeadlineState(lifecycleOwner) { state ->
+            state.apply(binding.tvDeadlineDate, binding.smDeadlineSwitch)
 //            if (state is StateDeadlineUI.On) showDatePicker(datePicker)
-//        }
-//
-//        binding.smDeadlineSwitch.setOnCheckedChangeListener { _, isChecked ->
-//            viewModel.changeEnabled(isChecked)
-//        }
-//    }
+        }
 
-//    private fun setupDelete() {
-//        if (args.taskID == null) binding.llDeleteTaskButton.visibility = View.INVISIBLE
-//
-//        binding.llDeleteTaskButton.setOnClickListener {
-//            viewModel.deleteTask()
-//        }
-//    }
+
+        binding.smDeadlineSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) showDatePicker(datePicker) else viewModel.setDeadlineTask()
+//            viewModel.changeEnabled(isChecked)
+        }
+    }
+
+    private fun setupDelete() {
+        if (args.taskID == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
+
+        binding.llDeleteTaskButton.setOnClickListener {
+            viewModel.deleteTask()
+        }
+    }
 
     private fun setupCloseScreen() {
-        viewModel.observeIsClose(lifecycleOwner) { close ->
+        viewModel.observeCloseScreen(lifecycleOwner) { close ->
             if (close) navigation.closeDetailsFragment(fragment)
         }
     }
 
     private fun showDatePicker(datePicker: MaterialDatePicker<Long>) {
         datePicker.addOnPositiveButtonClickListener { deadline ->
-            if (deadline is Long) {
-                viewModel.setDeadlineTask(deadline)
-            }
+            viewModel.setDeadlineTask(deadline)
+//            if (deadline is Long) {
+//                viewModel.setDeadlineTask(deadline)
+//            }
         }
         datePicker.addOnNegativeButtonClickListener {
         }

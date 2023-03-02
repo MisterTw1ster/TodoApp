@@ -8,8 +8,12 @@ interface TasksCacheDataSource {
     suspend fun getTaskById(id: Long): TaskData
     suspend fun addTask(task: TaskData): TaskData
     suspend fun editTask(task: TaskData): TaskData
+    suspend fun deleteTask(id: Long): Boolean
 
     suspend fun markAsSync(id: Long)
+    suspend fun markDeleteAfterSync(id: Long)
+
+    suspend fun fetchOutOfSyncMarkDeleteTasks(): List<TaskData>
     suspend fun fetchOutOfSyncNewTasks(): List<TaskData>
     suspend fun fetchOutOfSyncEditTasks(): List<TaskData>
 

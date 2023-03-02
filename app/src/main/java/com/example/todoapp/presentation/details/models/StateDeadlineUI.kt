@@ -17,20 +17,16 @@ sealed class StateDeadlineUI {
         }
     }
 
-    abstract class Abstract(
-        private val visibility: Int,
-        private val deadlineText: String
-        ) : StateDeadlineUI() {
+    class On(private val deadlineText: String) : StateDeadlineUI() {
         override fun apply(textView: TextView, compoundButton: CompoundButton) {
-            textView.visibility = visibility
+            textView.visibility = View.VISIBLE
             textView.text = deadlineText
         }
     }
+    object Off : StateDeadlineUI() {
+        override fun apply(textView: TextView, compoundButton: CompoundButton) {
+            textView.visibility = View.GONE
+        }
 
-    class On(deadlineText: String) : Abstract(View.VISIBLE, deadlineText)
-    class Off : Abstract(View.GONE, DEFAULT_TEXT_DEADLINE)
-
-    companion object {
-        private const val DEFAULT_TEXT_DEADLINE = "Выбрать дату"
-    }
+}
 }
