@@ -17,12 +17,12 @@ interface CommunicationDetails {
 
     fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
     fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
-    fun mapTaskID(source: Long)
 
+    fun mapTaskID(source: Long)
     fun mapText(source: String)
     fun mapImportance(source: String)
-    fun mapDeadline(source: Long)
     fun initDeadline(source: Long)
+    fun mapDeadline(source: Long)
 
     fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
     fun mapCloseScreen(source: Boolean)
@@ -49,19 +49,7 @@ interface CommunicationDetails {
             ): Base
         }
 
-        private val deadlineState: MutableLiveData<StateDeadlineUI> = MutableLiveData(
-//            StateDeadlineUI.Initial(false, StateDeadlineUI.Off)
-        )
-
-        override fun initDeadline(source: Long) {
-            deadline.postValue(source)
-            val time = longDateToString.ddMMMMyyyy(source)
-            val initStateDeadline =
-                if (time != null) StateDeadlineUI.On(time) else StateDeadlineUI.Off
-            deadlineState.postValue(
-                StateDeadlineUI.Initial(source != 0L, initStateDeadline)
-            )
-        }
+        private val deadlineState: MutableLiveData<StateDeadlineUI> = MutableLiveData()
 
         override fun getTaskDomainParams(): TaskDomainParams {
             return TaskDomainParams(
@@ -84,16 +72,6 @@ interface CommunicationDetails {
             importance.observe(owner, observer)
         }
 
-        override fun mapDeadline(source: Long) {
-            deadline.postValue(source)
-            val deadlineText = longDateToString.ddMMMMyyyy(source)
-            if (deadlineText == null) {
-                deadlineState.postValue((StateDeadlineUI.Off))
-            } else {
-                deadlineState.postValue(StateDeadlineUI.On(deadlineText))
-            }
-        }
-
         override fun mapTaskID(source: Long) {
             taskId.postValue(source)
         }
@@ -106,6 +84,26 @@ interface CommunicationDetails {
             importance.postValue(source)
         }
 
+        override fun initDeadline(source: Long) {
+            deadline.postValue(source)
+            val time = longDateToString.ddMMMMyyyy(source)
+            val initStateDeadline =
+                if (time != null) StateDeadlineUI.On(time) else StateDeadlineUI.Off
+            deadlineState.postValue(
+                StateDeadlineUI.Initial(source != 0L, initStateDeadline)
+            )
+        }
+
+        override fun mapDeadline(source: Long) {
+            deadline.postValue(source)
+            val deadlineText = longDateToString.ddMMMMyyyy(source)
+            if (deadlineText == null) {
+                deadlineState.postValue((StateDeadlineUI.Off))
+            } else {
+                deadlineState.postValue(StateDeadlineUI.On(deadlineText))
+            }
+        }
+
         override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
             isClose.observe(owner, observer)
         }
@@ -115,10 +113,4 @@ interface CommunicationDetails {
         }
 
     }
-}
-
-class ChooseStateDeadlineTask(private val source: String) {
-    private val on: StateDeadlineUI by lazy { StateDeadlineUI.On(source) }
-    private val off: StateDeadlineUI by lazy { StateDeadlineUI.Off }
-    fun map(): StateDeadlineUI = if (source.isEmpty()) off else on
 }

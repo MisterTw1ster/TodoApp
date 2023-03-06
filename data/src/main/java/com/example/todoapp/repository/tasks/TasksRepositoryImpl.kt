@@ -1,5 +1,6 @@
 package com.example.todoapp.repository.tasks
 
+import android.content.Context
 import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.mappers.TaskDataToDomainMapper
@@ -17,13 +18,14 @@ class TasksRepositoryImpl @Inject constructor(
     private val cloudDataSource: TasksCloudDataSource,
     private val dataToDomainMapper: TaskDataToDomainMapper,
     private val domainParamsToDataMapper: TaskDomainParamsToDataMapper,
-    private val handleDataRequest: HandleDataRequest
+    private val handleDataRequest: HandleDataRequest,
+    private val context: Context
 ): TasksRepository {
     private var stateCloud: Int = 0
 
     override suspend fun observeTasks(): Flow<List<TaskDomain>> {
-        syncCacheToCloud()
-
+//        syncCacheToCloud()
+//        sync()
         return cacheDataSource.observeTasks().map { tasks ->
             tasks.map { task ->
                 dataToDomainMapper.transform(task)
@@ -96,6 +98,23 @@ class TasksRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             stateCloud = 0
         }
+    }
+
+    fun sync() {
+//
+//        val workManager = WorkManager.getInstance(context.applicationContext)
+////         val workManager = WorkManager.initialize(
+////            context.applicationContext,
+////            Configuration.Builder().setWorkerFactory(syncTasksWorkerFactory).build()
+////        )
+//
+//        workManager.enqueueUniquePeriodicWork(
+////        workManager.enqueueUniqueWork(
+//            SyncTasksWorker.WORK_NAME,
+//            ExistingPeriodicWorkPolicy.REPLACE,
+////            ExistingWorkPolicy.REPLACE,
+//            SyncTasksWorker.makeRequest()
+//        )
     }
 
 }

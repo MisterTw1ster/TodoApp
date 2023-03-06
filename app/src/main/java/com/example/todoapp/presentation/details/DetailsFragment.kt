@@ -18,9 +18,6 @@ import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
 
-    lateinit var binding: FragmentDetailsBinding
-    private val args by navArgs<DetailsFragmentArgs>()
-
     private lateinit var taskDetailsComponent: DetailsFragmentComponent
 
     @Inject
@@ -36,6 +33,9 @@ class DetailsFragment : Fragment() {
         detailsViewModelFactory.create(args.taskID, communicationDetails.create())
     }
 
+    var binding: FragmentDetailsBinding? = null
+    private val args by navArgs<DetailsFragmentArgs>()
+
     override fun onAttach(context: Context) {
         taskDetailsComponent =
             context.appComponent.detailsFragmentComponent().create()
@@ -48,7 +48,7 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root ?: throw IllegalArgumentException("Layout not found: $inflater")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,7 +70,7 @@ class DetailsFragment : Fragment() {
         detailsController =
             detailsControllerFactory.create(
                 this,
-                binding,
+                binding!!,
                 viewLifecycleOwner,
                 viewModel,
                 args,
@@ -80,6 +80,12 @@ class DetailsFragment : Fragment() {
         detailsController?.apply {
             setupViews()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        detailsController = null
+        binding = null
     }
 
 }

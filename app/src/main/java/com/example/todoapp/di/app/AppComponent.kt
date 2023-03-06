@@ -24,4 +24,5 @@ interface AppComponent {
     fun inject(app: App)
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
     fun detailsFragmentComponent(): DetailsFragmentComponent.Factory
+
 }

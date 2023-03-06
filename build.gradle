@@ -17,6 +17,7 @@ buildscript {
     ext.fragment_ktx_version = "1.5.5"
     ext.dagger_version = "2.43.2"
     ext.datastore_version = "1.0.0"
+    ext.work_runtime_version = "2.7.1"
 
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"

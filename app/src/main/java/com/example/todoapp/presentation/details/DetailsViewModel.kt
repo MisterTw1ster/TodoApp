@@ -65,14 +65,13 @@ class DetailsViewModel(
                 editTaskUseCase(taskSaveParam)
             }
             closeScreen()
-//            if (isDone is TaskResult.Success) closeScreen()
         }
     }
 
     fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val isDone = deleteTaskById(taskId)
-            if (isDone) closeScreen()
+            deleteTaskById(taskId)
+            closeScreen()
         }
     }
 
@@ -101,3 +100,4 @@ class DetailsViewModel(
         private const val NEW_TASK_DEADLINE = 0L
     }
 }
+

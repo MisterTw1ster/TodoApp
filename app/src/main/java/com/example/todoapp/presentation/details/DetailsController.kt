@@ -90,18 +90,13 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupDeadline() {
-//        viewModel.observeDeadline(lifecycleOwner) {
-//            binding.tvDeadlineDate.text = it.toString()
-//        }
         viewModel.observeDeadlineState(lifecycleOwner) { state ->
             state.apply(binding.tvDeadlineDate, binding.smDeadlineSwitch)
-//            if (state is StateDeadlineUI.On) showDatePicker(datePicker)
         }
 
 
         binding.smDeadlineSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) showDatePicker(datePicker) else viewModel.setDeadlineTask()
-//            viewModel.changeEnabled(isChecked)
         }
     }
 
@@ -122,9 +117,6 @@ class DetailsController @AssistedInject constructor(
     private fun showDatePicker(datePicker: MaterialDatePicker<Long>) {
         datePicker.addOnPositiveButtonClickListener { deadline ->
             viewModel.setDeadlineTask(deadline)
-//            if (deadline is Long) {
-//                viewModel.setDeadlineTask(deadline)
-//            }
         }
         datePicker.addOnNegativeButtonClickListener {
         }
