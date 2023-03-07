@@ -8,14 +8,15 @@ import androidx.work.WorkerParameters
 import com.example.todoapp.repository.TasksRepository
 import java.util.concurrent.TimeUnit
 
-class SyncTasksWorker (
+class SyncTasksWorker(
     context: Context,
     workerParameters: WorkerParameters
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result = try {
-        val repository = (applicationContext as ProvidePeriodicRepository).providePeriodicRepository()
-        repository.syncCacheToCloud()
+//        val repository =
+//            (applicationContext as ProvidePeriodicRepository).providePeriodicRepository()
+//        repository.syncCacheToCloud()
         Result.success()
     } catch (e: Exception) {
         Result.retry()
@@ -23,8 +24,9 @@ class SyncTasksWorker (
 
     companion object {
         const val WORK_NAME = "SyncTasksWorker"
-          fun makeRequest(): PeriodicWorkRequest {
-            return PeriodicWorkRequestBuilder<SyncTasksWorker>(15, TimeUnit.MINUTES).build()
+        private const val REPEAT_INTERVAL = 15L
+        fun makeRequest(): PeriodicWorkRequest {
+            return PeriodicWorkRequestBuilder<SyncTasksWorker>(REPEAT_INTERVAL, TimeUnit.MINUTES).build()
         }
     }
 }

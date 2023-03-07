@@ -6,12 +6,12 @@ import com.example.todoapp.datasource.tasks.cloud.TasksCloudDataSourceImpl
 import com.example.todoapp.exception.HandleDomainError
 import com.example.todoapp.exception.HandleError
 import com.example.todoapp.repository.SettingsRepository
-import com.example.todoapp.repository.tasks.TasksCacheDataSource
-import com.example.todoapp.repository.tasks.TasksCloudDataSource
 import com.example.todoapp.repository.TasksRepository
 import com.example.todoapp.repository.settings.SettingsCacheDataSource
 import com.example.todoapp.repository.settings.SettingsRepositoryImpl
-import com.example.todoapp.repository.tasks.TasksRepositoryImpl
+import com.example.todoapp.repository.tasks.TasksCacheDataSource
+import com.example.todoapp.repository.tasks.TasksCloudDataSource
+import com.example.todoapp.repository.tasks.TasksRepositoryImplNew
 import dagger.Binds
 import dagger.Module
 
@@ -30,7 +30,7 @@ interface DataBindModule {
 
     @Binds
     fun bindTasksRepositoryImpl_to_TasksRepository(
-        tasksRepositoryImpl: TasksRepositoryImpl
+        tasksRepositoryImpl: TasksRepositoryImplNew
     ): TasksRepository
 
     @Binds

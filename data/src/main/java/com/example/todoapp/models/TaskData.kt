@@ -6,6 +6,9 @@ data class TaskData(
     val importance: String,
     val deadline: Long,
     val isDone: Boolean,
-    val createdAt: Long = 0L,
-    val changedAt: Long = 0L
+    val createdAt: Long,
+    val changedAt: Long,
+    val outOfSyncNew: Boolean,
+    val outOfSyncEdit: Boolean,
+    val outOfSyncDelete: Boolean
 )

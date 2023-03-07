@@ -1,7 +1,7 @@
 package com.example.todoapp.datasource.tasks.cache.mappers
 
-import com.example.todoapp.models.TaskData
 import com.example.todoapp.datasource.tasks.cache.TaskCache
+import com.example.todoapp.models.TaskData
 import javax.inject.Inject
 
 class TaskDataToCacheMapper @Inject constructor(){
@@ -14,6 +14,9 @@ class TaskDataToCacheMapper @Inject constructor(){
             isDone = task.isDone,
             createdAt = task.createdAt,
             changedAt = task.changedAt,
+            outOfSyncNew = task.outOfSyncNew,
+            outOfSyncEdit = task.outOfSyncEdit,
+            outOfSyncDelete = task.outOfSyncDelete
         )
     }
 }

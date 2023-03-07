@@ -13,7 +13,10 @@ class TaskCloudToDataMapper @Inject constructor(){
             deadline = task.deadline,
             isDone = task.isDone,
             createdAt = task.createdAt,
-            changedAt = task.changedAt
+            changedAt = task.changedAt,
+            outOfSyncNew = false,
+            outOfSyncEdit = false,
+            outOfSyncDelete = false
         )
     }
 }
