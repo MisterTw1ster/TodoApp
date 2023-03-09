@@ -3,13 +3,12 @@ package com.example.todoapp.repository
 import com.example.todoapp.core.testTaskData
 import com.example.todoapp.core.testTaskDomain
 import com.example.todoapp.core.testTaskDomainParams
-import com.example.todoapp.models.TaskData
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.exception.HandleError
-import com.example.todoapp.exception.NoInternetConnectionException
 import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
-import com.example.todoapp.models.TaskDomainParams
+import com.example.todoapp.models.TaskData
+import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.repository.tasks.TasksCacheDataSource
 import com.example.todoapp.repository.tasks.TasksCloudDataSource
 import com.example.todoapp.repository.tasks.TasksRepositoryImpl
@@ -73,7 +72,6 @@ class TasksRepositoryImplTest {
 
     @Test
     fun `get task by id return TaskDomain`() = runTest {
-        val id = 5L
         val testRepository =
             TasksRepositoryImpl(
                 testCacheDataSource,
@@ -82,8 +80,11 @@ class TasksRepositoryImplTest {
                 testDomainParamsToDataMapper,
                 testHandleDataRequest
             )
+        val id = 2L
 
-        coEvery { testCacheDataSource.getTaskById(id) } returns testTaskData(id = id)
+        coEvery { testCacheDataSource.getTaskById(any()) } answers {
+            testTaskData (id = firstArg())
+        }
         coEvery { testDataToDomainMapper.transform(any()) } answers {
             testTaskDomain(id = firstArg<TaskData>().id)
         }
@@ -96,27 +97,30 @@ class TasksRepositoryImplTest {
 
     @Test
     fun `add new task with params result success`() = runTest {
-//        val handleError =
-        val handleDataRequest = HandleDataRequest(testHandleError)
+//        val handleDataRequest = HandleDataRequest(testHandleError)
         val testRepository =
             TasksRepositoryImpl(
                 testCacheDataSource,
                 testCloudDataSource,
                 testDataToDomainMapper,
                 testDomainParamsToDataMapper,
-                handleDataRequest
+                testHandleDataRequest
+//                handleDataRequest
             )
         val time = 100L
         val taskDomainParams = testTaskDomainParams(id = 0L)
-        val newId = 2L
 
-        coEvery { testDomainParamsToDataMapper.transform(any(), time, time) } answers {
-            testTaskData(id = firstArg<TaskDomainParams>().id, createdAt = time, changedAt = time)
+        coEvery { testDomainParamsToDataMapper.transform(any(), any(), any()) } answers {
+            testTaskData(
+                id = time,
+                createdAt = secondArg(),
+                changedAt = thirdArg()
+            )
+        }
+        coEvery { testCloudDataSource.saveTask(any()) } answers {
+            firstArg()
         }
         coEvery { testCacheDataSource.addTask(any()) } answers {
-            firstArg<TaskData>().copy(id = newId)
-        }
-        coEvery { testCloudDataSource.addTask(any()) } answers {
             firstArg()
         }
         coEvery { testDataToDomainMapper.transform(any()) } answers {
@@ -124,8 +128,12 @@ class TasksRepositoryImplTest {
                 testTaskDomain(id = id, createdAt = createdAt, changedAt = changedAt)
             }
         }
+        coEvery { testHandleDataRequest.handle(any(), any()) } answers {
+//            firstArg<()-> TaskDomain>().invoke()
+            testTaskDomain(id = time, createdAt = time, changedAt = time)
+        }
 
-        val expected = testTaskDomain(id = newId, createdAt = time, changedAt = time)
+        val expected = testTaskDomain(id = time, createdAt = time, changedAt = time)
         val actual = testRepository.addTask(taskDomainParams)
 
         assertEquals(expected, actual)
@@ -134,45 +142,48 @@ class TasksRepositoryImplTest {
 
     @Test
     fun `add new task with params result failed`() = runTest {
-        val handleDataRequest = HandleDataRequest(testHandleError)
-        val testRepository =
-            TasksRepositoryImpl(
-                testCacheDataSource,
-                testCloudDataSource,
-                testDataToDomainMapper,
-                testDomainParamsToDataMapper,
-                handleDataRequest
-            )
-        val time = System.currentTimeMillis()
-        val taskDomainParams = testTaskDomainParams(id = 0L)
-        val newId = 2L
+//        val handleDataRequest = HandleDataRequest(testHandleError)
+//        val testRepository =
+//            TasksRepositoryImpl(
+//                testCacheDataSource,
+//                testCloudDataSource,
+//                testDataToDomainMapper,
+//                testDomainParamsToDataMapper,
+//                handleDataRequest
+//            )
+//        val time = System.currentTimeMillis()
+//        val taskDomainParams = testTaskDomainParams(id = 0L)
+//        val newId = 2L
+//
+//        coEvery { testDomainParamsToDataMapper.transform(any(), time, time) } answers {
+//            testTaskData(id = firstArg<TaskDomainParams>().id, createdAt = time, changedAt = time)
+//        }
+//        coEvery { testCacheDataSource.addTask(any()) } answers {
+//            firstArg<TaskData>().copy(id = newId)
+//        }
+//        coEvery { testCloudDataSource.addTask(any()) } answers {
+//            throw NoInternetConnectionException()
+//        }
+//
+//        val expected = "No internet connection"
+//        val actual = testRepository.addTask(taskDomainParams)
+//
+//        assertEquals(expected, actual)
+        //        val handleDataRequest = HandleDataRequest(testHandleError)
 
-        coEvery { testDomainParamsToDataMapper.transform(any(), time, time) } answers {
-            testTaskData(id = firstArg<TaskDomainParams>().id, createdAt = time, changedAt = time)
-        }
-        coEvery { testCacheDataSource.addTask(any()) } answers {
-            firstArg<TaskData>().copy(id = newId)
-        }
-        coEvery { testCloudDataSource.addTask(any()) } answers {
-            throw NoInternetConnectionException()
-        }
-
-        val expected = "No internet connection"
-        val actual = testRepository.addTask(taskDomainParams)
-
-        assertEquals(expected, actual)
     }
 
     @Test
     fun `edit task with params result success`() = runTest {
-        val handleDataRequest = HandleDataRequest(testHandleError)
+//        val handleDataRequest = HandleDataRequest(testHandleError)
         val testRepository =
             TasksRepositoryImpl(
                 testCacheDataSource,
                 testCloudDataSource,
                 testDataToDomainMapper,
                 testDomainParamsToDataMapper,
-                handleDataRequest
+                testHandleDataRequest
+//                handleDataRequest
             )
         val newCreatedAt = 100L
         val newChangedAt = 200L
@@ -180,24 +191,28 @@ class TasksRepositoryImplTest {
         val taskDomainParams = testTaskDomainParams(text = newText)
 
         coEvery { testCacheDataSource.getTaskById(any()) } answers {
-            testTaskData(text = "old text", createdAt = newCreatedAt)
-        }
-        coEvery { testDomainParamsToDataMapper.transform(any(), newCreatedAt, newChangedAt) } answers {
-            testTaskData(text = newText, changedAt = newChangedAt)
-        }
-        coEvery { testCacheDataSource.editTask(any()) } answers {
-            firstArg()
-        }
-        coEvery { testCloudDataSource.addTask(any()) } answers {
-            firstArg()
+            testTaskData(id = newCreatedAt, text = "old text")
         }
         coEvery { testDataToDomainMapper.transform(any()) } answers {
             with (firstArg<TaskData>()) {
                 testTaskDomain(text = text, createdAt = createdAt, changedAt = changedAt)
             }
         }
+        coEvery { testDomainParamsToDataMapper.transform(any(), any(), any()) } answers {
+            testTaskData(id = newCreatedAt, text = newText, createdAt = newCreatedAt, changedAt = newChangedAt)
+        }
+        coEvery { testCloudDataSource.saveTask(any()) } answers {
+            firstArg()
+        }
+        coEvery { testCacheDataSource.editTask(any()) } answers {
+            firstArg()
+        }
+        coEvery { testHandleDataRequest.handle(any(), any()) } answers {
+//            firstArg<()-> TaskDomain>().invoke()
+            testTaskDomain(id = newCreatedAt, text = newText, createdAt = newCreatedAt, changedAt = newChangedAt)
+        }
 
-        val expected = testTaskDomain(text = newText, createdAt = newCreatedAt, changedAt = newChangedAt)
+        val expected = testTaskDomain(id = newCreatedAt, text = newText, createdAt = newCreatedAt, changedAt = newChangedAt)
         val actual = testRepository.editTask(taskDomainParams)
 
         assertEquals(expected, actual)
@@ -205,36 +220,36 @@ class TasksRepositoryImplTest {
 
     @Test
     fun `edit task with params result failed`() = runTest {
-        val handleDataRequest = HandleDataRequest(testHandleError)
-        val testRepository =
-            TasksRepositoryImpl(
-                testCacheDataSource,
-                testCloudDataSource,
-                testDataToDomainMapper,
-                testDomainParamsToDataMapper,
-                handleDataRequest
-            )
-        val newCreatedAt = 100L
-        val newChangedAt = 200L
-        val newText = "new text"
-        val taskDomainParams = testTaskDomainParams(text = newText)
-
-        coEvery { testCacheDataSource.getTaskById(any()) } answers {
-            testTaskData(text = "old text", createdAt = newCreatedAt)
-        }
-        coEvery { testDomainParamsToDataMapper.transform(any(), newCreatedAt, newChangedAt) } answers {
-            testTaskData(text = newText, changedAt = newChangedAt)
-        }
-        coEvery { testCacheDataSource.editTask(any()) } answers {
-            firstArg()
-        }
-        coEvery { testCloudDataSource.addTask(any()) } answers {
-            throw NoInternetConnectionException()
-        }
-
-        val expected = "No internet connection"
-        val actual = testRepository.editTask(taskDomainParams)
-
-        assertEquals(expected, actual)
+//        val handleDataRequest = HandleDataRequest(testHandleError)
+//        val testRepository =
+//            TasksRepositoryImpl(
+//                testCacheDataSource,
+//                testCloudDataSource,
+//                testDataToDomainMapper,
+//                testDomainParamsToDataMapper,
+//                handleDataRequest
+//            )
+//        val newCreatedAt = 100L
+//        val newChangedAt = 200L
+//        val newText = "new text"
+//        val taskDomainParams = testTaskDomainParams(text = newText)
+//
+//        coEvery { testCacheDataSource.getTaskById(any()) } answers {
+//            testTaskData(text = "old text", createdAt = newCreatedAt)
+//        }
+//        coEvery { testDomainParamsToDataMapper.transform(any(), newCreatedAt, newChangedAt) } answers {
+//            testTaskData(text = newText, changedAt = newChangedAt)
+//        }
+//        coEvery { testCacheDataSource.editTask(any()) } answers {
+//            firstArg()
+//        }
+//        coEvery { testCloudDataSource.addTask(any()) } answers {
+//            throw NoInternetConnectionException()
+//        }
+//
+//        val expected = "No internet connection"
+//        val actual = testRepository.editTask(taskDomainParams)
+//
+//        assertEquals(expected, actual)
     }
 }

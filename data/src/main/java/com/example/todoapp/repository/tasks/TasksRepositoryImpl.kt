@@ -21,7 +21,6 @@ class TasksRepositoryImpl @Inject constructor(
 ) : TasksRepository {
 
     override suspend fun observeTasks(): Flow<List<TaskDomain>> {
-
         syncCacheToCloud()
 
         return cacheDataSource.observeTasks().map { tasks ->
@@ -62,6 +61,7 @@ class TasksRepositoryImpl @Inject constructor(
         ) {
             return dataToDomainMapper.transform(currentTaskDataFromCache)
         }
+
         val time = System.currentTimeMillis()
         val taskData =
             domainParamsToDataMapper.transform(
@@ -86,10 +86,10 @@ class TasksRepositoryImpl @Inject constructor(
 
     override suspend fun deleteTaskById(id: Long): Boolean {
         return try {
-            if (cloudDataSource.deleteTask(id)) cacheDataSource.deleteTask(id)
+            if (cloudDataSource.deleteTaskById(id)) cacheDataSource.deleteTaskById(id)
             true
         } catch (e: Exception) {
-            cacheDataSource.markOutOfSyncDeleteTask(id)
+            cacheDataSource.markOutOfSyncDeleteTaskById(id)
             false
         }
     }

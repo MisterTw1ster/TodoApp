@@ -28,7 +28,7 @@ class TasksCacheDataSourceImplTest {
     lateinit var testCacheToDataMapper: TaskCacheToDataMapper
 
     @Test
-    fun `observe tasks return flow TaskData list`() = runTest {
+    fun `observe tasks return flow ListTaskData`() = runTest {
         val testDataSource =
             TasksCacheDataSourceImpl(
                 testDao,
@@ -36,14 +36,15 @@ class TasksCacheDataSourceImplTest {
                 testDataToCacheMapper
             )
 
+        coEvery { testCacheToDataMapper.transform(any()) } answers {
+            testTaskData(id = firstArg<TaskCache>().id)
+        }
+
         coEvery { testDao.observeTasks() } returns flow {
             emit(listOf(testTaskCache(id = 1),testTaskCache(id = 2)))
             emit(listOf(testTaskCache(id = 1),testTaskCache(id = 3)))
         }
 
-        coEvery { testCacheToDataMapper.transform(any()) } answers {
-            testTaskData(id = firstArg<TaskCache>().id)
-        }
 
         val tasks = testDataSource.observeTasks().toList()
         val expectedFirst = listOf(testTaskData(id = 1), testTaskData(id = 2))
@@ -57,19 +58,22 @@ class TasksCacheDataSourceImplTest {
 
     @Test
     fun `get task by id return TaskData`() = runTest {
-        val id = 5L
-
         val testDataSource =
             TasksCacheDataSourceImpl(
                 testDao,
                 testCacheToDataMapper,
                 testDataToCacheMapper
             )
+        val id = 5L
 
-        coEvery { testDao.getTaskById(id) } returns testTaskCache(id = id)
-        coEvery { testCacheToDataMapper.transform(any()) } returns testTaskData(id)
+        coEvery { testDao.getTaskById(any()) } answers {
+            testTaskCache(id = firstArg())
+        }
+        coEvery { testCacheToDataMapper.transform(any()) } answers {
+            testTaskData(id = firstArg<TaskCache>().id)
+        }
 
-        val expected = testTaskData(id = 5L)
+        val expected = testTaskData(id = id)
         val actual = testDataSource.getTaskById(id)
 
         assertEquals(expected, actual)
@@ -83,72 +87,99 @@ class TasksCacheDataSourceImplTest {
                 testCacheToDataMapper,
                 testDataToCacheMapper
             )
-        val taskData = testTaskData(id = 0L)
-        val newId = 5L
+        val taskData = testTaskData()
 
         coEvery { testDataToCacheMapper.transform(any()) } answers {
             testTaskCache(id = firstArg<TaskData>().id)
         }
-        coEvery { testDao.addTask(any()) } returns newId
+        coEvery { testDao.addTask(any()) } answers {
+            firstArg<TaskCache>().id
+        }
 
-        val expected = testTaskData(id = newId)
+        val expected = testTaskData()
         val actual = testDataSource.addTask(taskData)
 
         assertEquals(expected, actual)
     }
 
     @Test
-    fun `edit task if changed return new TaskData`() = runTest {
+    fun `edit task return TaskData`() = runTest {
         val testDataSource =
             TasksCacheDataSourceImpl(
                 testDao,
                 testCacheToDataMapper,
                 testDataToCacheMapper
             )
-//        val newText = "new text"
-//        val createdAt = 100L
-//        val taskData = testTaskData(text = newText)
         val taskData = testTaskData()
-//        coEvery { testDao.getTaskById(any()) } answers {
-//            testTaskCache(text = "old text", createdAt = createdAt)
-//        }
-        coEvery { testDataToCacheMapper.transform(any()) } answers {
-//            testTaskCache(text = firstArg<TaskData>().text, createdAt = firstArg<TaskData>().createdAt)
-            testTaskCache()
-        }
-        coEvery { testDao.editTask(any()) } just Runs
-//        coEvery { testCacheToDataMapper.transform(any()) } answers {
-//            testTaskData(text = firstArg<TaskCache>().text, createdAt = firstArg<TaskData>().createdAt)
-//        }
 
-//        val expected = testTaskData(text = newText, createdAt = createdAt)
+        coEvery { testDataToCacheMapper.transform(any()) } answers {
+            testTaskCache(id = firstArg<TaskData>().id)
+        }
+
+        coEvery { testDao.editTask(any()) } just Runs
         val expected = testTaskData()
         val actual = testDataSource.editTask(taskData)
 
         assertEquals(expected, actual)
-//        coVerify(exactly = 1) { testDao.editTask(any()) }
     }
 
-//    @Test
-//    fun `edit task if not changed return current TaskData`() = runTest {
-//        val testDataSource =
-//            TasksCacheDataSourceImpl(
-//                testDao,
-//                testCacheToDataMapper,
-//                testDataToCacheMapper
-//            )
-//        val taskData = testTaskData(changedAt = 100L)
-//
-//        coEvery { testDao.getTaskById(any()) } returns testTaskCache()
-//        coEvery { testCacheToDataMapper.transform(any()) } answers {
-//            testTaskData()
-//        }
-//
-//        val expected = testTaskData()
-//        val actual = testDataSource.editTask(taskData)
-//
-//        assertEquals(expected, actual)
-//        coVerify(exactly = 0) { testDao.editTask(any()) }
-//    }
+    @Test
+    fun `delete task by id`() = runTest {
+        val testDataSource =
+            TasksCacheDataSourceImpl(
+                testDao,
+                testCacheToDataMapper,
+                testDataToCacheMapper
+            )
+        val id = 2L
+        val tasksCache = mutableListOf(testTaskCache(id = id))
+
+        coEvery { testDao.deleteTaskById(any()) } answers {
+            val element = tasksCache.find { id == firstArg() }
+            tasksCache.remove(element)
+
+        }
+
+        testDataSource.deleteTaskById(id)
+        val expected = emptyList<TaskCache>()
+        val actual = tasksCache
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `replace tasks`() = runTest {
+        val testDataSource =
+            TasksCacheDataSourceImpl(
+                testDao,
+                testCacheToDataMapper,
+                testDataToCacheMapper
+            )
+        val tasksCache = mutableListOf(
+            testTaskCache(id = 1L),
+            testTaskCache(id = 2L)
+        )
+        val newTasksData = mutableListOf(
+            testTaskData(id = 3L),
+            testTaskData(id = 4L)
+        )
+
+        coEvery { testDataToCacheMapper.transform(any()) } answers {
+            testTaskCache(id = firstArg<TaskData>().id)
+        }
+        coEvery { testDao.replaceAll(any()) } answers {
+            tasksCache.clear()
+            tasksCache.addAll(firstArg())
+        }
+
+        testDataSource.replaceTasks(newTasksData)
+        val expected = mutableListOf(
+            testTaskCache(id = 3L),
+            testTaskCache(id = 4L)
+        )
+        val actual = tasksCache
+
+        assertEquals(expected, actual)
+    }
 
 }

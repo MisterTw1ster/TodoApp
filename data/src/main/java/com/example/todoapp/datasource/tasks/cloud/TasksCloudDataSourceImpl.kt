@@ -26,8 +26,8 @@ class TasksCloudDataSourceImpl @Inject constructor(
         return cloudToDataMapper.transform(taskCloudNew)
     }
 
-    override suspend fun deleteTask(id: Long): Boolean {
-        api.deleteTask(id.toString())
+    override suspend fun deleteTaskById(id: Long): Boolean {
+        api.deleteTaskById(id.toString())
         return true
     }
 

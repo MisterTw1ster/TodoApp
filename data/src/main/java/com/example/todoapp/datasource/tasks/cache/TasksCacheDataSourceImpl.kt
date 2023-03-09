@@ -39,8 +39,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         return task
     }
 
-    override suspend fun deleteTask(id: Long): Boolean {
-        dao.deleteTask(id)
+    override suspend fun deleteTaskById(id: Long): Boolean {
+        dao.deleteTaskById(id)
         return true
     }
 
@@ -49,9 +49,9 @@ class TasksCacheDataSourceImpl @Inject constructor(
         dao.replaceAll(tasksCache)
     }
 
-    override suspend fun markOutOfSyncDeleteTask(id: Long) {
+    override suspend fun markOutOfSyncDeleteTaskById(id: Long) {
         val time = System.currentTimeMillis()
-        dao.markOutOfSyncDeleteTask(id, time)
+        dao.markOutOfSyncDeleteTaskById(id, time)
     }
 
 

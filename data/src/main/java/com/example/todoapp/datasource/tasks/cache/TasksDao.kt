@@ -19,7 +19,7 @@ interface TasksDao {
     suspend fun editTask(task: TaskCache)
 
     @Query("DELETE FROM tasks_table WHERE id = :id")
-    suspend fun deleteTask(id: Long)
+    suspend fun deleteTaskById(id: Long)
 
     @Transaction
     suspend fun replaceAll(tasks: List<TaskCache>) {
@@ -35,7 +35,7 @@ interface TasksDao {
 
 
     @Query("UPDATE tasks_table SET out_of_sync_delete = 1, changed_at = :changedAt WHERE id == :id")
-    suspend fun markOutOfSyncDeleteTask(id: Long, changedAt: Long)
+    suspend fun markOutOfSyncDeleteTaskById(id: Long, changedAt: Long)
 
 
     @Query("SELECT * FROM tasks_table WHERE out_of_sync_delete == 1")

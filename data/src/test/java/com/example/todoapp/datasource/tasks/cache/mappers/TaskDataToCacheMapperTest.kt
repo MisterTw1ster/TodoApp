@@ -5,14 +5,14 @@ import com.example.todoapp.core.testTaskData
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class TaskCacheToDataMapperTest {
+class TaskDataToCacheMapperTest {
 
     @Test
-    fun `transform task cache to task data return TaskData`() {
-        val taskCache = testTaskCache()
+    fun `transform task data to task cache return TaskCache`() {
+        val taskData = testTaskData()
 
-        val expected = testTaskData()
-        val actual = TaskCacheToDataMapper().transform(taskCache)
+        val expected = testTaskCache()
+        val actual = TaskDataToCacheMapper().transform(taskData)
 
         assertEquals(expected, actual)
     }
