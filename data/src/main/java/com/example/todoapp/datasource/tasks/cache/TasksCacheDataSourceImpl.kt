@@ -49,15 +49,6 @@ class TasksCacheDataSourceImpl @Inject constructor(
         dao.replaceAll(tasksCache)
     }
 
-
-    override suspend fun markOutOfSyncNewTask(id: Long) {
-        dao.markOutOfSyncNewTask(id)
-    }
-
-    override suspend fun markOutOfSyncEditTask(id: Long) {
-        dao.markOutOfSyncEditTask(id)
-    }
-
     override suspend fun markOutOfSyncDeleteTask(id: Long) {
         val time = System.currentTimeMillis()
         dao.markOutOfSyncDeleteTask(id, time)

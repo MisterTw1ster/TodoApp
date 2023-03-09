@@ -26,28 +26,8 @@ class TasksCloudDataSourceImpl @Inject constructor(
         return cloudToDataMapper.transform(taskCloudNew)
     }
 
-    override suspend fun addTask(task: TaskData): TaskData {
-        val taskCloud = dataToCloudMapper.transform(task)
-        val taskCloudNew = api.addTask(mapOf(taskCloud.id to taskCloud))
-        return cloudToDataMapper.transform(taskCloudNew)
-    }
-
-    override suspend fun editTask(task: TaskData): TaskData {
-        val taskCloud = dataToCloudMapper.transform(task)
-        val taskCloudNew = api.editTask(taskCloud.id, taskCloud)
-        return cloudToDataMapper.transform(taskCloudNew)
-    }
-
     override suspend fun deleteTask(id: Long): Boolean {
         api.deleteTask(id.toString())
-        return true
-    }
-
-    override suspend fun saveTasks(tasks: List<TaskData>): Boolean {
-        val tasksCloud = tasks.associate { task ->
-            task.id.toString() to dataToCloudMapper.transform(task)
-        }
-        api.saveTasks(tasksCloud)
         return true
     }
 

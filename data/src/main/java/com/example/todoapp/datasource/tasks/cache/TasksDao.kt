@@ -18,8 +18,8 @@ interface TasksDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun editTask(task: TaskCache)
 
-    @Query("DELETE FROM tasks_table")
-    suspend fun deleteTasks()
+    @Query("DELETE FROM tasks_table WHERE id = :id")
+    suspend fun deleteTask(id: Long)
 
     @Transaction
     suspend fun replaceAll(tasks: List<TaskCache>) {
@@ -27,8 +27,8 @@ interface TasksDao {
         addTasks(tasks)
     }
 
-    @Query("DELETE FROM tasks_table WHERE id = :id")
-    suspend fun deleteTask(id: Long)
+    @Query("DELETE FROM tasks_table")
+    suspend fun deleteTasks()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTasks(tasks: List<TaskCache>)
@@ -36,12 +36,6 @@ interface TasksDao {
 
     @Query("UPDATE tasks_table SET out_of_sync_delete = 1, changed_at = :changedAt WHERE id == :id")
     suspend fun markOutOfSyncDeleteTask(id: Long, changedAt: Long)
-
-    @Query("UPDATE tasks_table SET out_of_sync_edit = 1 WHERE id == :id")
-    suspend fun markOutOfSyncEditTask(id: Long)
-
-    @Query("UPDATE tasks_table SET out_of_sync_new = 1 WHERE id == :id")
-    suspend fun markOutOfSyncNewTask(id: Long)
 
 
     @Query("SELECT * FROM tasks_table WHERE out_of_sync_delete == 1")

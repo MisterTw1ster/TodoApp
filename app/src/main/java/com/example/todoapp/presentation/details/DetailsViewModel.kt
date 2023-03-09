@@ -1,6 +1,5 @@
 package com.example.todoapp.presentation.details
 
-import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -10,8 +9,7 @@ import com.example.todoapp.usecase.AddTaskUseCase
 import com.example.todoapp.usecase.DeleteTaskByIdUseCase
 import com.example.todoapp.usecase.EditTaskUseCase
 import com.example.todoapp.usecase.GetTaskByIdUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class DetailsViewModel(
     private val taskId: Long,
@@ -21,6 +19,8 @@ class DetailsViewModel(
     private val getTaskByIDUseCase: GetTaskByIdUseCase,
     private val deleteTaskById: DeleteTaskByIdUseCase
 ) : ViewModel() {
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,6 +40,26 @@ class DetailsViewModel(
     }
 
 
+    fun saveTask() {
+        scope.launch {
+            val taskSaveParam = communicationDetails.getTaskDomainParams()
+            delay(5000)
+            if (taskId == NEW_TASK_ID) {
+                addTaskUseCase(taskSaveParam)
+            } else {
+                editTaskUseCase(taskSaveParam)
+            }
+        }
+        closeScreen()
+    }
+
+    fun deleteTask() {
+        scope.launch {
+            deleteTaskById(taskId)
+        }
+        closeScreen()
+    }
+
     fun observeImportance(owner: LifecycleOwner, observer: Observer<String>) {
         communicationDetails.observeImportance(owner, observer)
     }
@@ -56,41 +76,18 @@ class DetailsViewModel(
         communicationDetails.observeText(owner, observer)
     }
 
-    fun saveTask() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val taskSaveParam = communicationDetails.getTaskDomainParams()
-            if (taskId == NEW_TASK_ID) {
-                addTaskUseCase(taskSaveParam)
-            } else {
-                editTaskUseCase(taskSaveParam)
-            }
-            closeScreen()
-        }
-    }
-
-    fun deleteTask() {
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteTaskById(taskId)
-            closeScreen()
-        }
-    }
-
-    @MainThread
     fun setTextTask(text: String) {
         communicationDetails.mapText(text)
     }
 
-    @MainThread
     fun setImportanceTask(importance: String) {
         communicationDetails.mapImportance(importance)
     }
 
-    @MainThread
     fun setDeadlineTask(time: Long = 0L) {
         communicationDetails.mapDeadline(time)
     }
 
-    @MainThread
     fun closeScreen() {
         communicationDetails.mapCloseScreen(true)
     }

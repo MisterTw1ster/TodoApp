@@ -11,8 +11,9 @@ import com.example.todoapp.presentation.tasks.models.StateTasksUI
 import com.example.todoapp.presentation.tasks.models.StateTitleUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.example.todoapp.usecase.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class TasksViewModel(
@@ -25,6 +26,8 @@ class TasksViewModel(
     private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
     private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase
 ): ViewModel() {
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     init {
         viewModelScope.launch((Dispatchers.IO)) {
@@ -67,14 +70,14 @@ class TasksViewModel(
 
     fun setIsDoneTask(taskUI: TaskUI, value: Boolean) {
         if (taskUI.isDone == value) return
-        viewModelScope.launch(Dispatchers.IO) {
+        scope.launch {
             val taskDomainParams = uiToDomainParamsMapper.transform(taskUI.copy(isDone = value))
             editTaskUseCase(taskDomainParams)
         }
     }
 
     fun saveSettingHideCompleted(hideCompleted: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        scope.launch  {
             saveSettingHideCompletedUseCase(hideCompleted)
         }
     }

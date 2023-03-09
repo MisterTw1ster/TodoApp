@@ -120,8 +120,7 @@ class TasksRepositoryImpl @Inject constructor(
             }
 
         } catch (e: Exception) {
-            val d = 3
-            val dd = d
+
         }
     }
 

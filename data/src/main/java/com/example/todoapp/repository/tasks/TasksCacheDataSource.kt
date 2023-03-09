@@ -13,8 +13,6 @@ interface TasksCacheDataSource {
     suspend fun replaceTasks(tasks: List<TaskData>)
 
     suspend fun markOutOfSyncDeleteTask(id: Long)
-    suspend fun markOutOfSyncEditTask(id: Long)
-    suspend fun markOutOfSyncNewTask(id: Long)
 
     suspend fun fetchOutOfSyncMarkDeleteTasks(): List<TaskData>
     suspend fun fetchOutOfSyncEditTasks(): List<TaskData>
