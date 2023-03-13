@@ -20,6 +20,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("string", "AUTH_API_KEY", "AIzaSyCl50qknCa6c71Vt_B5eimrMGu7up38k10")
+        }
+        debug {
+            buildConfigField("string", "AUTH_API_KEY", "AIzaSyCl50qknCa6c71Vt_B5eimrMGu7up38k10")
         }
     }
     compileOptions {

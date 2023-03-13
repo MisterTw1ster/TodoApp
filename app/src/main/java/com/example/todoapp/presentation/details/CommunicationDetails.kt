@@ -13,18 +13,18 @@ import dagger.assisted.AssistedInject
 interface CommunicationDetails {
 
     fun getTaskDomainParams(): TaskDomainParams
-    fun observeText(owner: LifecycleOwner, observer: Observer<String>)
 
+    fun observeText(owner: LifecycleOwner, observer: Observer<String>)
     fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
     fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
+    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
 
     fun mapTaskID(source: Long)
     fun mapText(source: String)
     fun mapImportance(source: String)
     fun initDeadline(source: Long)
     fun mapDeadline(source: Long)
-
-    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
+    fun mapUserId(source: String)
     fun mapCloseScreen(source: Boolean)
 
     class Base @AssistedInject constructor(
@@ -34,6 +34,7 @@ interface CommunicationDetails {
         @Assisted("importance") private val importance: MutableLiveData<String> = MutableLiveData("low"),
         @Assisted("isDone") private val isDone: MutableLiveData<Boolean> = MutableLiveData(false),
         @Assisted("isClose") private val isClose: MutableLiveData<Boolean> = MutableLiveData(false),
+        @Assisted("userId") private val userId: MutableLiveData<String> = MutableLiveData(""),
         private val longDateToString: LongDateToString
     ) : CommunicationDetails {
 
@@ -46,6 +47,7 @@ interface CommunicationDetails {
                 @Assisted("importance") importance: MutableLiveData<String> = MutableLiveData("low"),
                 @Assisted("isDone") isDone: MutableLiveData<Boolean> = MutableLiveData(false),
                 @Assisted("isClose") isClose: MutableLiveData<Boolean> = MutableLiveData(false),
+                @Assisted("userId") userId: MutableLiveData<String> = MutableLiveData("")
             ): Base
         }
 
@@ -57,7 +59,8 @@ interface CommunicationDetails {
                 text = text.value!!, // TODO
                 importance = importance.value!!, // TODO
                 deadline = deadline.value!!, // TODO
-                isDone = isDone.value!! // TODO
+                isDone = isDone.value!!, // TODO
+                userId = userId.value!!
             )
         }
 
@@ -102,6 +105,10 @@ interface CommunicationDetails {
             } else {
                 deadlineState.postValue(StateDeadlineUI.On(deadlineText))
             }
+        }
+
+        override fun mapUserId(source: String) {
+            userId.postValue(source)
         }
 
         override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {

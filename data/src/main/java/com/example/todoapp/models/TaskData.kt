@@ -8,6 +8,7 @@ data class TaskData(
     val isDone: Boolean,
     val createdAt: Long,
     val changedAt: Long,
+    val userId: String,
     val outOfSyncNew: Boolean,
     val outOfSyncEdit: Boolean,
     val outOfSyncDelete: Boolean

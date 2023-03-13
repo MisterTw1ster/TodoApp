@@ -21,7 +21,8 @@ class TaskDomainToUIMapper @Inject constructor(
             deadline = task.deadline,
             isDone = task.isDone,
             color = chooseImportanceColor.map(task.importance),
-            deadlineText = longDateToString.ddMMMMyyyy(task.deadline)
+            deadlineText = longDateToString.ddMMMMyyyy(task.deadline),
+            userId = task.userId
         )
     }
 }

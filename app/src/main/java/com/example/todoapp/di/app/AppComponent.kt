@@ -2,10 +2,11 @@ package com.example.todoapp.di.app
 
 import android.app.Application
 import com.example.todoapp.App
-import com.example.todoapp.di.DomainScope
-import com.example.todoapp.di.detailsFragment.DetailsFragmentComponent
-import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.DataScope
+import com.example.todoapp.di.DomainScope
+import com.example.todoapp.di.authfragment.AuthFragmentComponent
+import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
+import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -22,6 +23,7 @@ interface AppComponent {
         ): AppComponent
     }
     fun inject(app: App)
+    fun authFragmentComponent(): AuthFragmentComponent.Factory
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
     fun detailsFragmentComponent(): DetailsFragmentComponent.Factory
 

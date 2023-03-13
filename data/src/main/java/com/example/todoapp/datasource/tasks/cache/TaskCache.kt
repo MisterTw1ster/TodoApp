@@ -13,6 +13,7 @@ data class TaskCache(
     @ColumnInfo(name = "is_done") val isDone: Boolean,
     @ColumnInfo(name = "created_at") val createdAt: Long,
     @ColumnInfo(name = "changed_at") val changedAt: Long,
+    @ColumnInfo(name = "user_id") val userId: String,
     @ColumnInfo(name = "out_of_sync_new") val outOfSyncNew: Boolean = false,
     @ColumnInfo(name = "out_of_sync_edit") val outOfSyncEdit: Boolean = false,
     @ColumnInfo(name = "out_of_sync_delete") val outOfSyncDelete: Boolean = false

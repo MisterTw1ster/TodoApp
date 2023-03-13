@@ -40,21 +40,22 @@ class TasksViewController @AssistedInject constructor(
                 binding.tvLoadingList
             )
 
-            viewModel.observeFilterCompleted(lifecycleOwner) { state ->
-                state.apply(binding.cbHideCompleted)
-            }
+        }
 
-            viewModel.observeTitle(lifecycleOwner) { state ->
-                state.apply(binding.tvTitle)
-            }
+        viewModel.observeFilterCompleted(lifecycleOwner) { state ->
+            state.apply(binding.cbHideCompleted)
+        }
 
-            binding.fabAddTask.setOnClickListener {
-                navigation.newDetailsFragment(fragment)
-           }
+        viewModel.observeTitle(lifecycleOwner) { state ->
+            state.apply(binding.tvTitle)
+        }
 
-            binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.saveSettingHideCompleted(isChecked)
-            }
+        binding.fabAddTask.setOnClickListener {
+            navigation.newDetailsFragment(fragment)
+        }
+
+        binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveSettingHideCompleted(isChecked)
         }
 
     }

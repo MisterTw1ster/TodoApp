@@ -1,4 +1,4 @@
-package com.example.todoapp.datasource.settings.datastore
+package com.example.todoapp.datasource.settings.cache
 
 import android.content.Context
 import androidx.datastore.core.DataStore

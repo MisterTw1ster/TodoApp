@@ -3,13 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/tasks">
+    app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/tasks"
         android:name="com.example.todoapp.presentation.tasks.TasksFragment"
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_tasks_to_authFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
         <action
             android:id="@+id/action_tasks_to_detailsFragment"
             app:destination="@id/detailsFragment"
@@ -27,5 +37,14 @@
             android:name="taskID"
             android:defaultValue="0L"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.todoapp.presentation.auth.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragment_to_tasks"
+            app:destination="@id/tasks" />
     </fragment>
 </navigation>

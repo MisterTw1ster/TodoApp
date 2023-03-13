@@ -4,16 +4,22 @@ import retrofit2.http.*
 
 interface TasksService {
 
-    @GET("me/tasks.json")
-    suspend fun fetchTasks(): Map<String, TaskCloud>
+    @GET("{user_id}/tasks.json")
+    suspend fun fetchTasks(@Path("user_id") userId: String): Map<String, TaskCloud>
 
-    @PATCH("me/tasks.json")
-    suspend fun saveTask(@Body param: Map<String, TaskCloud>): TaskCloud
+    @PATCH("{user_id}/tasks.json")
+    suspend fun saveTask(
+        @Body param: Map<String, TaskCloud>,
+        @Path("user_id") userId: String
+    ): TaskCloud
 
-    @PUT("me/tasks.json")
-    suspend fun replaceTasks(@Body param: Map<String, TaskCloud>)
+    @PUT("{user_id}/tasks.json")
+    suspend fun replaceTasks(@Body param: Map<String, TaskCloud>, @Path("user_id") userId: String)
 
-    @DELETE("me/tasks/{id}.json")
-    suspend fun deleteTaskById(@Path("id") id: String)
+    @DELETE("{user_id}/tasks/{id}.json")
+    suspend fun deleteTaskById(@Path("id") id: String, @Path("user_id") userId: String)
+
+    @PATCH("{user_id}.json")
+    suspend fun addUserBranch(@Path("user_id") userId: String)
 
 }

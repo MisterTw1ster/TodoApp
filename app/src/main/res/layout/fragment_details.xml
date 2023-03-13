@@ -99,13 +99,6 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="4dp"
                     android:text="2 июля 2021" />
-<!--                <com.example.todolistsandtasks.presentation.taskdetails.viewstate.DeadlineTextView-->
-<!--                    android:id="@+id/tv_deadlineDate"-->
-<!--                    style="@style/color_blue_subhead"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:paddingTop="4dp"-->
-<!--                    tools:text="2 июля 2021" />-->
 
             </LinearLayout>
 

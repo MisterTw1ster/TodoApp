@@ -5,10 +5,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.presentation.details.models.StateDeadlineUI
-import com.example.todoapp.usecase.AddTaskUseCase
-import com.example.todoapp.usecase.DeleteTaskByIdUseCase
-import com.example.todoapp.usecase.EditTaskUseCase
-import com.example.todoapp.usecase.GetTaskByIdUseCase
+import com.example.todoapp.usecase.tasks.AddTaskUseCase
+import com.example.todoapp.usecase.tasks.DeleteTaskByIdUseCase
+import com.example.todoapp.usecase.tasks.EditTaskUseCase
+import com.example.todoapp.usecase.tasks.GetTaskByIdUseCase
 import kotlinx.coroutines.*
 
 class DetailsViewModel(

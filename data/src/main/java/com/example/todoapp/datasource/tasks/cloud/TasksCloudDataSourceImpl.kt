@@ -14,28 +14,32 @@ class TasksCloudDataSourceImpl @Inject constructor(
     private val dataToCloudMapper: TaskDataToCloudMapper
 ): TasksCloudDataSource {
 
-    override suspend fun fetchTasks(): List<TaskData> {
-        return api.fetchTasks().map { task ->
-            cloudToDataMapper.transform(task.value)
+    override suspend fun fetchTasks(userId: String): List<TaskData> {
+        return api.fetchTasks(userId).map { task ->
+            cloudToDataMapper.transform(task.value, userId)
         }
     }
 
-    override suspend fun saveTask(task: TaskData): TaskData {
+    override suspend fun saveTask(task: TaskData, userId: String): TaskData {
         val taskCloud = dataToCloudMapper.transform(task)
-        val taskCloudNew = api.saveTask(mapOf(taskCloud.id to taskCloud))
-        return cloudToDataMapper.transform(taskCloudNew)
+        val taskCloudNew = api.saveTask(mapOf(taskCloud.id to taskCloud), userId)
+        return cloudToDataMapper.transform(taskCloudNew, userId)
     }
 
-    override suspend fun deleteTaskById(id: Long): Boolean {
-        api.deleteTaskById(id.toString())
+    override suspend fun deleteTaskById(id: Long, userId: String): Boolean {
+        api.deleteTaskById(id.toString(), userId)
         return true
     }
 
-    override suspend fun replaceTasks(tasks: List<TaskData>): Boolean {
+    override suspend fun replaceTasks(tasks: List<TaskData>, userId: String): Boolean {
         val tasksCloud = tasks.associate { task ->
             task.id.toString() to dataToCloudMapper.transform(task)
         }
-        api.replaceTasks(tasksCloud)
+        api.replaceTasks(tasksCloud, userId)
         return true
+    }
+
+    override suspend fun addUserBranch(userId: String) {
+        api.addUserBranch(userId)
     }
 }

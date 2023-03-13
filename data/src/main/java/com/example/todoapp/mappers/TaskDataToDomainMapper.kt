@@ -13,7 +13,8 @@ class TaskDataToDomainMapper @Inject constructor() {
             deadline = task.deadline,
             isDone = task.isDone,
             createdAt = task.createdAt,
-            changedAt = task.changedAt
+            changedAt = task.changedAt,
+            userId = task.userId
         )
     }
 }

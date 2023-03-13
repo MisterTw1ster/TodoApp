@@ -1,4 +1,4 @@
-package com.example.todoapp.usecase
+package com.example.todoapp.usecase.settings
 
 import com.example.todoapp.di.DomainScope
 import com.example.todoapp.repository.SettingsRepository

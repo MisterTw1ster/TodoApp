@@ -21,6 +21,7 @@ class TaskDomainParamsToDataMapper @Inject constructor(){
             isDone = params.isDone,
             createdAt = createdAt,
             changedAt = changedAt,
+            userId = params.userId,
             outOfSyncNew = outOfSyncNew,
             outOfSyncEdit = outOfSyncEdit,
             outOfSyncDelete = outOfSyncDelete

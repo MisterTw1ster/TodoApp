@@ -10,24 +10,39 @@ import javax.inject.Inject
 @AppScope
 class Navigation @Inject constructor() {
 
+    fun authFragment(fragment: Fragment) {
+        fragment.findNavController().navigate(
+            TASKS_TO_AUTH_ACTION_ID
+        )
+    }
+
+    fun tasksFragment(fragment: Fragment, userId: String) {
+        fragment.findNavController().navigate(
+            AUTH_TO_TASKS_ACTION_ID,
+            bundleOf("userId" to userId)
+        )
+    }
+
     fun newDetailsFragment(fragment: Fragment) {
         fragment.findNavController().navigate(
-            DETAILS_FRAGMENT_ID
+            TASKS_TO_DETAILS_ACTION_ID
         )
     }
 
     fun editDetailsFragment(fragment: Fragment, taskID: Long) {
         fragment.findNavController().navigate(
-            DETAILS_FRAGMENT_ID,
+            TASKS_TO_DETAILS_ACTION_ID,
             bundleOf("taskID" to taskID)
         )
     }
 
-    fun closeDetailsFragment(fragment: Fragment) {
+    fun popFragment(fragment: Fragment) {
         fragment.findNavController().popBackStack()
     }
 
     companion object {
-        private const val DETAILS_FRAGMENT_ID = R.id.action_tasks_to_detailsFragment
+        private const val AUTH_TO_TASKS_ACTION_ID = R.id.action_authFragment_to_tasks
+        private const val TASKS_TO_AUTH_ACTION_ID = R.id.action_tasks_to_authFragment
+        private const val TASKS_TO_DETAILS_ACTION_ID = R.id.action_tasks_to_detailsFragment
     }
 }

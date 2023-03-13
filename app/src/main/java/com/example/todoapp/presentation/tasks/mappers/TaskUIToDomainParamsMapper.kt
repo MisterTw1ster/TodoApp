@@ -13,7 +13,8 @@ class TaskUIToDomainParamsMapper @Inject constructor(){
             text = task.text,
             importance = task.importance,
             deadline = task.deadline,
-            isDone = task.isDone
+            isDone = task.isDone,
+            userId = task.userId
         )
     }
 }

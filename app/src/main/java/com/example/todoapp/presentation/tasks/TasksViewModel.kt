@@ -10,7 +10,11 @@ import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
 import com.example.todoapp.presentation.tasks.models.StateTasksUI
 import com.example.todoapp.presentation.tasks.models.StateTitleUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
-import com.example.todoapp.usecase.*
+import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
+import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
+import com.example.todoapp.usecase.tasks.EditTaskUseCase
+import com.example.todoapp.usecase.tasks.ObserveCompletedTasksUseCase
+import com.example.todoapp.usecase.tasks.ObserveTasksUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

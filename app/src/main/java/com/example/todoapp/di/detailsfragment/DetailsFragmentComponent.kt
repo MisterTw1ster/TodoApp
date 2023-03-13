@@ -1,4 +1,4 @@
-package com.example.todoapp.di.detailsFragment
+package com.example.todoapp.di.detailsfragment
 
 import com.example.todoapp.di.scope.DetailsFragmentScope
 import com.example.todoapp.presentation.details.DetailsFragment

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentDetailsBinding
-import com.example.todoapp.di.detailsFragment.DetailsFragmentComponent
+import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
 import com.google.android.material.datepicker.MaterialDatePicker
 import javax.inject.Inject
 

@@ -2,10 +2,10 @@ package com.example.todoapp.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.todoapp.usecase.AddTaskUseCase
-import com.example.todoapp.usecase.DeleteTaskByIdUseCase
-import com.example.todoapp.usecase.EditTaskUseCase
-import com.example.todoapp.usecase.GetTaskByIdUseCase
+import com.example.todoapp.usecase.tasks.AddTaskUseCase
+import com.example.todoapp.usecase.tasks.DeleteTaskByIdUseCase
+import com.example.todoapp.usecase.tasks.EditTaskUseCase
+import com.example.todoapp.usecase.tasks.GetTaskByIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

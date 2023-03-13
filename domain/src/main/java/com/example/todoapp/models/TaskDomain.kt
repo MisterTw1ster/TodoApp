@@ -7,5 +7,6 @@ data class TaskDomain(
     val deadline: Long,
     val isDone: Boolean,
     val createdAt: Long,
-    val changedAt: Long
+    val changedAt: Long,
+    val userId: String,
 )

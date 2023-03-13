@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.usecase.*
+import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
+import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
+import com.example.todoapp.usecase.tasks.EditTaskUseCase
+import com.example.todoapp.usecase.tasks.ObserveCompletedTasksUseCase
+import com.example.todoapp.usecase.tasks.ObserveTasksUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Inject
 
 class TasksViewModelFactory @AssistedInject constructor(
     @Assisted("communication") private val communication: CommunicationTasks,

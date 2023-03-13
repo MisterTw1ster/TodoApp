@@ -14,6 +14,7 @@ class TaskCacheToDataMapper @Inject constructor(){
             isDone = task.isDone,
             createdAt = task.createdAt,
             changedAt = task.changedAt,
+            userId = task.userId,
             outOfSyncNew = task.outOfSyncNew,
             outOfSyncEdit = task.outOfSyncEdit,
             outOfSyncDelete = task.outOfSyncDelete

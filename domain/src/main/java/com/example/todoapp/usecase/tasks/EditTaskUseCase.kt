@@ -1,4 +1,4 @@
-package com.example.todoapp.usecase
+package com.example.todoapp.usecase.tasks
 
 import com.example.todoapp.di.DomainScope
 import com.example.todoapp.exception.HandleRequest
@@ -7,11 +7,11 @@ import com.example.todoapp.repository.TasksRepository
 import javax.inject.Inject
 
 @DomainScope
-class AddTaskUseCase @Inject constructor(
+class EditTaskUseCase @Inject constructor(
     private val repository: TasksRepository,
     private val handleRequest: HandleRequest
 ) {
     suspend operator fun invoke(params: TaskDomainParams) = handleRequest.handle {
-        repository.addTask(params)
+        repository.editTask(params)
     }
 }

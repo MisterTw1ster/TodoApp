@@ -22,8 +22,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTaskById(id: Long): TaskData {
-        val taskCache = dao.getTaskById(id)
+    override suspend fun getTaskById(id: Long, userId: String): TaskData {
+        val taskCache = dao.getTaskById(id, userId)
         return cacheToDataMapper.transform(taskCache)
     }
 
@@ -39,8 +39,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         return task
     }
 
-    override suspend fun deleteTaskById(id: Long): Boolean {
-        dao.deleteTaskById(id)
+    override suspend fun deleteTaskById(id: Long, userId: String): Boolean {
+        dao.deleteTaskById(id, userId)
         return true
     }
 
@@ -49,9 +49,9 @@ class TasksCacheDataSourceImpl @Inject constructor(
         dao.replaceAll(tasksCache)
     }
 
-    override suspend fun markOutOfSyncDeleteTaskById(id: Long) {
+    override suspend fun markOutOfSyncDeleteTaskById(id: Long, userId: String) {
         val time = System.currentTimeMillis()
-        dao.markOutOfSyncDeleteTaskById(id, time)
+        dao.markOutOfSyncDeleteTaskById(id, time, userId)
     }
 
 

@@ -5,5 +5,6 @@ data class TaskDomainParams(
     val text: String,
     val importance: String,
     val deadline: Long,
-    val isDone: Boolean
+    val isDone: Boolean,
+    val userId: String
 )

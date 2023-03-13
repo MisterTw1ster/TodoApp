@@ -11,4 +11,5 @@ interface TasksRepository {
     suspend fun editTask(params: TaskDomainParams): TaskDomain
     suspend fun deleteTaskById(id: Long): Boolean
     suspend fun syncCacheToCloud()
+    suspend fun addUserBranch(userId: String): String
 }

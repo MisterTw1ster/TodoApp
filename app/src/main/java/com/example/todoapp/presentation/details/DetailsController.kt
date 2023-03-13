@@ -7,7 +7,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentDetailsBinding
 import com.example.todoapp.presentation.common.Navigation
-import com.example.todoapp.presentation.details.models.StateDeadlineUI
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -110,7 +109,7 @@ class DetailsController @AssistedInject constructor(
 
     private fun setupCloseScreen() {
         viewModel.observeCloseScreen(lifecycleOwner) { close ->
-            if (close) navigation.closeDetailsFragment(fragment)
+            if (close) navigation.popFragment(fragment)
         }
     }
 
