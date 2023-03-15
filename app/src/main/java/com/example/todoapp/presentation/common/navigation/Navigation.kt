@@ -1,4 +1,4 @@
-package com.example.todoapp.presentation.common
+package com.example.todoapp.presentation.common.navigation
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment

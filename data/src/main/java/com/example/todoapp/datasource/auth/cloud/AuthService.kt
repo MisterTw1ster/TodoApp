@@ -10,13 +10,13 @@ import retrofit2.http.Query
 
 interface AuthService {
 
-    @POST("accounts:signUp")
+    @POST("./accounts:signUp")
     suspend fun singUpWithEmail(
         @Body request: SignUpRequest,
         @Query("key") key: String = BuildConfig.AUTH_API_KEY
     ): UserCloud
 
-    @POST("accounts:signInWithPassword")
+    @POST("./accounts:signInWithPassword")
     suspend fun singInWithEmail(
         @Body request: SignInRequest,
         @Query("key") key: String = BuildConfig.AUTH_API_KEY

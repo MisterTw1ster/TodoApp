@@ -32,7 +32,8 @@ class TasksRepositoryImpl @Inject constructor(
 //        }
 //    }
 
-    override suspend fun observeTasks(): Flow<List<TaskDomain>> {
+    override suspend fun observeTasks(user_id: String): Flow<List<TaskDomain>> {
+        userId = user_id
         syncCacheToCloud()
         return taskCacheDataSource.observeTasks().map { tasks ->
             tasks.filter { it.userId == userId }

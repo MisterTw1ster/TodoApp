@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ObserveCompletedTasksUseCase @Inject constructor(
     private val repository: TasksRepository
 ) {
-    suspend operator fun invoke() = repository.observeTasks().map { tasks ->
+    suspend operator fun invoke(userId: String) = repository.observeTasks(userId).map { tasks ->
         tasks.count { task -> task.isDone }
     }
 }

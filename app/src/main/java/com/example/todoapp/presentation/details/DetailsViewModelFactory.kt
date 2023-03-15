@@ -12,6 +12,7 @@ import dagger.assisted.AssistedInject
 
 class DetailsViewModelFactory @AssistedInject constructor(
     @Assisted("taskId") private val taskId: Long,
+    @Assisted("userId") private val userId: String,
     @Assisted("communication") private val communicationDetails: CommunicationDetails,
     private val addTaskUseCase: AddTaskUseCase,
     private val editTaskUseCase: EditTaskUseCase,
@@ -23,6 +24,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return DetailsViewModel(
             taskId,
+            userId,
             communicationDetails,
             addTaskUseCase,
             editTaskUseCase,
@@ -35,6 +37,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
     interface Factory {
         fun create(
             @Assisted("taskId") taskId: Long,
+            @Assisted("userId") userId: String,
             @Assisted("communication") communicationDetails: CommunicationDetails
         ): DetailsViewModelFactory
     }

@@ -12,18 +12,13 @@ import javax.inject.Inject
 @DomainScope
 class ObserveTasksUseCase @Inject constructor(
     private val tasksRepository: TasksRepository,
-    private val authRepository: AuthRepository,
     private val settingsRepository: SettingsRepository
 ) {
-    suspend operator fun invoke(): Flow<List<TaskDomain>> {
-        val tasksDomain = tasksRepository.observeTasks()
-        val userId = authRepository.observeUserId()
+    suspend operator fun invoke(userId: String): Flow<List<TaskDomain>> {
+        val tasksDomain = tasksRepository.observeTasks(userId)
         val hideCompleted = settingsRepository.observeSettingHideCompleted()
-        return combine(tasksDomain, userId, hideCompleted) { tasks, id, filter ->
-            tasks.filter { it.userId == id }.takeIf { !filter }?.filter { !it.isDone } ?: tasks
+        return tasksDomain.combine(hideCompleted) { tasks, filter ->
+            tasks.takeIf { !filter }?.filter { !it.isDone } ?: tasks
         }
-//        return tasksDomain.combine(hideCompleted) { tasks, filter ->
-//            tasks.takeIf { !filter }?.filter { !it.isDone } ?: tasks
-//        }
     }
 }

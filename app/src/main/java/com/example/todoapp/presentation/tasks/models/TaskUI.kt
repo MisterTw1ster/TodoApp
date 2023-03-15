@@ -1,6 +1,6 @@
 package com.example.todoapp.presentation.tasks.models
 
-import com.example.todoapp.presentation.tasks.adapter.Item
+import com.example.todoapp.presentation.common.ItemList
 
 data class TaskUI(
     val id: Long,
@@ -11,4 +11,4 @@ data class TaskUI(
     val color: Int,
     val deadlineText: String?,
     val userId: String
-): Item
+): ItemList

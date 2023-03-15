@@ -7,13 +7,24 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tw_text_task"
+        android:id="@+id/tw_user_label"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:textAlignment="viewStart"
         android:singleLine="false"
-        android:maxLines="3"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.Body"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="User" />
+
+    <TextView
+        android:id="@+id/tw_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:textAlignment="viewStart"
+        android:singleLine="false"
         android:ellipsize="end"
         android:textAppearance="@style/TextAppearance.Body"
         android:textColor="?android:attr/textColorPrimary"

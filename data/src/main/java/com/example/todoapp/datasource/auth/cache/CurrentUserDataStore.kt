@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.todoapp.di.DataScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -21,13 +22,19 @@ class CurrentUserDataStore @Inject constructor(context: Context) {
 
     private val dataStore = context.dataStore
 
+    fun observeUserId(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_ID] ?: UNKNOWN_USER
+        }
+    }
+
     suspend fun getUserId(): String {
         return dataStore.data.map { preferences ->
             preferences[USER_ID]
         }.first() ?: UNKNOWN_USER
     }
 
-    suspend fun saveUserId(id: String) {
+    suspend fun setUserId(id: String) {
         dataStore.edit { preferences ->
             preferences[USER_ID] = id
         }
@@ -40,7 +47,7 @@ class CurrentUserDataStore @Inject constructor(context: Context) {
     }
 
     companion object {
-        private const val UNKNOWN_USER = "unknown"//"Nvp7LsArP1XmFAzS1nmjrRJxyB62"
+        const val UNKNOWN_USER = "unknown"
         private val USER_ID = stringPreferencesKey("user_id")
         const val DATA_STORE_NAME = "auth"
     }

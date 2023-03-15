@@ -1,9 +1,9 @@
-package com.example.todoapp.presentation.tasks.adapter
+package com.example.todoapp.presentation.common
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseViewHolder<out V : ViewBinding, in I : Item>(
+abstract class BaseViewHolder<out V : ViewBinding, in I : ItemList>(
     val binding: V
     ): RecyclerView.ViewHolder(binding.root) {
 

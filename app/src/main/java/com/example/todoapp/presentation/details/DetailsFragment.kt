@@ -30,7 +30,7 @@ class DetailsFragment : Fragment() {
     @Inject
     lateinit var detailsViewModelFactory: DetailsViewModelFactory.Factory
     private val viewModel: DetailsViewModel by viewModels {
-        detailsViewModelFactory.create(args.taskID, communicationDetails.create())
+        detailsViewModelFactory.create(args.taskID, args.userId, communicationDetails.create())
     }
 
     var binding: FragmentDetailsBinding? = null

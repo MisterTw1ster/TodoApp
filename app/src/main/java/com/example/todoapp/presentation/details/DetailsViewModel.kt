@@ -13,6 +13,7 @@ import kotlinx.coroutines.*
 
 class DetailsViewModel(
     private val taskId: Long,
+    private val userId: String,
     private val communicationDetails: CommunicationDetails,
     private val addTaskUseCase: AddTaskUseCase,
     private val editTaskUseCase: EditTaskUseCase,
@@ -26,9 +27,10 @@ class DetailsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             var deadlineInit = NEW_TASK_DEADLINE
             if (taskId != NEW_TASK_ID) {
+                communicationDetails.mapTaskID(taskId)
+                communicationDetails.mapUserID(userId)
                 val taskDomain = getTaskByIDUseCase(taskId)
                 with(taskDomain) {
-                    communicationDetails.mapTaskID(id)
                     communicationDetails.mapText(text)
                     communicationDetails.mapImportance(importance)
                     deadlineInit = deadline
@@ -43,7 +45,6 @@ class DetailsViewModel(
     fun saveTask() {
         scope.launch {
             val taskSaveParam = communicationDetails.getTaskDomainParams()
-            delay(5000)
             if (taskId == NEW_TASK_ID) {
                 addTaskUseCase(taskSaveParam)
             } else {

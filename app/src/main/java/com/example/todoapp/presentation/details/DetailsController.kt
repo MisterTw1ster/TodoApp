@@ -6,7 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentDetailsBinding
-import com.example.todoapp.presentation.common.Navigation
+import com.example.todoapp.presentation.common.navigation.Navigation
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

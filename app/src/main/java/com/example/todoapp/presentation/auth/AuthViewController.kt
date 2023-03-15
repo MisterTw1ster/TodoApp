@@ -1,8 +1,10 @@
 package com.example.todoapp.presentation.auth
 
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentAuthBinding
-import com.example.todoapp.presentation.common.Navigation
+import com.example.todoapp.presentation.auth.adapter.UserListAdapter
+import com.example.todoapp.presentation.common.navigation.Navigation
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -12,7 +14,7 @@ class AuthViewController @AssistedInject constructor(
     @Assisted("authFragmentBinding") private val binding: FragmentAuthBinding,
     @Assisted("authLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("authViewModel") private val viewModel: AuthViewModel,
-    private val navigation: Navigation
+    private val usersAdapter: UserListAdapter
 ) {
 
     @AssistedFactory
@@ -27,20 +29,44 @@ class AuthViewController @AssistedInject constructor(
 
     fun setupViews() {
 
-        viewModel.observeUsers(lifecycleOwner) { state ->
-
+        binding.rvLocalUsers.apply {
+            adapter = this@AuthViewController.usersAdapter
         }
 
-        viewModel.observeError(lifecycleOwner) { state ->
+        usersAdapter.setOnItemClickListener { user ->
+            viewModel.selectUser(user)
+        }
 
+        viewModel.observeUsers(lifecycleOwner) { users ->
+            usersAdapter.submitList(users)
+        }
+
+        viewModel.observeError(lifecycleOwner) { error ->
+            binding.tvError.text = error
+        }
+
+        viewModel.observeNavigate(lifecycleOwner) { navigation ->
+            navigation.navigate(fragment)
         }
 
         binding.btnSingIn.setOnClickListener {
-            navigation.tasksFragment(fragment)
+            viewModel.signInWithEmail()
         }
 
         binding.btnSingUp.setOnClickListener {
-            navigation.tasksFragment(fragment)
+            viewModel.signUpWithEmail()
+        }
+
+        binding.etLogin.doAfterTextChanged {
+            if (binding.etLogin.hasFocus()) {
+                viewModel.setLogin(it.toString())
+            }
+        }
+
+        binding.etPassword.doAfterTextChanged {
+            if (binding.etPassword.hasFocus()) {
+                viewModel.setPassword(it.toString())
+            }
         }
 
     }

@@ -20,11 +20,11 @@ interface CommunicationDetails {
     fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
 
     fun mapTaskID(source: Long)
+    fun mapUserID(source: String)
     fun mapText(source: String)
     fun mapImportance(source: String)
     fun initDeadline(source: Long)
     fun mapDeadline(source: Long)
-    fun mapUserId(source: String)
     fun mapCloseScreen(source: Boolean)
 
     class Base @AssistedInject constructor(
@@ -79,6 +79,10 @@ interface CommunicationDetails {
             taskId.postValue(source)
         }
 
+        override fun mapUserID(source: String) {
+            userId.postValue(source)
+        }
+
         override fun mapText(source: String) {
             text.postValue(source)
         }
@@ -105,10 +109,6 @@ interface CommunicationDetails {
             } else {
                 deadlineState.postValue(StateDeadlineUI.On(deadlineText))
             }
-        }
-
-        override fun mapUserId(source: String) {
-            userId.postValue(source)
         }
 
         override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {

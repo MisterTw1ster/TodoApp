@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
+import com.example.todoapp.presentation.common.BaseViewHolder
+import com.example.todoapp.presentation.common.ItemList
 
-interface ItemViewType<V : ViewBinding, I : Item> {
+interface ItemViewType<V : ViewBinding, I : ItemList> {
 
-    fun isRelativeItem(item: Item): Boolean
+    fun isRelativeItem(itemList: ItemList): Boolean
 
     @LayoutRes
     fun getLayoutId(): Int

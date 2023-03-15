@@ -15,7 +15,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_tasks_to_authFragment"
-            app:destination="@id/detailsFragment"
+            app:destination="@id/authFragment"
             app:enterAnim="@anim/to_left_in"
             app:exitAnim="@anim/to_left_out"
             app:popEnterAnim="@anim/to_right_in"
@@ -37,6 +37,9 @@
             android:name="taskID"
             android:defaultValue="0L"
             app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"

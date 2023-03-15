@@ -13,7 +13,7 @@ import com.example.todoapp.databinding.FragmentAuthBinding
 import com.example.todoapp.databinding.FragmentTasksBinding
 import com.example.todoapp.di.authfragment.AuthFragmentComponent
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
-import com.example.todoapp.presentation.common.Navigation
+import com.example.todoapp.presentation.common.navigation.Navigation
 import com.example.todoapp.presentation.tasks.CommunicationTasks
 import com.example.todoapp.presentation.tasks.TasksViewController
 import com.example.todoapp.presentation.tasks.TasksViewModel
@@ -27,24 +27,20 @@ class AuthFragment : Fragment() {
     private lateinit var authFragmentComponent: AuthFragmentComponent
 
     @Inject
-    lateinit var authViewControllerFactory: AuthViewController.Factory
-    private var authViewController: AuthViewController? = null
+    lateinit var navigation: Navigation
 
     @Inject
+    lateinit var authViewControllerFactory: AuthViewController.Factory
+
+    private var authViewController: AuthViewController? = null
+    @Inject
     lateinit var authViewModelFactory: AuthViewModelFactory.Factory
+
     private val viewModel: AuthViewModel by viewModels {
         authViewModelFactory.create(CommunicationAuth.Base())
     }
 
-    @Inject
-    lateinit var navigation: Navigation
-
     private var binding: FragmentAuthBinding? = null
-//    private val authAdapter = TasksAdapter(
-//        listOf(
-//            TaskViewType(::showDetails, ::setIsDone),
-//        )
-//    )
 
     override fun onAttach(context: Context) {
         authFragmentComponent =
@@ -69,7 +65,6 @@ class AuthFragment : Fragment() {
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,
-//                tasksAdapter
             )
         authViewController?.apply {
             setupViews()

@@ -5,6 +5,8 @@ import com.example.todoapp.datasource.auth.cache.mappers.UserDataToCacheMapper
 import com.example.todoapp.di.DataScope
 import com.example.todoapp.models.UserData
 import com.example.todoapp.repository.auth.AuthCacheDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @DataScope
@@ -31,12 +33,24 @@ class AuthCacheDataSourceImpl @Inject constructor(
         dao.editUser(userCache)
     }
 
-    override suspend fun getCurrentUserId(): String {
-        return currentUserDataStore.getUserId()
+    override suspend fun observeCurrentUser(): Flow<UserData?> {
+        return currentUserDataStore.observeUserId().map { userId ->
+            userId.takeIf { userId != CurrentUserDataStore.UNKNOWN_USER }?.let {
+                val userCache = dao.getUser(userId)
+                cacheToDataMapper.transform(userCache)
+            }
+        }
     }
 
-    override suspend fun saveCurrentUserId(id: String) {
-        currentUserDataStore.saveUserId(id)
+    override suspend fun getCurrentUser(): UserData? {
+        val currentUserId = currentUserDataStore.getUserId()
+        if (currentUserId == CurrentUserDataStore.UNKNOWN_USER) return null
+        val userCache = dao.getUser(currentUserId)
+        return cacheToDataMapper.transform(userCache)
+    }
+
+    override suspend fun setCurrentUserId(userId: String) {
+        currentUserDataStore.setUserId(userId)
     }
 
     override suspend fun clearCurrentUserId() {

@@ -2,7 +2,7 @@ package com.example.todoapp.presentation.tasks
 
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentTasksBinding
-import com.example.todoapp.presentation.common.Navigation
+import com.example.todoapp.presentation.common.navigation.Navigation
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -30,7 +30,7 @@ class TasksViewController @AssistedInject constructor(
 
     fun setupViews() {
         binding.rvList.rvListAndTasks.apply {
-            adapter = tasksAdapter
+            adapter = this@TasksViewController.tasksAdapter
         }
 
         viewModel.observeTasks(lifecycleOwner) { state ->
@@ -50,12 +50,20 @@ class TasksViewController @AssistedInject constructor(
             state.apply(binding.tvTitle)
         }
 
+        viewModel.observeNavigate(lifecycleOwner) { navigation ->
+            navigation.navigate(fragment)
+        }
+
         binding.fabAddTask.setOnClickListener {
             navigation.newDetailsFragment(fragment)
         }
 
         binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveSettingHideCompleted(isChecked)
+        }
+
+        binding.ibSignOut.setOnClickListener {
+            viewModel.signOut()
         }
 
     }

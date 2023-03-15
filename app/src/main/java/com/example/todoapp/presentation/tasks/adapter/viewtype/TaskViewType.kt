@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ItemTaskBinding
-import com.example.todoapp.presentation.tasks.adapter.BaseViewHolder
-import com.example.todoapp.presentation.tasks.adapter.Item
+import com.example.todoapp.presentation.common.BaseViewHolder
+import com.example.todoapp.presentation.common.ItemList
 import com.example.todoapp.presentation.tasks.adapter.ItemViewType
 import com.example.todoapp.presentation.tasks.models.TaskUI
 
@@ -15,7 +15,7 @@ class TaskViewType(
     private val setIsDone: (TaskUI, value: Boolean) -> Unit
 ) : ItemViewType<ItemTaskBinding, TaskUI> {
 
-    override fun isRelativeItem(item: Item) = item is TaskUI
+    override fun isRelativeItem(itemList: ItemList) = itemList is TaskUI
 
     override fun getLayoutId() = LAYOUT_ID
 
@@ -48,9 +48,7 @@ class TaskViewHolder(
     private val setIsDone: (TaskUI, value: Boolean) -> Unit
 ) : BaseViewHolder<ItemTaskBinding, TaskUI>(binding) {
 
-    override fun onBind(
-        item: TaskUI
-    ) {
+    override fun onBind(item: TaskUI) {
         with(binding) {
             twTextTask.text = item.text
             cbIsDoneTask.isChecked = item.isDone

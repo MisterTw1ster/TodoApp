@@ -4,12 +4,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todoapp.presentation.auth.mappers.UserDomainToUIMapper
+import com.example.todoapp.presentation.common.navigation.NavigationGraph
 import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
 import com.example.todoapp.presentation.tasks.models.StateTasksUI
 import com.example.todoapp.presentation.tasks.models.StateTitleUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
+import com.example.todoapp.usecase.auth.GetCurrentUserUseCase
+import com.example.todoapp.usecase.auth.SignOutUseCase
 import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.tasks.EditTaskUseCase
@@ -21,14 +25,18 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class TasksViewModel(
+    private val userId: String,
     private val communication: CommunicationTasks,
-    private val domainToUIMapper: TaskDomainToUIMapper,
-    private val uiToDomainParamsMapper: TaskUIToDomainParamsMapper,
+    private val taskDomainToUIMapper: TaskDomainToUIMapper,
+    private val taskUiToDomainParamsMapper: TaskUIToDomainParamsMapper,
     private val observeTasksUseCase: ObserveTasksUseCase,
     private val observeCompletedTasksUseCase: ObserveCompletedTasksUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
-    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase
+    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val signOutUseCase: SignOutUseCase,
+    private val userDomainToUIMapper: UserDomainToUIMapper
 ): ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -36,15 +44,15 @@ class TasksViewModel(
     init {
         viewModelScope.launch((Dispatchers.IO)) {
             communication.mapTasks(StateTasksUI.Loading)
-            observeTasksUseCase().collect { tasksDomain ->
-                val tasksUI = tasksDomain.map { taskDomain -> domainToUIMapper.transform(taskDomain)}
+            observeTasksUseCase(userId).collect { tasksDomain ->
+                val tasksUI = tasksDomain.map { taskDomain -> taskDomainToUIMapper.transform(taskDomain)}
                 communication.mapTasks(ChooseStateTaskUI(tasksUI).map())
             }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
             communication.mapTitle(StateTitleUI.Loading)
-            observeCompletedTasksUseCase().collect { completedTasks ->
+            observeCompletedTasksUseCase(userId).collect { completedTasks ->
                 communication.mapTitle(ChooseStateTitleUI(completedTasks).map())
             }
         }
@@ -57,6 +65,32 @@ class TasksViewModel(
                     )
                 )
             }
+        }
+
+        viewModelScope.launch((Dispatchers.IO)) {
+            val currentUser = getCurrentUserUseCase()
+            communication.mapUser(currentUser?.let { userDomainToUIMapper.transform(it) })
+        }
+    }
+
+    fun setIsDoneTask(taskUI: TaskUI, value: Boolean) {
+        if (taskUI.isDone == value) return
+        scope.launch {
+            val taskDomainParams = taskUiToDomainParamsMapper.transform(taskUI.copy(isDone = value))
+            editTaskUseCase(taskDomainParams)
+        }
+    }
+
+    fun saveSettingHideCompleted(hideCompleted: Boolean) {
+        scope.launch  {
+            saveSettingHideCompletedUseCase(hideCompleted)
+        }
+    }
+
+    fun signOut() {
+        scope.launch  {
+            signOutUseCase()
+            communication.mapNavigation(NavigationGraph.tasksToAuth)
         }
     }
 
@@ -72,18 +106,8 @@ class TasksViewModel(
         communication.observeFilterCompleted(owner, observer)
     }
 
-    fun setIsDoneTask(taskUI: TaskUI, value: Boolean) {
-        if (taskUI.isDone == value) return
-        scope.launch {
-            val taskDomainParams = uiToDomainParamsMapper.transform(taskUI.copy(isDone = value))
-            editTaskUseCase(taskDomainParams)
-        }
-    }
-
-    fun saveSettingHideCompleted(hideCompleted: Boolean) {
-        scope.launch  {
-            saveSettingHideCompletedUseCase(hideCompleted)
-        }
+    fun observeNavigate(owner: LifecycleOwner, observer: Observer<NavigationGraph>) {
+        communication.observeNavigation(owner, observer)
     }
 }
 
