@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import com.example.todoapp.App
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentTasksBinding
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
-import com.example.todoapp.presentation.common.navigation.Navigation
+import com.example.todoapp.presentation.details.DetailsFragment
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import com.example.todoapp.presentation.tasks.adapter.viewtype.TaskViewType
 import com.example.todoapp.presentation.tasks.models.TaskUI
@@ -21,20 +21,27 @@ class TasksFragment : Fragment() {
 
     private lateinit var tasksFragmentComponent: TasksFragmentComponent
 
+    private val userId: String by lazy { arguments?.getString(ID_USER)!! }
+
     @Inject
     lateinit var tasksViewControllerFactory: TasksViewController.Factory
     private var tasksViewController: TasksViewController? = null
 
-    private val args by navArgs<TasksFragmentArgs>()
+//    private val args by navArgs<TasksFragmentArgs>()
 
     @Inject
     lateinit var tasksViewModelFactory: TasksViewModelFactory.Factory
     private val viewModel: TasksViewModel by viewModels {
-        tasksViewModelFactory.create(args.userId, CommunicationTasks.Base())
+        tasksViewModelFactory.create(
+//            args.userId,
+            userId,
+            CommunicationTasks.Base(),
+            (requireActivity().applicationContext as App).provideNavigationCommunication()
+        )
     }
 
-    @Inject
-    lateinit var navigation: Navigation
+//    @Inject
+//    lateinit var navigation: Navigation
 
     private var binding: FragmentTasksBinding? = null
 
@@ -82,11 +89,25 @@ class TasksFragment : Fragment() {
     }
 
     private fun showDetails(task: TaskUI) {
-        navigation.editDetailsFragment(this, task.id)
+//        navigation.editDetailsFragment(this, task.id)
+        viewModel.showDetails(task.id)
     }
 
     private fun setIsDone(task: TaskUI, value: Boolean) {
         viewModel.setIsDoneTask(task, value)
     }
 
+
+    companion object {
+
+        private const val ID_USER = "user_id"
+
+        @JvmStatic
+        fun newInstance(userId: String) =
+            TasksFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ID_USER, userId)
+                }
+            }
+    }
 }

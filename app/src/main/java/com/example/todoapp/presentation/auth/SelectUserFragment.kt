@@ -9,37 +9,37 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.todoapp.App
 import com.example.todoapp.appComponent
-import com.example.todoapp.databinding.FragmentAuthBinding
-import com.example.todoapp.di.authfragment.AuthFragmentComponent
+import com.example.todoapp.databinding.FragmentSelectUserBinding
+import com.example.todoapp.di.authfragment.SelectUserFragmentComponent
 import javax.inject.Inject
 
-class AuthFragment : Fragment() {
+class SelectUserFragment : Fragment() {
 
-    private lateinit var authFragmentComponent: AuthFragmentComponent
+    private lateinit var selectUserFragmentComponent: SelectUserFragmentComponent
 
 //    @Inject
 //    lateinit var navigation: Navigation
 
     @Inject
-    lateinit var authViewControllerFactory: AuthViewController.Factory
+    lateinit var selectUserViewControllerFactory: SelectUserViewController.Factory
+    private var selectUserViewController: SelectUserViewController? = null
 
-    private var authViewController: AuthViewController? = null
     @Inject
-    lateinit var authViewModelFactory: AuthViewModelFactory.Factory
+    lateinit var selectUserViewModelFactory: SelectUserViewModelFactory.Factory
 
-    private val viewModel: AuthViewModel by viewModels {
-        authViewModelFactory.create(
-            AuthCommunication.Base(),
+    private val viewModel: SelectUserViewModel by viewModels {
+        selectUserViewModelFactory.create(
+            SelectUserCommunication.Base(),
             (requireActivity().applicationContext as App).provideNavigationCommunication()
         )
     }
 
-    private var binding: FragmentAuthBinding? = null
+    private var binding: FragmentSelectUserBinding? = null
 
     override fun onAttach(context: Context) {
-        authFragmentComponent =
-            context.appComponent.authFragmentComponent().create()
-        authFragmentComponent.inject(this)
+        selectUserFragmentComponent =
+            context.appComponent.selectUserFragmentComponent().create()
+        selectUserFragmentComponent.inject(this)
         super.onAttach(context)
     }
 
@@ -47,20 +47,20 @@ class AuthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAuthBinding.inflate(inflater, container, false)
+        binding = FragmentSelectUserBinding.inflate(inflater, container, false)
         return binding?.root ?: throw IllegalArgumentException("Layout not found: $inflater")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authViewController =
-            authViewControllerFactory.create(
+        selectUserViewController =
+            selectUserViewControllerFactory.create(
                 this,
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,
             )
-        authViewController?.apply {
+        selectUserViewController?.apply {
             setupViews()
         }
 
@@ -68,7 +68,7 @@ class AuthFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        authViewController = null
+        selectUserViewController = null
         binding = null
     }
 

@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentDetailsBinding
-import com.example.todoapp.presentation.common.navigation.Navigation
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -18,10 +17,11 @@ class DetailsController @AssistedInject constructor(
     @Assisted("taskDetailsFragmentBinding") private val binding: FragmentDetailsBinding,
     @Assisted("taskDetailsLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("taskDetailsViewModel") private val viewModel: DetailsViewModel,
-    @Assisted("taskDetailsArgs") private val args: DetailsFragmentArgs,
+//    @Assisted("taskDetailsArgs") private val args: DetailsFragmentArgs,
+    @Assisted("taskDetailsArgs") private val args: Long,
     @Assisted("taskDetailsSpinnerAdapter")private val spinnerAdapter: ArrayAdapter<String>,
     @Assisted("taskDetailsDatePicker")private val datePicker: MaterialDatePicker<Long>,
-    private val navigation: Navigation
+//    private val navigation: Navigation
 ) {
 
     @AssistedFactory
@@ -31,7 +31,8 @@ class DetailsController @AssistedInject constructor(
             @Assisted("taskDetailsFragmentBinding") binding: FragmentDetailsBinding,
             @Assisted("taskDetailsLifecycleOwner") lifecycleOwner: LifecycleOwner,
             @Assisted("taskDetailsViewModel") viewModel: DetailsViewModel,
-            @Assisted("taskDetailsArgs") args: DetailsFragmentArgs,
+//            @Assisted("taskDetailsArgs") args: DetailsFragmentArgs,
+            @Assisted("taskDetailsArgs") args: Long,
             @Assisted("taskDetailsSpinnerAdapter") spinnerAdapter: ArrayAdapter<String>,
             @Assisted("taskDetailsDatePicker") datePicker: MaterialDatePicker<Long>,
         ): DetailsController
@@ -100,17 +101,18 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupDelete() {
-        if (args.taskID == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
-
+//        if (args.taskID == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
+        if (args == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
         binding.llDeleteTaskButton.setOnClickListener {
             viewModel.deleteTask()
         }
     }
 
+    //TODO
     private fun setupCloseScreen() {
-        viewModel.observeCloseScreen(lifecycleOwner) { close ->
-            if (close) navigation.popFragment(fragment)
-        }
+//        viewModel.observeCloseScreen(lifecycleOwner) { close ->
+//            if (close) navigation.popFragment(fragment)
+//        }
     }
 
     private fun showDatePicker(datePicker: MaterialDatePicker<Long>) {

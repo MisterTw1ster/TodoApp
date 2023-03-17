@@ -4,30 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/back_main"
+    android:layout_marginHorizontal="16dp">
 
-    <TextView
-        android:id="@+id/tw_user_label"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:textAlignment="viewStart"
-        android:singleLine="false"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textColor="?android:attr/textColorPrimary"
-        tools:text="User" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tint="@color/secondary"
+        android:src="@drawable/ic_user"/>
 
     <TextView
         android:id="@+id/tw_user_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:textAlignment="viewStart"
         android:singleLine="false"
-        android:ellipsize="end"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.Body"
-        android:textColor="?android:attr/textColorPrimary"
-        tools:text="User" />
+        android:textColor="@color/white"
+        tools:text="User@domain.ru" />
 
 </LinearLayout>

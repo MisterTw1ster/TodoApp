@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_main"
+    tools:context=".presentation.auth.AuthFragment"
+    android:orientation="vertical">
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_error"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:text="нет ошибки"/>-->
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:tint="@color/secondary"
+        android:src="@drawable/ic_task"/>
+
+<!--    <LinearLayout-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/ll_new_user"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Theme.TextInputLayoutOutlinedBox"-->
+
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginHorizontal="32dp"-->
+<!--            android:hint="Логин">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/et_login"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/white"/>-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Theme.TextInputLayoutOutlinedBoxDense"-->
+<!--            android:textColorHint="@color/white"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginHorizontal="32dp"-->
+<!--            android:hint="Пароль"-->
+<!--            app:endIconMode="password_toggle"-->
+<!--            app:errorEnabled="true"-->
+<!--            app:helperTextEnabled="true">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/et_password"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:textColor="@color/white" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_sing_in"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="40dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/shape_button"-->
+<!--            android:text="войти"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_sing_up"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginHorizontal="40dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/shape_button"-->
+<!--            android:text="регистрация"/>-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_select_user"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:orientation="vertical">-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:text="Выберите аккаунт для входа"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_local_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_user" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/back_main"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/secondary"
+                android:src="@drawable/ic_add_user"/>
+
+            <TextView
+                android:id="@+id/tw_add_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:singleLine="false"
+                android:layout_marginStart="8dp"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.Body"
+                android:textColor="@color/white"
+                android:text="Добавить аккаунт" />
+
+        </LinearLayout>
+
+<!--    </LinearLayout>-->
+
+
+</LinearLayout>

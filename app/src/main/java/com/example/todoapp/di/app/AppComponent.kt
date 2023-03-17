@@ -5,7 +5,9 @@ import com.example.todoapp.App
 import com.example.todoapp.di.DataScope
 import com.example.todoapp.di.DomainScope
 import com.example.todoapp.di.authfragment.AuthFragmentComponent
+import com.example.todoapp.di.authfragment.SelectUserFragmentComponent
 import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
+import com.example.todoapp.di.mainactivity.MainActivityComponent
 import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.BindsInstance
@@ -23,6 +25,8 @@ interface AppComponent {
         ): AppComponent
     }
     fun inject(app: App)
+    fun mainActivityComponent(): MainActivityComponent.Factory
+    fun selectUserFragmentComponent(): SelectUserFragmentComponent.Factory
     fun authFragmentComponent(): AuthFragmentComponent.Factory
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
     fun detailsFragmentComponent(): DetailsFragmentComponent.Factory

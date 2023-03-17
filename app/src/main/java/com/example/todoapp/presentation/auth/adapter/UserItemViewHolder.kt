@@ -10,7 +10,6 @@ class UserItemViewHolder(
 ): BaseViewHolder<ItemUserBinding, UserUI>(binding) {
     override fun onBind(item: UserUI) {
         with(binding) {
-            twUserLabel.text = item.email.first().toString()
             twUserName.text = item.email
             root.setOnClickListener { onItemClickListener?.let { it(item) } }
         }

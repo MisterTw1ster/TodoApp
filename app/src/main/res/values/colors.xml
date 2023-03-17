@@ -31,4 +31,10 @@
     <color name="back_secondary">#FFFFFF</color>
     <color name="back_elevated">#FFFFFF</color>
 
+    //Main
+    <color name="back_main">#373C36</color>
+    <color name="secondary">#AFC99C</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color">#AFC99C</color>
+
 </resources>

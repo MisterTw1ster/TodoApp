@@ -10,27 +10,27 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class AuthViewModelFactory @AssistedInject constructor(
-    @Assisted("communication") private val communication: AuthCommunication,
-    @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base,
-    //    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+class SelectUserViewModelFactory @AssistedInject constructor(
+    @Assisted("communication") private val communication: SelectUserCommunication,
+    @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base, //NavigationCommunication.Mutable
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val setCurrentUserUseCase: SetCurrentUserIdUseCase,
-//    private val getUsers: FetchUsersUseCase,
-    private val signInWithEmailUseCase: SignInWithEmailUseCase,
-    private val signUpWithEmailUseCase: SignUpWithEmailUseCase,
+    private val getUsers: FetchUsersUseCase,
+//    private val signInWithEmailUseCase: SignInWithEmailUseCase,
+//    private val signUpWithEmailUseCase: SignUpWithEmailUseCase,
     private val domainToUIMapper: UserDomainToUIMapper
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AuthViewModel(
+        return SelectUserViewModel(
             communication,
             navigationCommunication,
-//            getCurrentUserUseCase,
+            getCurrentUserUseCase,
             setCurrentUserUseCase,
-//            getUsers,
-            signInWithEmailUseCase,
-            signUpWithEmailUseCase,
+            getUsers,
+//            signInWithEmailUseCase,
+//            signUpWithEmailUseCase,
             domainToUIMapper
         ) as T
     }
@@ -38,9 +38,9 @@ class AuthViewModelFactory @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted("communication") communication: AuthCommunication,
-            @Assisted("navigationCommunication") navigationCommunication: NavigationCommunication.Base,
-        ): AuthViewModelFactory
+            @Assisted("communication") communication: SelectUserCommunication,
+            @Assisted("navigationCommunication") navigationCommunication: NavigationCommunication.Base
+        ): SelectUserViewModelFactory
     }
 
 }

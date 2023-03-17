@@ -5,7 +5,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.presentation.auth.mappers.UserDomainToUIMapper
-import com.example.todoapp.presentation.common.navigation.NavigationGraph
+import com.example.todoapp.presentation.auth.models.UserUI
+import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
+import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
+import com.example.todoapp.presentation.common.navigation.newnav.Screen
 import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
@@ -27,6 +30,7 @@ import kotlinx.coroutines.launch
 class TasksViewModel(
     private val userId: String,
     private val communication: CommunicationTasks,
+    private val navigationCommunication: NavigationCommunication.Base,
     private val taskDomainToUIMapper: TaskDomainToUIMapper,
     private val taskUiToDomainParamsMapper: TaskUIToDomainParamsMapper,
     private val observeTasksUseCase: ObserveTasksUseCase,
@@ -88,9 +92,10 @@ class TasksViewModel(
     }
 
     fun signOut() {
+        navigationCommunication.map(NavigationStrategy.Replace(Screen.SelectUser))
         scope.launch  {
             signOutUseCase()
-            communication.mapNavigation(NavigationGraph.tasksToAuth)
+//            communication.mapNavigation(NavigationGraph.tasksToSelectUser)
         }
     }
 
@@ -106,8 +111,12 @@ class TasksViewModel(
         communication.observeFilterCompleted(owner, observer)
     }
 
-    fun observeNavigate(owner: LifecycleOwner, observer: Observer<NavigationGraph>) {
-        communication.observeNavigation(owner, observer)
+//    fun observeNavigate(owner: LifecycleOwner, observer: Observer<NavigationGraph>) {
+//        communication.observeNavigation(owner, observer)
+//    }
+
+    fun showDetails(taskId: Long = 0L) {
+        navigationCommunication.map(NavigationStrategy.Add(Screen.Details(taskId, userId)))
     }
 }
 

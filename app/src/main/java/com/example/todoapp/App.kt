@@ -8,6 +8,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import com.example.todoapp.di.app.AppComponent
 import com.example.todoapp.di.app.DaggerAppComponent
+import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
+import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
 import com.example.todoapp.repository.TasksRepository
 import com.example.todoapp.workers.tasks.ProvidePeriodicRepository
 import com.example.todoapp.workers.tasks.SyncTasksWorker
@@ -20,6 +22,7 @@ class App : Application(), ProvidePeriodicRepository {
     @Inject
     lateinit var repository: TasksRepository
 
+    val nav = NavigationCommunication.Base()
 
     override fun onCreate() {
         super.onCreate()
@@ -37,6 +40,8 @@ class App : Application(), ProvidePeriodicRepository {
     override fun providePeriodicRepository(): TasksRepository {
         return repository
     }
+
+    fun provideNavigationCommunication(): NavigationCommunication.Base = nav
 
 }
 

@@ -3,8 +3,6 @@ package com.example.todoapp.presentation.auth
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentAuthBinding
-import com.example.todoapp.presentation.auth.adapter.UserListAdapter
-import com.example.todoapp.presentation.common.navigation.Navigation
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -14,7 +12,7 @@ class AuthViewController @AssistedInject constructor(
     @Assisted("authFragmentBinding") private val binding: FragmentAuthBinding,
     @Assisted("authLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("authViewModel") private val viewModel: AuthViewModel,
-    private val usersAdapter: UserListAdapter
+//    private val usersAdapter: UserListAdapter
 ) {
 
     @AssistedFactory
@@ -29,25 +27,33 @@ class AuthViewController @AssistedInject constructor(
 
     fun setupViews() {
 
-        binding.rvLocalUsers.apply {
-            adapter = this@AuthViewController.usersAdapter
-        }
+//        binding.rvLocalUsers.apply {
+//            adapter = this@AuthViewController.usersAdapter
+//        }
 
-        usersAdapter.setOnItemClickListener { user ->
-            viewModel.selectUser(user)
-        }
-
-        viewModel.observeUsers(lifecycleOwner) { users ->
-            usersAdapter.submitList(users)
-        }
+//        usersAdapter.setOnItemClickListener { user ->
+//            viewModel.selectUser(user)
+//        }
+//
+//        viewModel.observeUsers(lifecycleOwner) { users ->
+//            usersAdapter.submitList(users)
+//        }
+//
+//        viewModel.observeStateScreen(lifecycleOwner) { state ->
+//            state.apply(binding.llSelectUser, binding.llNewUser)
+//        }
 
         viewModel.observeError(lifecycleOwner) { error ->
             binding.tvError.text = error
         }
 
-        viewModel.observeNavigate(lifecycleOwner) { navigation ->
-            navigation.navigate(fragment)
-        }
+//        viewModel.observeNavigate(lifecycleOwner) { navigation ->
+//            navigation.navigate(fragment)
+//        }
+
+//        binding.twTitle.setOnClickListener {
+//            viewModel.addUser()
+//        }
 
         binding.btnSingIn.setOnClickListener {
             viewModel.signInWithEmail()

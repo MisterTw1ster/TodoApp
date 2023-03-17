@@ -13,12 +13,16 @@ import com.example.todoapp.R
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentDetailsBinding
 import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
+import com.example.todoapp.presentation.auth.SelectUserFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
 
     private lateinit var taskDetailsComponent: DetailsFragmentComponent
+
+    private val taskId: Long by lazy { arguments?.getLong(ID_TASK)!! }
+    private val userId: String by lazy { arguments?.getString(ID_USER)!! }
 
     @Inject
     lateinit var detailsControllerFactory: DetailsController.Factory
@@ -30,11 +34,17 @@ class DetailsFragment : Fragment() {
     @Inject
     lateinit var detailsViewModelFactory: DetailsViewModelFactory.Factory
     private val viewModel: DetailsViewModel by viewModels {
-        detailsViewModelFactory.create(args.taskID, args.userId, communicationDetails.create())
+        detailsViewModelFactory.create(
+//            args.taskID,
+//            args.userId,
+            taskId,
+            userId,
+            communicationDetails.create()
+        )
     }
 
     var binding: FragmentDetailsBinding? = null
-    private val args by navArgs<DetailsFragmentArgs>()
+//    private val args by navArgs<DetailsFragmentArgs>()
 
     override fun onAttach(context: Context) {
         taskDetailsComponent =
@@ -73,7 +83,8 @@ class DetailsFragment : Fragment() {
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,
-                args,
+//                args,
+                taskId,
                 spinnerAdapter,
                 datePicker,
             )
@@ -88,4 +99,18 @@ class DetailsFragment : Fragment() {
         binding = null
     }
 
+    companion object {
+
+        private const val ID_TASK = "task_id"
+        private const val ID_USER = "user_id"
+
+        @JvmStatic
+        fun newInstance(taskId: Long, userId: String) =
+            DetailsFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ID_TASK, taskId)
+                    putString(ID_USER, userId)
+                }
+            }
+    }
 }

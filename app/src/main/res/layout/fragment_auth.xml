@@ -4,50 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_main"
     tools:context=".presentation.auth.AuthFragment"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_login"
+    <ImageView
+        android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:hint="login"/>
+        android:layout_marginTop="32dp"
+        app:tint="@color/secondary"
+        android:src="@drawable/ic_task"/>
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:hint="password"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.TextInputLayoutOutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="32dp"
+            android:hint="Логин">
 
-    <Button
-        android:id="@+id/btn_sing_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="войти"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"/>
 
-    <Button
-        android:id="@+id/btn_sing_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="регистрация"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Theme.TextInputLayoutOutlinedBoxDense"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="32dp"
+            android:hint="Пароль"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_sing_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_button"
+            android:text="войти"/>
+
+        <Button
+            android:id="@+id/btn_sing_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_button"
+            android:text="регистрация"/>
 
     <TextView
         android:id="@+id/tv_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
         android:text="нет ошибки"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_local_users"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_user" />
 
 </LinearLayout>
