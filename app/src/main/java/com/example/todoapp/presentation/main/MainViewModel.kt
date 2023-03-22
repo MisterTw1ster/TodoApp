@@ -22,7 +22,6 @@ class MainViewModel(
 
     fun init(isFirstRun: Boolean) {
         if (!isFirstRun) return
-
         viewModelScope.launch(Dispatchers.IO) {
             val currentUser = getCurrentUserUseCase()
             val usersDomain = fetchUsersUseCase()
@@ -40,20 +39,13 @@ class ChooseStartScreen(
     private val currentUser: UserDomain?,
     private val localUsers: List<UserDomain>
 ) {
-    private val selectUser by lazy { navigationCommunication.map(NavigationStrategy.Replace(Screen.SelectUser)) }
-    private val auth by lazy { navigationCommunication.map(NavigationStrategy.Replace(Screen.Auth)) }
-    private val tasks by lazy {
-        navigationCommunication.map(
-            NavigationStrategy.Replace(
-                Screen.Tasks(
-                    currentUser!!.localId
-                )
-            )
-        )
-    }
-
+    private val selectUser by lazy { NavigationStrategy.Replace(Screen.SelectUser) }
+    private val auth by lazy { NavigationStrategy.Replace(Screen.Auth) }
+    private val tasks by lazy { NavigationStrategy.Replace(Screen.Tasks(currentUser!!.localId))}
     suspend fun map() = withContext(Dispatchers.Main) {
-        currentUser?.apply { tasks } ?: localUsers.takeIf { users -> users.isEmpty() }
-            ?.apply { auth } ?: selectUser
+        navigationCommunication.map(
+            currentUser?.let { tasks } ?: localUsers.takeIf { users -> users.isEmpty() }
+                ?.let { auth } ?: selectUser
+        )
     }
 }
