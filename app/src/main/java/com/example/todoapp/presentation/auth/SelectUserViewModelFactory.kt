@@ -12,12 +12,9 @@ import dagger.assisted.AssistedInject
 
 class SelectUserViewModelFactory @AssistedInject constructor(
     @Assisted("communication") private val communication: SelectUserCommunication,
-    @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base, //NavigationCommunication.Mutable
-    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base,
     private val setCurrentUserUseCase: SetCurrentUserIdUseCase,
-    private val getUsers: FetchUsersUseCase,
-//    private val signInWithEmailUseCase: SignInWithEmailUseCase,
-//    private val signUpWithEmailUseCase: SignUpWithEmailUseCase,
+    private val fetchUsersUseCase: FetchUsersUseCase,
     private val domainToUIMapper: UserDomainToUIMapper
 ) : ViewModelProvider.Factory {
 
@@ -26,11 +23,8 @@ class SelectUserViewModelFactory @AssistedInject constructor(
         return SelectUserViewModel(
             communication,
             navigationCommunication,
-            getCurrentUserUseCase,
             setCurrentUserUseCase,
-            getUsers,
-//            signInWithEmailUseCase,
-//            signUpWithEmailUseCase,
+            fetchUsersUseCase,
             domainToUIMapper
         ) as T
     }

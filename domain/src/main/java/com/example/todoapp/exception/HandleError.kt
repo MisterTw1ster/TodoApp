@@ -1,6 +1,10 @@
 package com.example.todoapp.exception
 
 import com.example.todoapp.di.DomainScope
+import com.example.todoapp.exception.auth.EmailNotFoundException
+import com.example.todoapp.exception.auth.InvalidEmailException
+import com.example.todoapp.exception.auth.InvalidPasswordException
+import com.example.todoapp.exception.auth.WeakPasswordException
 import javax.inject.Inject
 
 @DomainScope
@@ -16,4 +20,6 @@ interface HandleError<T> {
             }
 
     }
+
+
 }

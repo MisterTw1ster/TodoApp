@@ -4,7 +4,18 @@ sealed class AuthResult {
 
     data class Success(
         val user: UserDomain
-    ): AuthResult()
+    ) : AuthResult()
 
-    class Failure(val error: String): AuthResult()
+    data class LoginError(
+        val error: String
+    ) : AuthResult()
+
+    data class PasswordError(
+        val error: String
+    ) : AuthResult()
+
+    data class Failure(
+        val error: String
+    ) : AuthResult()
+
 }

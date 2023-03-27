@@ -1,7 +1,10 @@
 package com.example.todoapp.presentation.tasks
 
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.LifecycleOwner
-import com.example.todoapp.databinding.FragmentTasksBinding
+import com.example.todoapp.R
+import com.example.todoapp.databinding.FragmentTasks2Binding
+import com.example.todoapp.databinding.NavHeaderMainBinding
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -9,18 +12,17 @@ import dagger.assisted.AssistedInject
 
 class TasksViewController @AssistedInject constructor(
     @Assisted("tasksFragment") private val fragment: TasksFragment,
-    @Assisted("tasksFragmentBinding") private val binding: FragmentTasksBinding,
+    @Assisted("tasksFragmentBinding") private val binding: FragmentTasks2Binding,
     @Assisted("tasksLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("tasksViewModel") private val viewModel: TasksViewModel,
-    @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter,
-//    private val navigation: Navigation
+    @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter
 ) {
 
     @AssistedFactory
     interface Factory {
         fun create(
             @Assisted("tasksFragment") fragment: TasksFragment,
-            @Assisted("tasksFragmentBinding") binding: FragmentTasksBinding,
+            @Assisted("tasksFragmentBinding") binding: FragmentTasks2Binding,
             @Assisted("tasksLifecycleOwner") lifecycleOwner: LifecycleOwner,
             @Assisted("tasksViewModel") viewModel: TasksViewModel,
             @Assisted("tasksAdapter") tasksAdapter: TasksAdapter
@@ -41,6 +43,10 @@ class TasksViewController @AssistedInject constructor(
 
         }
 
+        val viewHeader = binding.navView.getHeaderView(0)
+        val bindingHeader: NavHeaderMainBinding = NavHeaderMainBinding.bind(viewHeader)
+        bindingHeader.tvUserLogin.text = "Текст"
+
         viewModel.observeFilterCompleted(lifecycleOwner) { state ->
             state.apply(binding.cbHideCompleted)
         }
@@ -49,22 +55,29 @@ class TasksViewController @AssistedInject constructor(
             state.apply(binding.tvTitle)
         }
 
-//        viewModel.observeNavigate(lifecycleOwner) { navigation ->
-//            navigation.navigate(fragment)
-//        }
-
         binding.fabAddTask.setOnClickListener {
             viewModel.showDetails()
-//            navigation.newDetailsFragment(fragment)
         }
 
         binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveSettingHideCompleted(isChecked)
         }
 
-        binding.ibSignOut.setOnClickListener {
-            viewModel.signOut()
+        binding.ibMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        binding.navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_sign_out -> {
+                    viewModel.signOut()
+                    true
+                }
+                else -> false
+            }
+        }
+
+
     }
+
 }

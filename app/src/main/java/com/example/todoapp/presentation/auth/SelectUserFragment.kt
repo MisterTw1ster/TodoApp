@@ -17,9 +17,6 @@ class SelectUserFragment : Fragment() {
 
     private lateinit var selectUserFragmentComponent: SelectUserFragmentComponent
 
-//    @Inject
-//    lateinit var navigation: Navigation
-
     @Inject
     lateinit var selectUserViewControllerFactory: SelectUserViewController.Factory
     private var selectUserViewController: SelectUserViewController? = null
@@ -53,9 +50,9 @@ class SelectUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.init(savedInstanceState == null)
         selectUserViewController =
             selectUserViewControllerFactory.create(
-                this,
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,

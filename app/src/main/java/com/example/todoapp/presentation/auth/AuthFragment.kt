@@ -17,9 +17,6 @@ class AuthFragment : Fragment() {
 
     private lateinit var authFragmentComponent: AuthFragmentComponent
 
-//    @Inject
-//    lateinit var navigation: Navigation
-
     @Inject
     lateinit var authViewControllerFactory: AuthViewController.Factory
 
@@ -55,7 +52,6 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         authViewController =
             authViewControllerFactory.create(
-                this,
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,

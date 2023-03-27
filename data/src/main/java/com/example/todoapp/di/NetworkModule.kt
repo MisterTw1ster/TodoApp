@@ -68,6 +68,7 @@ class NetworkModule {
             .baseUrl(BASE_URL_AUTH)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+//            .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()
         return retrofit.create(AuthService::class.java)
     }

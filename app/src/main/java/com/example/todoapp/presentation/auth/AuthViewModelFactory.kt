@@ -2,7 +2,6 @@ package com.example.todoapp.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.todoapp.presentation.auth.mappers.UserDomainToUIMapper
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
 import com.example.todoapp.usecase.*
 import com.example.todoapp.usecase.auth.*
@@ -13,12 +12,8 @@ import dagger.assisted.AssistedInject
 class AuthViewModelFactory @AssistedInject constructor(
     @Assisted("communication") private val communication: AuthCommunication,
     @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base,
-    //    private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val setCurrentUserUseCase: SetCurrentUserIdUseCase,
-//    private val getUsers: FetchUsersUseCase,
     private val signInWithEmailUseCase: SignInWithEmailUseCase,
     private val signUpWithEmailUseCase: SignUpWithEmailUseCase,
-    private val domainToUIMapper: UserDomainToUIMapper
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -26,12 +21,8 @@ class AuthViewModelFactory @AssistedInject constructor(
         return AuthViewModel(
             communication,
             navigationCommunication,
-//            getCurrentUserUseCase,
-            setCurrentUserUseCase,
-//            getUsers,
             signInWithEmailUseCase,
-            signUpWithEmailUseCase,
-            domainToUIMapper
+            signUpWithEmailUseCase
         ) as T
     }
 

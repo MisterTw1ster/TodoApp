@@ -25,10 +25,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="title_registration">регистрация</string>
 
-
     <string name="hint_password">Пароль</string>
     <string name="hint_login">Логин</string>
     <string name="title_sigh_in">войти</string>
     <string name="title_error">отсутствует интернет</string>
-    <string name="title_select_user">Выберите аккаунт для входа</string>
+
 </resources>

@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.todoapp.App
 import com.example.todoapp.appComponent
-import com.example.todoapp.databinding.FragmentTasksBinding
+import com.example.todoapp.databinding.FragmentTasks2Binding
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
-import com.example.todoapp.presentation.details.DetailsFragment
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import com.example.todoapp.presentation.tasks.adapter.viewtype.TaskViewType
 import com.example.todoapp.presentation.tasks.models.TaskUI
@@ -27,7 +26,6 @@ class TasksFragment : Fragment() {
     lateinit var tasksViewControllerFactory: TasksViewController.Factory
     private var tasksViewController: TasksViewController? = null
 
-//    private val args by navArgs<TasksFragmentArgs>()
 
     @Inject
     lateinit var tasksViewModelFactory: TasksViewModelFactory.Factory
@@ -40,10 +38,7 @@ class TasksFragment : Fragment() {
         )
     }
 
-//    @Inject
-//    lateinit var navigation: Navigation
-
-    private var binding: FragmentTasksBinding? = null
+    private var binding: FragmentTasks2Binding? = null
 
     private val tasksAdapter = TasksAdapter(
         listOf(
@@ -62,7 +57,7 @@ class TasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTasksBinding.inflate(inflater, container, false)
+        binding = FragmentTasks2Binding.inflate(inflater, container, false)
         return binding?.root ?: throw IllegalArgumentException("Layout not found: $inflater")
     }
 
@@ -79,7 +74,6 @@ class TasksFragment : Fragment() {
         tasksViewController?.apply {
             setupViews()
         }
-
     }
 
     override fun onDestroyView() {

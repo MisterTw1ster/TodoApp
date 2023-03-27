@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/back_main"
+    android:background="@color/back_primary"
     android:layout_marginHorizontal="16dp">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:tint="@color/secondary"
+        app:tint="@color/support_border_primary"
         android:src="@drawable/ic_user"/>
 
     <TextView
@@ -22,8 +22,8 @@
         android:singleLine="false"
         android:layout_marginStart="8dp"
         android:gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.Body"
-        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.Regular"
+        android:textColor="@color/label_primary"
         tools:text="User@domain.ru" />
 
 </LinearLayout>

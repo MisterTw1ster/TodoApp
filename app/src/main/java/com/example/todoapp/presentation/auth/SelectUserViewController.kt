@@ -8,7 +8,6 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class SelectUserViewController @AssistedInject constructor(
-    @Assisted("selectUserFragment") private val fragment: SelectUserFragment,
     @Assisted("selectUserFragmentBinding") private val binding: FragmentSelectUserBinding,
     @Assisted("selectUserLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("selectUserViewModel") private val viewModel: SelectUserViewModel,
@@ -18,7 +17,6 @@ class SelectUserViewController @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted("selectUserFragment") fragment: SelectUserFragment,
             @Assisted("selectUserFragmentBinding") binding: FragmentSelectUserBinding,
             @Assisted("selectUserLifecycleOwner") lifecycleOwner: LifecycleOwner,
             @Assisted("selectUserViewModel") viewModel: SelectUserViewModel
@@ -26,7 +24,25 @@ class SelectUserViewController @AssistedInject constructor(
     }
 
     fun setupViews() {
+        setupUsersList()
+        setupAddUser()
+//        binding.rvLocalUsers.apply {
+//            adapter = this@SelectUserViewController.usersAdapter
+//        }
+//
+//        usersAdapter.setOnItemClickListener { user ->
+//            viewModel.selectUser(user)
+//        }
+//
+//        viewModel.observeUsers(lifecycleOwner) { users ->
+//            usersAdapter.submitList(users)
+//        }
+//        binding.twAddUser.setOnClickListener {
+//            viewModel.showAddUser()
+//        }
+    }
 
+    private fun setupUsersList() {
         binding.rvLocalUsers.apply {
             adapter = this@SelectUserViewController.usersAdapter
         }
@@ -38,42 +54,11 @@ class SelectUserViewController @AssistedInject constructor(
         viewModel.observeUsers(lifecycleOwner) { users ->
             usersAdapter.submitList(users)
         }
+    }
 
-//        viewModel.observeStateScreen(lifecycleOwner) { state ->
-//            state.apply(binding.llSelectUser, binding.llNewUser)
-//        }
-//
-//        viewModel.observeError(lifecycleOwner) { error ->
-//            binding.tvError.text = error
-//        }
-
-//        viewModel.observeNavigate(lifecycleOwner) { navigation ->
-//            navigation.navigate(fragment)
-//        }
-
+    private fun setupAddUser() {
         binding.twAddUser.setOnClickListener {
             viewModel.showAddUser()
         }
-
-//        binding.btnSingIn.setOnClickListener {
-//            viewModel.signInWithEmail()
-//        }
-//
-//        binding.btnSingUp.setOnClickListener {
-//            viewModel.signUpWithEmail()
-//        }
-//
-//        binding.etLogin.doAfterTextChanged {
-//            if (binding.etLogin.hasFocus()) {
-//                viewModel.setLogin(it.toString())
-//            }
-//        }
-
-//        binding.etPassword.doAfterTextChanged {
-//            if (binding.etPassword.hasFocus()) {
-//                viewModel.setPassword(it.toString())
-//            }
-//        }
-
     }
 }

@@ -2,15 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.TodoApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorPrimary">@color/back_primary</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/back_secondary</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/back_main</item>
+        <item name="android:statusBarColor">@color/back_secondary</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -19,16 +19,10 @@
     <style name="Theme.YandexSchoolTodo.Light" parent="Theme.TodoApp" />
 
     <style name="Theme.TextInputLayoutOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/secondary</item>
+        <item name="boxStrokeColor">@color/support_border_primary</item>
         <item name="boxStrokeWidth">1dp</item>
-        <item name="android:textColorHint">@color/white</item>
-
-    </style>
-
-    <style name="Theme.TextInputLayoutOutlinedBoxDense" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/secondary</item>
-        <item name="boxStrokeWidth">1dp</item>
-        <item name="endIconTint">@color/secondary</item>
+        <item name="android:textColorHint">@color/label_primary</item>
+        <item name="hintTextColor">@color/label_primary</item>
     </style>
 
 </resources>

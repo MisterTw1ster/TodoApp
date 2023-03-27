@@ -1,7 +1,7 @@
 package com.example.todoapp.repository.auth
 
 import com.example.todoapp.di.DataScope
-import com.example.todoapp.exception.HandleError
+import com.example.todoapp.exception.AuthHandleDomainError
 import com.example.todoapp.mappers.UserDataToDomainMapper
 import com.example.todoapp.models.UserDomain
 import com.example.todoapp.models.UserDomainParams
@@ -15,7 +15,8 @@ class AuthRepositoryImpl @Inject constructor(
     private val authCacheDataSource: AuthCacheDataSource,
     private val authCloudDataSource: AuthCloudDataSource,
     private val dataToDomainMapper: UserDataToDomainMapper,
-    private val handleError: HandleError<Exception>
+//    private val handleError: HandleError<Exception>
+    private val handleError: AuthHandleDomainError
 ) : AuthRepository {
 
     override suspend fun fetchLocalUsers(): List<UserDomain> {
@@ -54,12 +55,36 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun signInWithEmail(userParams: UserDomainParams): UserDomain {
         try {
-            val userData =
-                authCloudDataSource.signInWithEmail(userParams.email, userParams.password)
+            val userData = authCloudDataSource.signInWithEmail(userParams.email, userParams.password)
             authCacheDataSource.addUser(userData)
             authCacheDataSource.setCurrentUserId(userData.localId)
             return dataToDomainMapper.transform(userData)
-        } catch (e: Exception) {
+//            val authResult = authCloudDataSource.signInWithEmail(userParams.email, userParams.password)
+//            when (authResult) {
+//                is AuthResponse.Success -> {
+//                    val userData = authResult.user
+//                    authCacheDataSource.addUser(userData)
+//                    authCacheDataSource.setCurrentUserId(userData.localId)
+//                    return dataToDomainMapper.transform(userData)
+//                }
+//                is AuthResponse.Failure -> {
+//                    throw when (authResult.error.statusMessage) {
+//                        "EMAIL_NOT_FOUND_EXCEPTION" -> EmailNotFoundException()
+//                        "INVALID_EMAIL_EXCEPTION" -> InvalidEmailException()
+//                        "INVALID_PASSWORD_EXCEPTION" -> InvalidPasswordException()
+//                        "WEAK_PASSWORD_EXCEPTION" -> WeakPasswordException()
+//                        else -> UnknownException()
+//                    }
+//
+//                }
+//            }
+
+//            val userData =
+//                authCloudDataSource.signInWithEmail(userParams.email, userParams.password)
+//            authCacheDataSource.addUser(userData)
+//            authCacheDataSource.setCurrentUserId(userData.localId)
+//            return dataToDomainMapper.transform(userData)
+       } catch (e: Exception) {
             throw handleError.handle(e)
         }
     }

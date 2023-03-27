@@ -12,20 +12,24 @@
 <!--    <color name="support_separator">#33000000</color>-->
 <!--    <color name="support_overlay">#0F000000</color>-->
 
-    // Label
-<!--    <color name="label_primary">#8E8E8E</color>-->
+<!--    // Label-->
+<!--    <color name="label_primary">#000000</color>-->
 <!--    <color name="label_secondary">#99000000</color>-->
 <!--    <color name="label_tertiary">#4D000000</color>-->
 <!--    <color name="label_disable">#26000000</color>-->
 
-    // Color
+<!--    // Color-->
+<!--    <color name="color_red">#FF3B30</color>-->
 <!--    <color name="color_green">#34C759</color>-->
 <!--    <color name="color_blue">#007AFF</color>-->
 <!--    <color name="color_gray">#8E8E93</color>-->
 <!--    <color name="color_light">#D1D1D6</color>-->
+<!--    <color name="color_white">#FFFFFF</color>-->
 
-    // Back
-
+<!--    // Back-->
+<!--    <color name="back_primary">#F7F6F2</color>-->
+<!--    <color name="back_secondary">#FFFFFF</color>-->
+<!--    <color name="back_elevated">#FFFFFF</color>-->
 
     //New
 
@@ -39,26 +43,27 @@
     <color name="color_green">#AFC99C</color>
 
     //Back
-    <color name="back_primary">@color/color_white</color>
-    <color name="back_secondary">@color/color_white</color>
-    <color name="back_elevated">@color/color_white</color>
+    <color name="back_primary">@color/color_dark_green_primary</color>
+    <color name="back_secondary">@color/color_dark_green_secondary</color>
+    <color name="back_elevated">@color/color_dark_green_secondary</color>
 
     // Label
-    <color name="label_primary">@color/color_gray</color>
-    <color name="label_secondary">@color/color_white</color>
-    <color name="label_tertiary">@color/color_green</color>
+    <color name="label_primary">@color/color_white</color>
+    <color name="label_secondary">@color/color_gray</color>
+    <color name="label_tertiary">@color/color_coral</color>
 
     // Support
     <color name="support_error">@color/color_coral</color>
-    <color name="support_border_primary">@color/color_coral</color>
+    <color name="support_border_primary">@color/color_green</color>
     <color name="support_border_secondary">@color/color_gray</color>
-    <color name="support_fill_primary">@color/color_white</color>
-    <color name="support_fill_secondary">@color/color_coral</color>
+    <color name="support_fill_primary">@color/color_dark_green_primary</color>
+    <color name="support_fill_secondary">@color/color_green</color>
 
-<!--    <color name="back_main">#FFFFFF</color>-->
-<!--    <color name="back_main_secondary">#FFFFFF</color>-->
-<!--    <color name="secondary">#BA555D</color>-->
-<!--    <color name="error">#FF3B30</color>-->
+    //Main
+<!--    <color name="back_main">#373C36</color>-->
+<!--    <color name="back_main_secondary">#3C413C</color>-->
+<!--    <color name="secondary">#AFC99C</color>-->
+<!--    <color name="error">#BA555D</color>-->
 
     <color name="mtrl_error">@color/support_error</color>
     <color name="mtrl_textinput_default_box_stroke_color">@color/support_border_primary</color>
