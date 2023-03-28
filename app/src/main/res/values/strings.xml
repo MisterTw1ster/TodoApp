@@ -31,4 +31,7 @@
     <string name="title_sigh_in">войти</string>
     <string name="title_error">отсутствует интернет</string>
     <string name="title_select_user">Выберите аккаунт для входа</string>
+    <string name="title_search">поиск</string>
+    <string name="title_sort">сортировка</string>
+    <string name="title_filter">фильтр</string>
 </resources>

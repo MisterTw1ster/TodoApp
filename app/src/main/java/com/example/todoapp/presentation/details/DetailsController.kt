@@ -48,8 +48,8 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupToolbar() {
-        binding.ibCloseToolbar.setOnClickListener { viewModel.closeScreen() }
-        binding.tvSaveToolbar.setOnClickListener {
+//        binding.ibCloseToolbar.setOnClickListener { viewModel.closeScreen() }
+        binding.btnSaveTask.setOnClickListener {
             viewModel.saveTask()
         }
     }
@@ -102,8 +102,8 @@ class DetailsController @AssistedInject constructor(
 
     private fun setupDelete() {
 //        if (args.taskID == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
-        if (args == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
-        binding.llDeleteTaskButton.setOnClickListener {
+        if (args == 0L) binding.btnDeleteTask.visibility = View.INVISIBLE
+        binding.btnDeleteTask.setOnClickListener {
             viewModel.deleteTask()
         }
     }

@@ -4,55 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_primary"
     android:backgroundTint="@color/back_primary"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/mt_toolbar"
+    <include
+        android:id="@+id/standard_toolbar"
+        layout="@layout/view_standard_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/back_primary"
-        app:navigationIconTint="@color/label_primary"
-        app:titleTextColor="@color/label_primary">
-
-        <ImageButton
-            android:id="@+id/ib_closeToolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:gravity="center_vertical"
-            android:background="@color/back_primary"
-            android:src="@drawable/ic_close"
-            app:tint="@color/label_tertiary" />
-
-        <TextView
-            android:id="@+id/tv_saveToolbar"
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:gravity="center_vertical"
-            android:paddingEnd="16dp"
-            android:text="@string/button_save"
-            android:textColor="@color/support_border_primary" />
-
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        android:layout_marginTop="8dp"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingHorizontal="8dp">
+
+                <TextView
+                    style="@style/label_primary_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="28dp"
+                    android:text="Текс" />
 
                 <EditText
                     android:id="@+id/et_textTask"
@@ -62,7 +47,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/shape"
                     android:gravity="top|start"
-                    android:hint="описание"
+                    android:hint="..."
                     android:inputType="textMultiLine"
                     android:minLines="3" />
 
@@ -80,16 +65,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp" />
 
-                <include
-                    layout="@layout/view_separator"/>
+                <include layout="@layout/view_separator" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/sm_deadlineSwitch"
                     style="@style/label_primary_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="43dp"
                     android:checked="true"
+                    android:paddingTop="43dp"
                     android:text="Сделать до" />
 
                 <TextView
@@ -101,36 +85,58 @@
 
             </LinearLayout>
 
-            <include
-                layout="@layout/view_separator"/>
+            <include layout="@layout/view_separator" />
 
-            <LinearLayout
-                android:id="@+id/ll_deleteTaskButton"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_save_task"
+                style="@style/TextAppearance.Button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="64dp"
+                android:background="@drawable/shp_button_primary"
+                android:text="сохранить"
+                android:textColor="@color/white" />
 
-                <ImageView
-                    android:id="@+id/iv_deleteTaskIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_delete" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_delete_task"
+                style="@style/TextAppearance.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="@dimen/standard_distance_between_buttons"
+                android:background="@drawable/shp_button_secondary"
+                android:text="удалить" />
 
-                <TextView
-                    android:id="@+id/tv_deleteTaskText"
-                    style="@style/label_primary_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="16dp"
-                    android:gravity="center_vertical"
-                    android:text="Удалить"
-                    android:textColor="@color/color_red" />
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/ll_deleteTaskButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:clickable="true"-->
+            <!--                android:orientation="horizontal">-->
 
-            </LinearLayout>
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/iv_deleteTaskIcon"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center_vertical"-->
+            <!--                    android:layout_marginStart="16dp"-->
+            <!--                    android:src="@drawable/ic_delete" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tv_deleteTaskText"-->
+            <!--                    style="@style/label_primary_body"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center_vertical"-->
+            <!--                    android:layout_margin="16dp"-->
+            <!--                    android:gravity="center_vertical"-->
+            <!--                    android:text="Удалить"-->
+            <!--                    android:textColor="@color/color_red" />-->
+
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
 

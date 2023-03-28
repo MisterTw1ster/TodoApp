@@ -3,8 +3,8 @@ package com.example.todoapp.presentation.tasks
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.R
-import com.example.todoapp.databinding.FragmentTasks2Binding
-import com.example.todoapp.databinding.NavHeaderMainBinding
+import com.example.todoapp.databinding.FragmentTasks3Binding
+import com.example.todoapp.databinding.ViewSideNavHeaderBinding
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -12,7 +12,7 @@ import dagger.assisted.AssistedInject
 
 class TasksViewController @AssistedInject constructor(
     @Assisted("tasksFragment") private val fragment: TasksFragment,
-    @Assisted("tasksFragmentBinding") private val binding: FragmentTasks2Binding,
+    @Assisted("tasksFragmentBinding") private val binding: FragmentTasks3Binding,
     @Assisted("tasksLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("tasksViewModel") private val viewModel: TasksViewModel,
     @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter
@@ -22,7 +22,7 @@ class TasksViewController @AssistedInject constructor(
     interface Factory {
         fun create(
             @Assisted("tasksFragment") fragment: TasksFragment,
-            @Assisted("tasksFragmentBinding") binding: FragmentTasks2Binding,
+            @Assisted("tasksFragmentBinding") binding: FragmentTasks3Binding,
             @Assisted("tasksLifecycleOwner") lifecycleOwner: LifecycleOwner,
             @Assisted("tasksViewModel") viewModel: TasksViewModel,
             @Assisted("tasksAdapter") tasksAdapter: TasksAdapter
@@ -44,7 +44,7 @@ class TasksViewController @AssistedInject constructor(
         }
 
         val viewHeader = binding.navView.getHeaderView(0)
-        val bindingHeader: NavHeaderMainBinding = NavHeaderMainBinding.bind(viewHeader)
+        val bindingHeader = ViewSideNavHeaderBinding.bind(viewHeader)
         bindingHeader.tvUserLogin.text = "Текст"
 
         viewModel.observeFilterCompleted(lifecycleOwner) { state ->

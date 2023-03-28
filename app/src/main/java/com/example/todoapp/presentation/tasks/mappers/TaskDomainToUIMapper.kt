@@ -31,7 +31,7 @@ class TaskDomainToUIMapper @Inject constructor(
 class ChooseImportanceColor @Inject constructor(
     private val resources: ManageResources
 ){
-    private val default: Int by lazy { resources.color(R.color.color_white) }
+    private val default: Int by lazy { resources.color(R.color.color_white_primary) }
     private val low: Int by lazy { resources.color(R.color.color_green) }
     private val important: Int by lazy { resources.color(R.color.color_red) }
     fun map(source: String) = when(source) {

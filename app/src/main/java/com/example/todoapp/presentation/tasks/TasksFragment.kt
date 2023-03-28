@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.todoapp.App
 import com.example.todoapp.appComponent
-import com.example.todoapp.databinding.FragmentTasks2Binding
+import com.example.todoapp.databinding.FragmentTasks3Binding
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import com.example.todoapp.presentation.tasks.adapter.viewtype.TaskViewType
@@ -38,7 +38,7 @@ class TasksFragment : Fragment() {
         )
     }
 
-    private var binding: FragmentTasks2Binding? = null
+    private var binding: FragmentTasks3Binding? = null
 
     private val tasksAdapter = TasksAdapter(
         listOf(
@@ -57,7 +57,7 @@ class TasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTasks2Binding.inflate(inflater, container, false)
+        binding = FragmentTasks3Binding.inflate(inflater, container, false)
         return binding?.root ?: throw IllegalArgumentException("Layout not found: $inflater")
     }
 

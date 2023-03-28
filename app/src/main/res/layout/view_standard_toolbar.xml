@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mt_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    app:popupTheme="@style/Theme.MyApplication.PopupOverlay"
+    android:background="@color/back_secondary"
+    app:navigationIconTint="@color/label_primary"
+    app:titleTextColor="@color/label_primary">
+
+    <ImageButton
+        android:id="@+id/ib_toolbar_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding8"
+        android:gravity="start"
+        android:background="@color/back_secondary"
+        app:tint="@color/label_primary"
+        android:src="@drawable/ic_arrow_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="@dimen/padding8"
+        android:gravity="start"
+        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.Body"
+        android:text="Задача"/>
+
+</com.google.android.material.appbar.MaterialToolbar>

@@ -85,8 +85,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main"
-            app:menu="@menu/activity_main_drawer" />
+            app:headerLayout="@layout/view_side_nav_header"
+            app:menu="@menu/fragment_tasks_side_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
     <include

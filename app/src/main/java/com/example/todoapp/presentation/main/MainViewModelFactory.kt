@@ -9,7 +9,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-
 class MainViewModelFactory @AssistedInject constructor(
     @Assisted("navigationCommunication") private val navigationCommunication: NavigationCommunication.Base,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,

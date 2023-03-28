@@ -37,7 +37,6 @@
             android:maxLines="3"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.Body"
-            android:textColor="@color/white"
             tools:text="Task" />
 
         <com.example.todoapp.presentation.tasks.view.CustomDateTextView
@@ -46,7 +45,6 @@
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
             android:textAppearance="@style/TextAppearance.Subhead"
-            android:textColor="@color/white"
             android:drawablePadding="4dp"
             tools:text="22.01.2022"/>
 

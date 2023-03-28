@@ -95,7 +95,6 @@ class TasksViewModel(
         navigationCommunication.map(NavigationStrategy.Replace(Screen.SelectUser))
         scope.launch  {
             signOutUseCase()
-//            communication.mapNavigation(NavigationGraph.tasksToSelectUser)
         }
     }
 
@@ -110,10 +109,6 @@ class TasksViewModel(
     fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>) {
         communication.observeFilterCompleted(owner, observer)
     }
-
-//    fun observeNavigate(owner: LifecycleOwner, observer: Observer<NavigationGraph>) {
-//        communication.observeNavigation(owner, observer)
-//    }
 
     fun showDetails(taskId: Long = 0L) {
         navigationCommunication.map(NavigationStrategy.Add(Screen.Details(taskId, userId)))

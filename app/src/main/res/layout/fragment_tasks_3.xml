@@ -5,8 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true" >
-<!--    tools:openDrawer="start">-->
+    android:fitsSystemWindows="true">
+    <!--    tools:openDrawer="start">-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 app:expandedTitleMarginStart="60dp"
                 app:expandedTitleTextAppearance="@style/TextAppearance.LargeTitle"
                 app:expandedTitleTextColor="?android:attr/textColorPrimary"
-                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed" >
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -43,21 +43,49 @@
                         android:id="@+id/ib_menu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical"
                         android:background="@color/back_secondary"
-                        app:tint="@color/label_primary"
-                        android:src="@drawable/ic_menu"/>
+                        android:gravity="start|center_vertical"
+                        android:src="@drawable/ic_menu"
+                        app:tint="@color/label_primary" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingStart="16dp"
-                        android:textSize="20sp"
                         android:gravity="start|center_vertical"
+                        android:paddingStart="16dp"
                         android:text="@string/title"
-                        android:textAppearance="@style/TextAppearance.Body"/>
+                        android:textAppearance="@style/TextAppearance.Body"
+                        android:textSize="20sp" />
 
                 </androidx.appcompat.widget.Toolbar>
+
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:layout_width="40dp"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    android:layout_gravity="bottom"-->
+                <!--                    android:layout_marginStart="60dp"-->
+                <!--                    android:layout_marginBottom="40dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:background="@drawable/shp_report_primary"-->
+                <!--                    tools:text="50"-->
+                <!--                    android:textAppearance="@style/TextAppearance.Body"-->
+                <!--                    app:layout_collapseMode="parallax"-->
+                <!--                    app:layout_collapseParallaxMultiplier="1000"/>-->
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="40dp"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="1000"
+                    android:orientation="horizontal">
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -66,10 +94,10 @@
                     android:layout_gravity="bottom"
                     android:layout_marginStart="60dp"
                     android:layout_marginBottom="18dp"
-                    tools:text="@string/number_of_completed"
                     android:textAppearance="@style/TextAppearance.Body"
                     app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="1000" />
+                    app:layout_collapseParallaxMultiplier="1000"
+                    tools:text="@string/number_of_completed" />
 
                 <CheckBox
                     android:id="@+id/cb_hide_completed"
@@ -78,10 +106,10 @@
                     android:layout_gravity="bottom|end"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="8dp"
+                    android:button="@drawable/is_filter_hide_completed_checkbox"
                     app:layout_anchor="@id/app_bar"
                     app:layout_anchorGravity="bottom|end"
-                    app:layout_collapseMode="pin"
-                    android:button="@drawable/is_filter_hide_completed_checkbox"/>
+                    app:layout_collapseMode="pin" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -96,38 +124,38 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@color/support_border_primary"/>
+            android:indeterminateTint="@color/support_border_primary"
+            android:indeterminateTintMode="src_atop" />
 
         <TextView
             android:id="@+id/tv_empty_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:gravity="center"
+            android:text="@string/empty_list"
             android:textAppearance="@style/TextAppearance.Regular"
-            android:text="@string/empty_list"/>
+            android:visibility="gone" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/btm_app_bar_fab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:backgroundTint="@color/back_secondary"
             app:fabAlignmentMode="end"
-            app:menuAlignmentMode="start"
-            
+
             app:menu="@menu/fragment_tasks_bottom_menu"
-            android:backgroundTint="@color/back_secondary"/>
+            app:menuAlignmentMode="start" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchor="@id/btm_app_bar_fab"
             android:background="@color/support_fill_secondary"
             android:backgroundTint="@color/support_fill_secondary"
-            app:tint="@color/back_primary"
-            app:srcCompat="@drawable/ic_add" />
+            app:layout_anchor="@id/btm_app_bar_fab"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/back_primary" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -136,11 +164,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         android:background="@color/back_primary"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/view_side_nav_header"
-        app:menu="@menu/fragment_tasks_side_menu"
+        app:itemIconTint="@color/support_fill_secondary"
         app:itemTextColor="@color/label_primary"
-        app:itemIconTint="@color/support_fill_secondary"/>
+        app:menu="@menu/fragment_tasks_side_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
