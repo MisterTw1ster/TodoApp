@@ -5,63 +5,73 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.todoapp.models.TaskDomainParams
 import com.example.todoapp.presentation.common.LongDateToString
+import com.example.todoapp.presentation.details.models.ModeScreenDetails
 import com.example.todoapp.presentation.details.models.StateDeadlineUI
+import com.example.todoapp.presentation.details.models.TaskSaveParamsUI
+import com.example.todoapp.presentation.tasks.models.TaskUI
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 interface CommunicationDetails {
 
-    fun getTaskDomainParams(): TaskDomainParams
+    fun getSaveParams(): TaskSaveParamsUI
 
+    fun observeMode(owner: LifecycleOwner, observer: Observer<ModeScreenDetails>)
     fun observeText(owner: LifecycleOwner, observer: Observer<String>)
     fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
     fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
-    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
+//    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
 
+    fun mapMode(source: ModeScreenDetails)
     fun mapTaskID(source: Long)
     fun mapUserID(source: String)
     fun mapText(source: String)
     fun mapImportance(source: String)
     fun initDeadline(source: Long)
     fun mapDeadline(source: Long)
-    fun mapCloseScreen(source: Boolean)
+//    fun mapCloseScreen(source: Boolean)
 
     class Base @AssistedInject constructor(
-        @Assisted("taskId") private val taskId: MutableLiveData<Long> = MutableLiveData(0L),
+        @Assisted("mode") private val mode: MutableLiveData<ModeScreenDetails> = MutableLiveData(),
+        @Assisted("taskId") private val taskId: MutableLiveData<Long> = MutableLiveData(TaskUI.NEW_TASK_ID),
+        @Assisted("userId") private val userId: MutableLiveData<String> = MutableLiveData(""),
         @Assisted("deadline") private val deadline: MutableLiveData<Long> = MutableLiveData(0L),
         @Assisted("text") private val text: MutableLiveData<String> = MutableLiveData(""),
         @Assisted("importance") private val importance: MutableLiveData<String> = MutableLiveData("low"),
         @Assisted("isDone") private val isDone: MutableLiveData<Boolean> = MutableLiveData(false),
-        @Assisted("isClose") private val isClose: MutableLiveData<Boolean> = MutableLiveData(false),
-        @Assisted("userId") private val userId: MutableLiveData<String> = MutableLiveData(""),
+//        @Assisted("isClose") private val isClose: MutableLiveData<Boolean> = MutableLiveData(false),
         private val longDateToString: LongDateToString
     ) : CommunicationDetails {
 
         @AssistedFactory
         interface Factory {
             fun create(
-                @Assisted("taskId") taskId: MutableLiveData<Long> = MutableLiveData(0L),
+                @Assisted("mode") mode: MutableLiveData<ModeScreenDetails> = MutableLiveData(),
+                @Assisted("taskId") taskId: MutableLiveData<Long> = MutableLiveData(TaskUI.NEW_TASK_ID),
+                @Assisted("userId") userId: MutableLiveData<String> = MutableLiveData(""),
                 @Assisted("deadline") deadline: MutableLiveData<Long> = MutableLiveData(0L),
                 @Assisted("text") text: MutableLiveData<String> = MutableLiveData(""),
                 @Assisted("importance") importance: MutableLiveData<String> = MutableLiveData("low"),
                 @Assisted("isDone") isDone: MutableLiveData<Boolean> = MutableLiveData(false),
-                @Assisted("isClose") isClose: MutableLiveData<Boolean> = MutableLiveData(false),
-                @Assisted("userId") userId: MutableLiveData<String> = MutableLiveData("")
+//                @Assisted("isClose") isClose: MutableLiveData<Boolean> = MutableLiveData(false)
             ): Base
         }
 
         private val deadlineState: MutableLiveData<StateDeadlineUI> = MutableLiveData()
 
-        override fun getTaskDomainParams(): TaskDomainParams {
-            return TaskDomainParams(
-                id = taskId.value!!, // TODO
-                text = text.value!!, // TODO
-                importance = importance.value!!, // TODO
-                deadline = deadline.value!!, // TODO
-                isDone = isDone.value!!, // TODO
-                userId = userId.value!!
+        override fun getSaveParams(): TaskSaveParamsUI {
+            val mode = mode.value!!
+            val taskParams = TaskDomainParams(
+                id = taskId.value!!, text = text.value!!,
+                importance = importance.value!!, deadline = deadline.value!!,
+                isDone = isDone.value!!, userId = userId.value!!
             )
+            return TaskSaveParamsUI(mode, taskParams)
+        }
+
+        override fun observeMode(owner: LifecycleOwner, observer: Observer<ModeScreenDetails>) {
+            mode.observe(owner, observer)
         }
 
         override fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) =
@@ -73,6 +83,10 @@ interface CommunicationDetails {
 
         override fun observeImportance(owner: LifecycleOwner, observer: Observer<String>) {
             importance.observe(owner, observer)
+        }
+
+        override fun mapMode(source: ModeScreenDetails) {
+            mode.postValue(source)
         }
 
         override fun mapTaskID(source: Long) {
@@ -111,13 +125,13 @@ interface CommunicationDetails {
             }
         }
 
-        override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
-            isClose.observe(owner, observer)
-        }
-
-        override fun mapCloseScreen(source: Boolean) {
-            isClose.postValue(source)
-        }
+//        override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
+//            isClose.observe(owner, observer)
+//        }
+//
+//        override fun mapCloseScreen(source: Boolean) {
+//            isClose.postValue(source)
+//        }
 
     }
 }

@@ -9,7 +9,7 @@ interface TasksRepository {
     suspend fun getTaskById(id: Long): TaskDomain
     suspend fun addTask(params: TaskDomainParams): TaskDomain
     suspend fun editTask(params: TaskDomainParams): TaskDomain
-    suspend fun deleteTaskById(id: Long): Boolean
-    suspend fun syncCacheToCloud()
-    suspend fun addUserBranch(userId: String): String
+    suspend fun deleteTaskById(taskDomainParams: TaskDomainParams): Boolean
+    suspend fun syncCacheToCloud(currentUserId: String?)
+//    suspend fun addUserBranch(userId: String): String
 }

@@ -13,15 +13,12 @@ import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
 import com.example.todoapp.presentation.tasks.models.StateTasksUI
-import com.example.todoapp.presentation.tasks.models.StateTitleUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.example.todoapp.usecase.auth.GetCurrentUserUseCase
 import com.example.todoapp.usecase.auth.SignOutUseCase
 import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
-import com.example.todoapp.usecase.tasks.EditTaskUseCase
-import com.example.todoapp.usecase.tasks.ObserveCompletedTasksUseCase
-import com.example.todoapp.usecase.tasks.ObserveTasksUseCase
+import com.example.todoapp.usecase.tasks.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -34,7 +31,9 @@ class TasksViewModel(
     private val taskDomainToUIMapper: TaskDomainToUIMapper,
     private val taskUiToDomainParamsMapper: TaskUIToDomainParamsMapper,
     private val observeTasksUseCase: ObserveTasksUseCase,
-    private val observeCompletedTasksUseCase: ObserveCompletedTasksUseCase,
+    private val observeCountCompletedTasksUseCase: ObserveCountCompletedTasksUseCase,
+    private val observeCountNotCompletedTasksImportantUseCase: ObserveCountNotCompletedTasksImportantUseCase,
+    private val observeCountNotCompletedTasksUseCase: ObserveCountNotCompletedTasksUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
     private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
@@ -45,7 +44,8 @@ class TasksViewModel(
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    init {
+    fun init(isFirstRun: Boolean) {
+        if (!isFirstRun) return
         viewModelScope.launch((Dispatchers.IO)) {
             communication.mapTasks(StateTasksUI.Loading)
             observeTasksUseCase(userId).collect { tasksDomain ->
@@ -55,9 +55,20 @@ class TasksViewModel(
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            communication.mapTitle(StateTitleUI.Loading)
-            observeCompletedTasksUseCase(userId).collect { completedTasks ->
-                communication.mapTitle(ChooseStateTitleUI(completedTasks).map())
+            observeCountNotCompletedTasksImportantUseCase(userId).collect { cntTasks ->
+                communication.mapCntTasksImportantNotCompleted(cntTasks)
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            observeCountNotCompletedTasksUseCase(userId).collect { cntTasks ->
+                communication.mapCntTasksNotCompleted(cntTasks)
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            observeCountCompletedTasksUseCase(userId).collect { cntTasks ->
+                communication.mapCntTasksCompleted(cntTasks)
             }
         }
 
@@ -73,9 +84,11 @@ class TasksViewModel(
 
         viewModelScope.launch((Dispatchers.IO)) {
             val currentUser = getCurrentUserUseCase()
-            communication.mapUser(currentUser?.let { userDomainToUIMapper.transform(it) })
+            currentUser?.let { userDomain -> userDomainToUIMapper.transform(userDomain) }
+                ?.let { userUI -> communication.mapUser(userUI) }
         }
     }
+
 
     fun setIsDoneTask(taskUI: TaskUI, value: Boolean) {
         if (taskUI.isDone == value) return
@@ -98,19 +111,31 @@ class TasksViewModel(
         }
     }
 
+    fun observeUser(owner: LifecycleOwner, observer: Observer<UserUI>) {
+        communication.observeUser(owner, observer)
+    }
+
     fun observeTasks(owner: LifecycleOwner, observer: Observer<StateTasksUI>) {
         communication.observeTasks(owner, observer)
     }
 
-    fun observeTitle(owner: LifecycleOwner, observer: Observer<StateTitleUI>) {
-        communication.observeTitle(owner, observer)
+    fun observeCntTasksImportantNotCompleted(owner: LifecycleOwner, observer: Observer<Int>) {
+        communication.observeCntTasksImportantNotCompleted(owner, observer)
+    }
+
+    fun observeCntTasksNotCompleted(owner: LifecycleOwner, observer: Observer<Int>) {
+        communication.observeCntTasksNotCompleted(owner, observer)
+    }
+
+    fun observeCntTasksCompleted(owner: LifecycleOwner, observer: Observer<Int>) {
+        communication.observeCntTasksCompleted(owner, observer)
     }
 
     fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>) {
         communication.observeFilterCompleted(owner, observer)
     }
 
-    fun showDetails(taskId: Long = 0L) {
+    fun showDetails(taskId: Long = TaskUI.NEW_TASK_ID) {
         navigationCommunication.map(NavigationStrategy.Add(Screen.Details(taskId, userId)))
     }
 }
@@ -128,8 +153,3 @@ class ChooseStateTaskUI(private val source: List<TaskUI>) {
     fun map(): StateTasksUI = if (source.isEmpty()) empty else success
 }
 
-class ChooseStateTitleUI(private val source: Int) {
-    private val empty: StateTitleUI by lazy { StateTitleUI.Empty }
-    private val success: StateTitleUI by lazy { StateTitleUI.Success(source) }
-    fun map(): StateTitleUI = if (source == 0) empty else success
-}

@@ -8,19 +8,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import com.example.todoapp.App
 import com.example.todoapp.R
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentDetailsBinding
 import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
-import com.example.todoapp.presentation.auth.SelectUserFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
 
     private lateinit var taskDetailsComponent: DetailsFragmentComponent
-
     private val taskId: Long by lazy { arguments?.getLong(ID_TASK)!! }
     private val userId: String by lazy { arguments?.getString(ID_USER)!! }
 
@@ -35,16 +33,14 @@ class DetailsFragment : Fragment() {
     lateinit var detailsViewModelFactory: DetailsViewModelFactory.Factory
     private val viewModel: DetailsViewModel by viewModels {
         detailsViewModelFactory.create(
-//            args.taskID,
-//            args.userId,
             taskId,
             userId,
-            communicationDetails.create()
+            communicationDetails.create(),
+            (requireActivity().applicationContext as App).provideNavigationCommunication()
         )
     }
 
     var binding: FragmentDetailsBinding? = null
-//    private val args by navArgs<DetailsFragmentArgs>()
 
     override fun onAttach(context: Context) {
         taskDetailsComponent =
@@ -76,6 +72,8 @@ class DetailsFragment : Fragment() {
             .datePicker()
             .setTitleText("Select date of deadline")
             .build()
+
+        viewModel.init(savedInstanceState == null)
 
         detailsController =
             detailsControllerFactory.create(

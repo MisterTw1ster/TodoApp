@@ -2,6 +2,7 @@ package com.example.todoapp.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
 import com.example.todoapp.usecase.tasks.AddTaskUseCase
 import com.example.todoapp.usecase.tasks.DeleteTaskByIdUseCase
 import com.example.todoapp.usecase.tasks.EditTaskUseCase
@@ -14,6 +15,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
     @Assisted("taskId") private val taskId: Long,
     @Assisted("userId") private val userId: String,
     @Assisted("communication") private val communicationDetails: CommunicationDetails,
+    @Assisted("communication") private val navigationCommunication: NavigationCommunication.Base,
     private val addTaskUseCase: AddTaskUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val getTaskById: GetTaskByIdUseCase,
@@ -26,6 +28,7 @@ class DetailsViewModelFactory @AssistedInject constructor(
             taskId,
             userId,
             communicationDetails,
+            navigationCommunication,
             addTaskUseCase,
             editTaskUseCase,
             getTaskById,
@@ -38,7 +41,8 @@ class DetailsViewModelFactory @AssistedInject constructor(
         fun create(
             @Assisted("taskId") taskId: Long,
             @Assisted("userId") userId: String,
-            @Assisted("communication") communicationDetails: CommunicationDetails
+            @Assisted("communication") communicationDetails: CommunicationDetails,
+            @Assisted("communication") navigationCommunication: NavigationCommunication.Base,
         ): DetailsViewModelFactory
     }
 

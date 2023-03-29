@@ -15,10 +15,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/nav_header_desc"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginBottom="16dp"
         app:tint="@color/support_border_primary"
         app:srcCompat="@drawable/ic_user" />
 
@@ -27,6 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/nav_header_subtitle"
-        android:textAppearance="@style/TextAppearance.Body"/>
+        android:textAppearance="@style/TextAppearance.SmallTitle"/>
 
 </LinearLayout>

@@ -13,7 +13,7 @@ class SyncTasksWorker(
     override suspend fun doWork(): Result = try {
         val repository =
             (applicationContext as ProvidePeriodicRepository).providePeriodicRepository()
-        repository.syncCacheToCloud()
+        repository.syncCacheToCloud(null)
         Result.success()
     } catch (e: Exception) {
         Result.retry()

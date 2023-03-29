@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mt_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
@@ -20,6 +21,7 @@
         android:src="@drawable/ic_arrow_back" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
@@ -27,6 +29,6 @@
         android:gravity="start"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.Body"
-        android:text="Задача"/>
+        tools:text="Задача"/>
 
 </com.google.android.material.appbar.MaterialToolbar>

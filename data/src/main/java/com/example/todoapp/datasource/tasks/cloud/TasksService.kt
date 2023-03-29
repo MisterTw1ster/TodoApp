@@ -19,7 +19,7 @@ interface TasksService {
     @DELETE("{user_id}/tasks/{id}.json")
     suspend fun deleteTaskById(@Path("id") id: String, @Path("user_id") userId: String)
 
-    @PATCH("{user_id}.json")
-    suspend fun addUserBranch(@Path("user_id") userId: String)
+//    @PATCH("{user_id}.json")
+//    suspend fun addUserBranch(@Path("user_id") userId: String)
 
 }

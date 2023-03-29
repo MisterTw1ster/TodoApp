@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.databinding.FragmentDetailsBinding
+import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -39,12 +40,19 @@ class DetailsController @AssistedInject constructor(
     }
 
     fun setupViews() {
+        setupModeScreenDetails()
         setupToolbar()
         setupText()
         setupImportance()
         setupDeadline()
         setupDelete()
         setupCloseScreen()
+    }
+
+    private fun setupModeScreenDetails() {
+        viewModel.observeModeScreenDetails(lifecycleOwner) { mode ->
+            mode.apply(binding)
+        }
     }
 
     private fun setupToolbar() {
@@ -101,18 +109,16 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupDelete() {
-//        if (args.taskID == 0L) binding.llDeleteTaskButton.visibility = View.INVISIBLE
-        if (args == 0L) binding.btnDeleteTask.visibility = View.INVISIBLE
+//        if (args == TaskUI.NEW_TASK_ID) binding.btnDeleteTask.visibility = View.INVISIBLE
         binding.btnDeleteTask.setOnClickListener {
             viewModel.deleteTask()
         }
     }
 
-    //TODO
     private fun setupCloseScreen() {
-//        viewModel.observeCloseScreen(lifecycleOwner) { close ->
-//            if (close) navigation.popFragment(fragment)
-//        }
+        binding.standardToolbar.ibToolbarClose.setOnClickListener {
+            viewModel.closeScreen()
+        }
     }
 
     private fun showDatePicker(datePicker: MaterialDatePicker<Long>) {

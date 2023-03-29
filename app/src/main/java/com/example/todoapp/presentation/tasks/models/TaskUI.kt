@@ -11,4 +11,8 @@ data class TaskUI(
     val color: Int,
     val deadlineText: String?,
     val userId: String
-): ItemList
+): ItemList {
+    companion object {
+        const val NEW_TASK_ID = 0L
+    }
+}

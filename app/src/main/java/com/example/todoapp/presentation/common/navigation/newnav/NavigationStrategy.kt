@@ -41,4 +41,11 @@ interface NavigationStrategy {
                 add(containerId, screen.getNewInstance()).addToBackStack(it.simpleName)
             }
     }
+
+    object Pop: NavigationStrategy {
+        override fun navigate(supportFragmentManager: FragmentManager, containerId: Int) {
+            supportFragmentManager.popBackStack()
+        }
+
+    }
 }

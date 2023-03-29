@@ -9,7 +9,6 @@ import com.example.todoapp.presentation.auth.models.UserUI
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
 import com.example.todoapp.presentation.common.navigation.newnav.Screen
-import com.example.todoapp.presentation.main.ChooseStartScreen
 import com.example.todoapp.usecase.auth.FetchUsersUseCase
 import com.example.todoapp.usecase.auth.SetCurrentUserIdUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -36,16 +35,6 @@ class SelectUserViewModel(
             })
         }
     }
-
-//    init {
-//
-//        viewModelScope.launch(Dispatchers.IO) {
-//                val usersDomain = fetchUsersUseCase()
-//                communication.mapUsers(usersDomain.map { user ->
-//                    domainToUIMapper.transform(user)
-//                })
-//        }
-//    }
 
     fun selectUser(user: UserUI) {
         navigationCommunication.map(NavigationStrategy.Replace(Screen.Tasks(user.localId)))

@@ -6,28 +6,34 @@ import androidx.lifecycle.Observer
 import com.example.todoapp.presentation.auth.models.UserUI
 import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
 import com.example.todoapp.presentation.tasks.models.StateTasksUI
-import com.example.todoapp.presentation.tasks.models.StateTitleUI
 
 interface CommunicationTasks {
 
+    fun observeUser(owner: LifecycleOwner, observer: Observer<UserUI>)
     fun observeTasks(owner: LifecycleOwner, observer: Observer<StateTasksUI>)
     fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>)
-    fun observeTitle(owner: LifecycleOwner, observer: Observer<StateTitleUI>)
-//    fun observeNavigation(owner: LifecycleOwner, observer: Observer<NavigationGraph>)
+    fun observeCntTasksImportantNotCompleted(owner: LifecycleOwner, observer: Observer<Int>)
+    fun observeCntTasksNotCompleted(owner: LifecycleOwner, observer: Observer<Int>)
+    fun observeCntTasksCompleted(owner: LifecycleOwner, observer: Observer<Int>)
 
-    fun mapUser(source: UserUI?)
+    fun mapUser(source: UserUI)
     fun mapTasks(source: StateTasksUI)
     fun mapFilterCompleted(source: StateSettingHideCompletedUI)
-    fun mapTitle(source: StateTitleUI)
-//    fun mapNavigation(source: NavigationGraph)
+    fun mapCntTasksImportantNotCompleted(source: Int)
+    fun mapCntTasksNotCompleted(source: Int)
+    fun mapCntTasksCompleted(source: Int)
 
     class Base (
-        private val user: MutableLiveData<UserUI?> = MutableLiveData(),
+        private val user: MutableLiveData<UserUI> = MutableLiveData(),
         private val tasks: MutableLiveData<StateTasksUI> = MutableLiveData(),
         private val filterCompleted: MutableLiveData<StateSettingHideCompletedUI> = MutableLiveData(),
-        private val title: MutableLiveData<StateTitleUI> = MutableLiveData(),
-//        private val navigation: MutableLiveData<NavigationGraph> = MutableLiveData()
+        private val cntTasksImportantNotCompleted: MutableLiveData<Int> = MutableLiveData(),
+        private val cntTasksNotCompleted: MutableLiveData<Int> = MutableLiveData(),
+        private val cntTasksCompleted: MutableLiveData<Int> = MutableLiveData(),
     ): CommunicationTasks {
+        override fun observeUser(owner: LifecycleOwner, observer: Observer<UserUI>) {
+            user.observe(owner, observer)
+        }
 
         override fun observeTasks(owner: LifecycleOwner, observer: Observer<StateTasksUI>) {
             tasks.observe(owner, observer)
@@ -40,15 +46,22 @@ interface CommunicationTasks {
             filterCompleted.observe(owner, observer)
         }
 
-        override fun observeTitle(owner: LifecycleOwner, observer: Observer<StateTitleUI>) {
-            title.observe(owner, observer)
+        override fun observeCntTasksImportantNotCompleted(
+            owner: LifecycleOwner,
+            observer: Observer<Int>
+        ) {
+            cntTasksImportantNotCompleted.observe(owner, observer)
         }
 
-//        override fun observeNavigation(owner: LifecycleOwner, observer: Observer<NavigationGraph>) {
-//            navigation.observe(owner, observer)
-//        }
+        override fun observeCntTasksNotCompleted(owner: LifecycleOwner, observer: Observer<Int>) {
+            cntTasksNotCompleted.observe(owner, observer)
+        }
 
-        override fun mapUser(source: UserUI?) {
+        override fun observeCntTasksCompleted(owner: LifecycleOwner, observer: Observer<Int>) {
+            cntTasksCompleted.observe(owner, observer)
+        }
+
+        override fun mapUser(source: UserUI) {
             user.postValue(source)
         }
 
@@ -60,13 +73,18 @@ interface CommunicationTasks {
             filterCompleted.postValue(source)
         }
 
-        override fun mapTitle(source: StateTitleUI) {
-            title.postValue(source)
+        override fun mapCntTasksImportantNotCompleted(source: Int) {
+            cntTasksImportantNotCompleted.postValue(source)
         }
 
-//        override fun mapNavigation(source: NavigationGraph) {
-//            navigation.postValue(source)
-//        }
+        override fun mapCntTasksNotCompleted(source: Int) {
+            cntTasksNotCompleted.postValue(source)
+        }
+
+        override fun mapCntTasksCompleted(source: Int) {
+            cntTasksCompleted.postValue(source)
+        }
+
     }
 }
 

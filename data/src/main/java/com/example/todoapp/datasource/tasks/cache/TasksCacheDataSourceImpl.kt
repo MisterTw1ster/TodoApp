@@ -22,8 +22,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTaskById(id: Long, userId: String): TaskData {
-        val taskCache = dao.getTaskById(id, userId)
+    override suspend fun getTaskById(id: Long): TaskData {
+        val taskCache = dao.getTaskById(id)
         return cacheToDataMapper.transform(taskCache)
     }
 
@@ -39,24 +39,28 @@ class TasksCacheDataSourceImpl @Inject constructor(
         return task
     }
 
-    override suspend fun deleteTaskById(id: Long, userId: String): Boolean {
-        dao.deleteTaskById(id, userId)
+    override suspend fun deleteTaskById(id: Long): Boolean {
+        dao.deleteTaskById(id)
         return true
     }
 
-    override suspend fun replaceTasks(tasks: List<TaskData>) {
+    override suspend fun replaceTasks(tasks: List<TaskData>, userId: String) {
         val tasksCache = tasks.map { task -> dataToCacheMapper.transform(task) }
-        dao.replaceAll(tasksCache)
+        dao.replaceAll(tasksCache, userId)
     }
 
-    override suspend fun markOutOfSyncDeleteTaskById(id: Long, userId: String) {
+    override suspend fun markOutOfSyncDeleteTaskById(id: Long) {
         val time = System.currentTimeMillis()
-        dao.markOutOfSyncDeleteTaskById(id, time, userId)
+        dao.markOutOfSyncDeleteTaskById(id, time)
+    }
+
+    override suspend fun fetchUsersIdOutOfSyncTasks(): List<String> {
+        return dao.fetchUsersIdOutOfSyncTasks()
     }
 
 
-    override suspend fun fetchOutOfSyncNewTasks(): List<TaskData> {
-        return dao.fetchOutOfSyncNewTasks().map { taskCache ->
+    override suspend fun fetchOutOfSyncNewTasks(userId: String): List<TaskData> {
+        return dao.fetchOutOfSyncNewTasks(userId).map { taskCache ->
             cacheToDataMapper.transform(
                 taskCache.copy(
                     outOfSyncNew = false,
@@ -67,8 +71,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchOutOfSyncEditTasks(): List<TaskData> {
-        return dao.fetchOutOfSyncEditTasks().map { taskCache ->
+    override suspend fun fetchOutOfSyncEditTasks(userId: String): List<TaskData> {
+        return dao.fetchOutOfSyncEditTasks(userId).map { taskCache ->
             cacheToDataMapper.transform(
                 taskCache.copy(
                     outOfSyncNew = false,
@@ -79,8 +83,8 @@ class TasksCacheDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchOutOfSyncMarkDeleteTasks(): List<TaskData> {
-        return dao.fetchOutOfSyncMarkDeleteTasks().map { taskCache ->
+    override suspend fun fetchOutOfSyncMarkDeleteTasks(userId: String): List<TaskData> {
+        return dao.fetchOutOfSyncMarkDeleteTasks(userId).map { taskCache ->
             cacheToDataMapper.transform(
                 taskCache.copy(
                     outOfSyncNew = false,

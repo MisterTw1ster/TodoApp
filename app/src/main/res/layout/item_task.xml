@@ -18,6 +18,7 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:buttonTint="@color/support_fill_secondary"
         android:button="@drawable/is_done_checkbox"/>
 
     <LinearLayout
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
-            android:textAppearance="@style/TextAppearance.Subhead"
+            android:textAppearance="@style/TextAppearance.SmallTitle"
             android:drawablePadding="4dp"
             tools:text="22.01.2022"/>
 

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.todoapp.App
 import com.example.todoapp.appComponent
-import com.example.todoapp.databinding.FragmentTasks3Binding
+import com.example.todoapp.databinding.FragmentTasksBinding
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import com.example.todoapp.presentation.tasks.adapter.viewtype.TaskViewType
@@ -19,26 +19,23 @@ import javax.inject.Inject
 class TasksFragment : Fragment() {
 
     private lateinit var tasksFragmentComponent: TasksFragmentComponent
-
     private val userId: String by lazy { arguments?.getString(ID_USER)!! }
 
     @Inject
     lateinit var tasksViewControllerFactory: TasksViewController.Factory
     private var tasksViewController: TasksViewController? = null
 
-
     @Inject
     lateinit var tasksViewModelFactory: TasksViewModelFactory.Factory
     private val viewModel: TasksViewModel by viewModels {
         tasksViewModelFactory.create(
-//            args.userId,
             userId,
             CommunicationTasks.Base(),
             (requireActivity().applicationContext as App).provideNavigationCommunication()
         )
     }
 
-    private var binding: FragmentTasks3Binding? = null
+    private var binding: FragmentTasksBinding? = null
 
     private val tasksAdapter = TasksAdapter(
         listOf(
@@ -57,15 +54,15 @@ class TasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTasks3Binding.inflate(inflater, container, false)
+        binding = FragmentTasksBinding.inflate(inflater, container, false)
         return binding?.root ?: throw IllegalArgumentException("Layout not found: $inflater")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.init(savedInstanceState == null)
         tasksViewController =
             tasksViewControllerFactory.create(
-                this,
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,
@@ -83,7 +80,6 @@ class TasksFragment : Fragment() {
     }
 
     private fun showDetails(task: TaskUI) {
-//        navigation.editDetailsFragment(this, task.id)
         viewModel.showDetails(task.id)
     }
 
@@ -91,11 +87,8 @@ class TasksFragment : Fragment() {
         viewModel.setIsDoneTask(task, value)
     }
 
-
     companion object {
-
         private const val ID_USER = "user_id"
-
         @JvmStatic
         fun newInstance(userId: String) =
             TasksFragment().apply {

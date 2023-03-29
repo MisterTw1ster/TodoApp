@@ -4,11 +4,10 @@ import com.example.todoapp.di.DataScope
 import com.example.todoapp.exception.HandleDataRequest
 import com.example.todoapp.mappers.TaskDataToDomainMapper
 import com.example.todoapp.mappers.TaskDomainParamsToDataMapper
+import com.example.todoapp.models.TaskData
 import com.example.todoapp.models.TaskDomain
 import com.example.todoapp.models.TaskDomainParams
 import com.example.todoapp.repository.TasksRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -17,24 +16,13 @@ import javax.inject.Inject
 class TasksRepositoryImpl @Inject constructor(
     private val taskCacheDataSource: TasksCacheDataSource,
     private val taskCloudDataSource: TasksCloudDataSource,
-//    private val authCacheDataSource: AuthCacheDataSource,
     private val dataToDomainMapper: TaskDataToDomainMapper,
     private val domainParamsToDataMapper: TaskDomainParamsToDataMapper,
     private val handleDataRequest: HandleDataRequest
 ) : TasksRepository {
 
-    private var userId = "unknown"
-//    private val scope = CoroutineScope(Dispatchers.IO)
-
-//    init {
-//        scope.launch {
-//            authCacheDataSource.getCurrentUserId().collect { userId = it }
-//        }
-//    }
-
-    override suspend fun observeTasks(user_id: String): Flow<List<TaskDomain>> {
-        userId = user_id
-        syncCacheToCloud()
+    override suspend fun observeTasks(userId: String): Flow<List<TaskDomain>> {
+        syncCacheToCloud(userId)
         return taskCacheDataSource.observeTasks().map { tasks ->
             tasks.filter { it.userId == userId }
                  .map { task -> dataToDomainMapper.transform(task) }
@@ -42,7 +30,7 @@ class TasksRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTaskById(id: Long): TaskDomain {
-        val taskData = taskCacheDataSource.getTaskById(id, userId)
+        val taskData = taskCacheDataSource.getTaskById(id)
         return dataToDomainMapper.transform(taskData)
     }
 
@@ -52,7 +40,7 @@ class TasksRepositoryImpl @Inject constructor(
             params = params.copy(id = time), createdAt = time, changedAt = time
         )
         val block = suspend {
-            val taskDataFromCloud = taskCloudDataSource.saveTask(taskData, userId)
+            val taskDataFromCloud = taskCloudDataSource.saveTask(taskData)
             taskCacheDataSource.addTask(taskDataFromCloud)
             dataToDomainMapper.transform(taskDataFromCloud)
         }
@@ -63,7 +51,7 @@ class TasksRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editTask(params: TaskDomainParams): TaskDomain {
-        val currentTaskDataFromCache = taskCacheDataSource.getTaskById(params.id, userId)
+        val currentTaskDataFromCache = taskCacheDataSource.getTaskById(params.id)
 
         if (currentTaskDataFromCache.text == params.text &&
             currentTaskDataFromCache.importance == params.importance &&
@@ -84,7 +72,7 @@ class TasksRepositoryImpl @Inject constructor(
                 outOfSyncDelete = currentTaskDataFromCache.outOfSyncDelete
             )
         val block = suspend {
-            val taskDataFromCloud = taskCloudDataSource.saveTask(taskData, userId)
+            val taskDataFromCloud = taskCloudDataSource.saveTask(taskData)
             taskCacheDataSource.editTask(taskDataFromCloud)
             dataToDomainMapper.transform(taskDataFromCloud)
         }
@@ -95,49 +83,56 @@ class TasksRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun deleteTaskById(id: Long): Boolean {
+    override suspend fun deleteTaskById(taskDomainParams: TaskDomainParams): Boolean {
+        val id = taskDomainParams.id
+        val userId = taskDomainParams.userId
         return try {
-            if (taskCloudDataSource.deleteTaskById(id, userId)) taskCacheDataSource.deleteTaskById(id, userId)
+            if (taskCloudDataSource.deleteTaskById(id, userId)) taskCacheDataSource.deleteTaskById(id)
             true
         } catch (e: Exception) {
-            taskCacheDataSource.markOutOfSyncDeleteTaskById(id, userId)
+            taskCacheDataSource.markOutOfSyncDeleteTaskById(id)
             false
         }
     }
 
-    override suspend fun syncCacheToCloud() {
-        try {
-            val tasksDataFromCloud = taskCloudDataSource.fetchTasks(userId).toMutableList()
+    override suspend fun syncCacheToCloud(currentUserId: String?) {
+        val usersId = taskCacheDataSource.fetchUsersIdOutOfSyncTasks().toMutableList()
+        if (currentUserId != null && !usersId.contains(currentUserId)) {
+            usersId.add(0, currentUserId)
+        }
 
-            val markDeleteTasksData = taskCacheDataSource.fetchOutOfSyncMarkDeleteTasks()
+        for (id in usersId) {
+            val tasksDataFromCloud = mutableListOf<TaskData>()
+            try {
+                tasksDataFromCloud.addAll(taskCloudDataSource.fetchTasks(id))
+            } catch (e: Exception) {
+            }
+
+            val markDeleteTasksData = taskCacheDataSource.fetchOutOfSyncMarkDeleteTasks(id)
             markDeleteTasksData.forEach { taskDataCache ->
                 tasksDataFromCloud.find { it.id == taskDataCache.id }
                     ?.takeIf { it.changedAt <= taskDataCache.changedAt }
                     ?.let { tasksDataFromCloud.remove(it) }
             }
 
-            val markEditTasksData = taskCacheDataSource.fetchOutOfSyncEditTasks()
+            val markEditTasksData = taskCacheDataSource.fetchOutOfSyncEditTasks(id)
             markEditTasksData.forEach { task ->
                 tasksDataFromCloud.find { it.id == task.id }
                     ?.takeIf { it.changedAt < task.changedAt }
                     ?.let { tasksDataFromCloud[tasksDataFromCloud.indexOf(it)] = task }
             }
 
-            val markNewTasksData = taskCacheDataSource.fetchOutOfSyncNewTasks()
+            val markNewTasksData = taskCacheDataSource.fetchOutOfSyncNewTasks(id)
             tasksDataFromCloud.addAll(markNewTasksData)
 
-            if (taskCloudDataSource.replaceTasks(tasksDataFromCloud, userId)) {
-                taskCacheDataSource.replaceTasks(tasksDataFromCloud)
+            try {
+                if (taskCloudDataSource.replaceTasks(tasksDataFromCloud, id)) {
+                    taskCacheDataSource.replaceTasks(tasksDataFromCloud, id)
+                }
+            } catch (e: Exception) {
             }
-
-        } catch (e: Exception) {
-
         }
-    }
 
-    override suspend fun addUserBranch(userId: String): String {
-        taskCloudDataSource.addUserBranch(userId)
-        return userId
     }
 
 }

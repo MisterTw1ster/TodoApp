@@ -70,6 +70,12 @@
         <item name="android:textColor">@color/label_primary</item>
     </style>
 
+    <style name="TextAppearance.SmallTitle" parent="TextAppearance.Medium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/label_primary</item>
+    </style>
+
     <style name="TextAppearance.Button" parent="TextAppearance.Regular">
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">10sp</item>

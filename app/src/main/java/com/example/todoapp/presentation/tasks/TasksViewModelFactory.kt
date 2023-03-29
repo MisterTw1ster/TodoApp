@@ -11,9 +11,7 @@ import com.example.todoapp.usecase.auth.GetCurrentUserUseCase
 import com.example.todoapp.usecase.auth.SignOutUseCase
 import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
-import com.example.todoapp.usecase.tasks.EditTaskUseCase
-import com.example.todoapp.usecase.tasks.ObserveCompletedTasksUseCase
-import com.example.todoapp.usecase.tasks.ObserveTasksUseCase
+import com.example.todoapp.usecase.tasks.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -25,7 +23,9 @@ class TasksViewModelFactory @AssistedInject constructor(
     private val domainToUIMapper: TaskDomainToUIMapper,
     private val uiToDomainParamsMapper: TaskUIToDomainParamsMapper,
     private val observeTasksUseCase: ObserveTasksUseCase,
-    private val observeCompletedTasksUseCase: ObserveCompletedTasksUseCase,
+    private val observeCountCompletedTasksUseCase: ObserveCountCompletedTasksUseCase,
+    private val observeCountNotCompletedTasksImportantUseCase: ObserveCountNotCompletedTasksImportantUseCase,
+    private val observeCountNotCompletedTasksUseCase: ObserveCountNotCompletedTasksUseCase,
     private val editTaskUseCase: EditTaskUseCase,
     private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
     private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
@@ -43,7 +43,9 @@ class TasksViewModelFactory @AssistedInject constructor(
             domainToUIMapper,
             uiToDomainParamsMapper,
             observeTasksUseCase,
-            observeCompletedTasksUseCase,
+            observeCountCompletedTasksUseCase,
+            observeCountNotCompletedTasksImportantUseCase,
+            observeCountNotCompletedTasksUseCase,
             editTaskUseCase,
             observeSettingHideCompletedUseCase,
             saveSettingHideCompletedUseCase,

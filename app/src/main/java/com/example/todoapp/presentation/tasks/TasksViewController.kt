@@ -3,7 +3,7 @@ package com.example.todoapp.presentation.tasks
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.todoapp.R
-import com.example.todoapp.databinding.FragmentTasks3Binding
+import com.example.todoapp.databinding.FragmentTasksBinding
 import com.example.todoapp.databinding.ViewSideNavHeaderBinding
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 import dagger.assisted.Assisted
@@ -11,8 +11,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class TasksViewController @AssistedInject constructor(
-    @Assisted("tasksFragment") private val fragment: TasksFragment,
-    @Assisted("tasksFragmentBinding") private val binding: FragmentTasks3Binding,
+    @Assisted("tasksFragmentBinding") private val binding: FragmentTasksBinding,
     @Assisted("tasksLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("tasksViewModel") private val viewModel: TasksViewModel,
     @Assisted("tasksAdapter") private val tasksAdapter: TasksAdapter
@@ -21,8 +20,7 @@ class TasksViewController @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted("tasksFragment") fragment: TasksFragment,
-            @Assisted("tasksFragmentBinding") binding: FragmentTasks3Binding,
+            @Assisted("tasksFragmentBinding") binding: FragmentTasksBinding,
             @Assisted("tasksLifecycleOwner") lifecycleOwner: LifecycleOwner,
             @Assisted("tasksViewModel") viewModel: TasksViewModel,
             @Assisted("tasksAdapter") tasksAdapter: TasksAdapter
@@ -45,14 +43,26 @@ class TasksViewController @AssistedInject constructor(
 
         val viewHeader = binding.navView.getHeaderView(0)
         val bindingHeader = ViewSideNavHeaderBinding.bind(viewHeader)
-        bindingHeader.tvUserLogin.text = "Текст"
+
 
         viewModel.observeFilterCompleted(lifecycleOwner) { state ->
             state.apply(binding.cbHideCompleted)
         }
 
-        viewModel.observeTitle(lifecycleOwner) { state ->
-            state.apply(binding.tvTitle)
+        viewModel.observeUser(lifecycleOwner) { user ->
+            bindingHeader.tvUserLogin.text = user.email
+        }
+
+        viewModel.observeCntTasksImportantNotCompleted(lifecycleOwner) { cntTasks ->
+            binding.twCountTaskImportantValue.text = cntTasks.toString()
+        }
+
+        viewModel.observeCntTasksNotCompleted(lifecycleOwner) { cntTasks ->
+            binding.tvCountTaskValue.text = cntTasks.toString()
+        }
+
+        viewModel.observeCntTasksCompleted(lifecycleOwner) { cntTasks ->
+            binding.twCountTaskCompletedValue.text = cntTasks.toString()
         }
 
         binding.fabAddTask.setOnClickListener {
@@ -77,6 +87,23 @@ class TasksViewController @AssistedInject constructor(
             }
         }
 
+        binding.btmAppBarFab.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.btm_search -> {
+                    viewModel.showDetails()
+                    true
+                }
+                R.id.btm_sort -> {
+                    viewModel.showDetails()
+                    true
+                }
+                R.id.btm_filter -> {
+                    viewModel.showDetails()
+                    true
+                }
+                else -> false
+            }
+        }
 
     }
 

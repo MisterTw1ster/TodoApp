@@ -23,10 +23,11 @@ sealed class StateDeadlineUI {
             textView.text = deadlineText
         }
     }
+
     object Off : StateDeadlineUI() {
         override fun apply(textView: TextView, compoundButton: CompoundButton) {
             textView.visibility = View.GONE
         }
 
-}
+    }
 }

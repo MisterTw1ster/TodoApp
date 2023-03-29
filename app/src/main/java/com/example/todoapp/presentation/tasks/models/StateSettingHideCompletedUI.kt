@@ -15,7 +15,7 @@ sealed class StateSettingHideCompletedUI {
         }
     }
 
-    abstract class Abstract() : StateSettingHideCompletedUI() {
+    abstract class Abstract : StateSettingHideCompletedUI() {
         override fun apply(compoundButton: CompoundButton) { }
     }
 
