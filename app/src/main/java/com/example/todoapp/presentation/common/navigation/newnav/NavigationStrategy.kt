@@ -3,6 +3,7 @@ package com.example.todoapp.presentation.common.navigation.newnav
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.todoapp.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 interface NavigationStrategy {
 
@@ -43,9 +44,17 @@ interface NavigationStrategy {
     }
 
     object Pop: NavigationStrategy {
+
         override fun navigate(supportFragmentManager: FragmentManager, containerId: Int) {
             supportFragmentManager.popBackStack()
         }
+    }
 
+    data class Modal(val screen: ScreenModal): NavigationStrategy {
+
+        override fun navigate(supportFragmentManager: FragmentManager, containerId: Int) {
+            val bottomSheetDialog = (screen.getNewInstance() as BottomSheetDialogFragment)
+            bottomSheetDialog.show(supportFragmentManager, screen.getTag())
+        }
     }
 }

@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
 
-
 sealed class StateTasksUI {
 
     abstract fun apply(recyclerView: RecyclerView, emptyText: TextView, loadingText: ProgressBar)

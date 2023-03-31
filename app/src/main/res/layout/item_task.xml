@@ -11,6 +11,7 @@
         android:layout_width="4dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
+        android:contentDescription="@string/content_description_importance"
         tools:background="@color/color_red"/>
 
     <CheckBox
@@ -44,7 +45,6 @@
             android:id="@+id/tv_deadline_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="4dp"
             android:textAppearance="@style/TextAppearance.SmallTitle"
             android:drawablePadding="4dp"
             tools:text="22.01.2022"/>

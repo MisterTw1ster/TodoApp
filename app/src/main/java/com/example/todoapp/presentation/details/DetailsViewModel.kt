@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
+import com.example.todoapp.presentation.common.navigation.newnav.ScreenModal
 import com.example.todoapp.presentation.details.models.ModeScreenDetails
 import com.example.todoapp.presentation.details.models.StateDeadlineUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
@@ -44,6 +45,7 @@ class DetailsViewModel(
                 with(taskDomain) {
                     communicationDetails.mapText(text)
                     communicationDetails.mapImportance(importance)
+                    communicationDetails.mapIsDone(isDone)
                     deadlineInit = deadline
 
                 }
@@ -88,6 +90,10 @@ class DetailsViewModel(
         communicationDetails.observeText(owner, observer)
     }
 
+    fun observeIsDone(owner: LifecycleOwner, observer: Observer<Boolean>) {
+        communicationDetails.observeIsDone(owner, observer)
+    }
+
     fun setTextTask(text: String) {
         communicationDetails.mapText(text)
     }
@@ -98,6 +104,15 @@ class DetailsViewModel(
 
     fun setDeadlineTask(time: Long = 0L) {
         communicationDetails.mapDeadline(time)
+    }
+
+    fun setIsDone(isDone: Boolean) {
+        communicationDetails.mapIsDone(isDone)
+    }
+
+    fun showImportanceModal() {
+        val screen = ScreenModal.Importance
+        navigationCommunication.map(NavigationStrategy.Modal(screen))
     }
 
     fun closeScreen() {

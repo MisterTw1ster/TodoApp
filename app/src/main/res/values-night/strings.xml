@@ -37,5 +37,22 @@
     <string name="report_is_done_title">выполнено</string>
     <string name="content_description_menu">menu</string>
     <string name="content_description_add_task">add</string>
+    <string name="tint_task_text">Введите задачу</string>
+    <string name="content_description_current_user">текущий пользователь</string>
+    <string name="content_description_icon_app">иконка приложения</string>
+    <string name="content_description_user">пользователь</string>
+    <string name="content_description_importance">важность</string>
+    <string name="content_description_add_new_user">добавить нового пользователя</string>
+    <string name="add_user">Добавить аккаунт</string>
+    <string name="content_description_minus_separator">минус</string>
+    <string name="importance">Важность</string>
+    <string name="low_importance">низная</string>
+    <string name="basic_importance">обычная</string>
+    <string name="important_importance">высокая</string>
+    <string name="content_description_deadline">Срок выполнения</string>
+    <string name="content_description_close">закрыть</string>
+    <string name="save">сохранить</string>
+    <string name="delete">удалить</string>
+    <string name="content_description_back">назад</string>
 
 </resources>

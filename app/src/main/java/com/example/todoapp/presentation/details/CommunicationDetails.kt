@@ -21,7 +21,7 @@ interface CommunicationDetails {
     fun observeText(owner: LifecycleOwner, observer: Observer<String>)
     fun observeImportance(owner: LifecycleOwner, observer: Observer<String>)
     fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>)
-//    fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>)
+    fun observeIsDone(owner: LifecycleOwner, observer: Observer<Boolean>)
 
     fun mapMode(source: ModeScreenDetails)
     fun mapTaskID(source: Long)
@@ -30,7 +30,7 @@ interface CommunicationDetails {
     fun mapImportance(source: String)
     fun initDeadline(source: Long)
     fun mapDeadline(source: Long)
-//    fun mapCloseScreen(source: Boolean)
+    fun mapIsDone(source: Boolean)
 
     class Base @AssistedInject constructor(
         @Assisted("mode") private val mode: MutableLiveData<ModeScreenDetails> = MutableLiveData(),
@@ -40,7 +40,6 @@ interface CommunicationDetails {
         @Assisted("text") private val text: MutableLiveData<String> = MutableLiveData(""),
         @Assisted("importance") private val importance: MutableLiveData<String> = MutableLiveData("low"),
         @Assisted("isDone") private val isDone: MutableLiveData<Boolean> = MutableLiveData(false),
-//        @Assisted("isClose") private val isClose: MutableLiveData<Boolean> = MutableLiveData(false),
         private val longDateToString: LongDateToString
     ) : CommunicationDetails {
 
@@ -54,7 +53,6 @@ interface CommunicationDetails {
                 @Assisted("text") text: MutableLiveData<String> = MutableLiveData(""),
                 @Assisted("importance") importance: MutableLiveData<String> = MutableLiveData("low"),
                 @Assisted("isDone") isDone: MutableLiveData<Boolean> = MutableLiveData(false),
-//                @Assisted("isClose") isClose: MutableLiveData<Boolean> = MutableLiveData(false)
             ): Base
         }
 
@@ -76,6 +74,10 @@ interface CommunicationDetails {
 
         override fun observeDeadlineState(owner: LifecycleOwner, observer: Observer<StateDeadlineUI>) =
             deadlineState.observe(owner, observer)
+
+        override fun observeIsDone(owner: LifecycleOwner, observer: Observer<Boolean>) {
+            isDone.observe(owner, observer)
+        }
 
         override fun observeText(owner: LifecycleOwner, observer: Observer<String>) {
             text.observe(owner, observer)
@@ -109,7 +111,7 @@ interface CommunicationDetails {
             deadline.postValue(source)
             val time = longDateToString.ddMMMMyyyy(source)
             val initStateDeadline =
-                if (time != null) StateDeadlineUI.On(time) else StateDeadlineUI.Off
+                if (time != null) StateDeadlineUI.Success(time) else StateDeadlineUI.Empty
             deadlineState.postValue(
                 StateDeadlineUI.Initial(source != 0L, initStateDeadline)
             )
@@ -119,19 +121,15 @@ interface CommunicationDetails {
             deadline.postValue(source)
             val deadlineText = longDateToString.ddMMMMyyyy(source)
             if (deadlineText == null) {
-                deadlineState.postValue((StateDeadlineUI.Off))
+                deadlineState.postValue((StateDeadlineUI.Empty))
             } else {
-                deadlineState.postValue(StateDeadlineUI.On(deadlineText))
+                deadlineState.postValue(StateDeadlineUI.Success(deadlineText))
             }
         }
 
-//        override fun observeCloseScreen(owner: LifecycleOwner, observer: Observer<Boolean>) {
-//            isClose.observe(owner, observer)
-//        }
-//
-//        override fun mapCloseScreen(source: Boolean) {
-//            isClose.postValue(source)
-//        }
+        override fun mapIsDone(source: Boolean) {
+            isDone.postValue(source)
+        }
 
     }
 }

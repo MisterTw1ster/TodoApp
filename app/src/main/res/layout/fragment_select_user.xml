@@ -43,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:tint="@color/support_fill_secondary"
+                android:contentDescription="@string/content_description_add_new_user"
                 android:src="@drawable/ic_add_user"/>
 
             <TextView
@@ -53,7 +54,7 @@
                 android:layout_marginStart="8dp"
                 android:gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.Regular"
-                android:text="Добавить аккаунт" />
+                android:text="@string/add_user" />
 
         </LinearLayout>
 

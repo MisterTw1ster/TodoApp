@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.example.todoapp.presentation.auth.AuthFragment
 import com.example.todoapp.presentation.auth.SelectUserFragment
 import com.example.todoapp.presentation.details.DetailsFragment
+import com.example.todoapp.presentation.details.importancebottomsheet.ImportanceModalBottomSheetFragment
 import com.example.todoapp.presentation.tasks.TasksFragment
 
 sealed class Screen {
@@ -34,4 +35,16 @@ sealed class Screen {
         override fun getNewInstance() = DetailsFragment.newInstance(taskId, userId)
     }
 
+}
+
+sealed class ScreenModal : Screen() {
+
+    abstract fun getTag(): String
+
+    object Importance : ScreenModal() {
+        override fun getTag() = ImportanceModalBottomSheetFragment.TAG
+        override fun fragment(): Class<out Fragment> = ImportanceModalBottomSheetFragment::class.java
+        override fun getNewInstance() = ImportanceModalBottomSheetFragment()
+
+    }
 }

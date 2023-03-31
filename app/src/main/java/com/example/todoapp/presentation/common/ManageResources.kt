@@ -1,8 +1,6 @@
 package com.example.todoapp.presentation.common
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.todoapp.di.scope.AppScope
 import javax.inject.Inject
 

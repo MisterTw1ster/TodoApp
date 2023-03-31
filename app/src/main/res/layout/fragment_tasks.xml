@@ -212,7 +212,7 @@
         android:layout_gravity="start"
         android:background="@color/back_primary"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/view_side_nav_header"
+        app:headerLayout="@layout/view_side_menu_header"
         app:itemIconTint="@color/support_fill_secondary"
         app:itemTextColor="@color/label_primary"
         app:menu="@menu/fragment_tasks_side_menu" />

@@ -5,7 +5,7 @@
     android:id="@+id/mt_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
-    app:popupTheme="@style/Theme.MyApplication.PopupOverlay"
+    app:popupTheme="@style/Theme.MyApplication.AppBarOverlay"
     android:background="@color/back_secondary"
     app:navigationIconTint="@color/label_primary"
     app:titleTextColor="@color/label_primary">
@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding8"
         android:gravity="start"
+        android:contentDescription="@string/content_description_back"
         android:background="@color/back_secondary"
         app:tint="@color/label_primary"
         android:src="@drawable/ic_arrow_back" />
@@ -24,7 +25,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
+        android:paddingHorizontal="16dp"
         android:paddingTop="@dimen/padding8"
         android:gravity="start"
         android:textSize="20sp"

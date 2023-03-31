@@ -11,9 +11,6 @@ import com.example.todoapp.App
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentTasksBinding
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
-import com.example.todoapp.presentation.tasks.adapter.TasksAdapter
-import com.example.todoapp.presentation.tasks.adapter.viewtype.TaskViewType
-import com.example.todoapp.presentation.tasks.models.TaskUI
 import javax.inject.Inject
 
 class TasksFragment : Fragment() {
@@ -37,11 +34,11 @@ class TasksFragment : Fragment() {
 
     private var binding: FragmentTasksBinding? = null
 
-    private val tasksAdapter = TasksAdapter(
-        listOf(
-            TaskViewType(::showDetails, ::setIsDone),
-        )
-    )
+//    private val tasksAdapter = TasksAdapter(
+//        listOf(
+//            TaskViewType(::showDetails, ::setIsDone),
+//        )
+//    )
 
     override fun onAttach(context: Context) {
         tasksFragmentComponent =
@@ -66,7 +63,6 @@ class TasksFragment : Fragment() {
                 binding!!,
                 viewLifecycleOwner,
                 viewModel,
-                tasksAdapter
             )
         tasksViewController?.apply {
             setupViews()
@@ -79,16 +75,10 @@ class TasksFragment : Fragment() {
         binding = null
     }
 
-    private fun showDetails(task: TaskUI) {
-        viewModel.showDetails(task.id)
-    }
-
-    private fun setIsDone(task: TaskUI, value: Boolean) {
-        viewModel.setIsDoneTask(task, value)
-    }
-
     companion object {
+
         private const val ID_USER = "user_id"
+
         @JvmStatic
         fun newInstance(userId: String) =
             TasksFragment().apply {

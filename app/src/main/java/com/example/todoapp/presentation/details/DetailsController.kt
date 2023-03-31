@@ -1,28 +1,22 @@
 package com.example.todoapp.presentation.details
 
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.LifecycleOwner
+import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDetailsBinding
-import com.example.todoapp.presentation.tasks.models.TaskUI
+import com.example.todoapp.presentation.common.ManageResources
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-
 
 class DetailsController @AssistedInject constructor(
     @Assisted("taskDetailsFragment")  private val fragment: DetailsFragment,
     @Assisted("taskDetailsFragmentBinding") private val binding: FragmentDetailsBinding,
     @Assisted("taskDetailsLifecycleOwner") private val lifecycleOwner: LifecycleOwner,
     @Assisted("taskDetailsViewModel") private val viewModel: DetailsViewModel,
-//    @Assisted("taskDetailsArgs") private val args: DetailsFragmentArgs,
-    @Assisted("taskDetailsArgs") private val args: Long,
-    @Assisted("taskDetailsSpinnerAdapter")private val spinnerAdapter: ArrayAdapter<String>,
-    @Assisted("taskDetailsDatePicker")private val datePicker: MaterialDatePicker<Long>,
-//    private val navigation: Navigation
+    private val resources: ManageResources
 ) {
 
     @AssistedFactory
@@ -31,17 +25,14 @@ class DetailsController @AssistedInject constructor(
             @Assisted("taskDetailsFragment") fragment: DetailsFragment,
             @Assisted("taskDetailsFragmentBinding") binding: FragmentDetailsBinding,
             @Assisted("taskDetailsLifecycleOwner") lifecycleOwner: LifecycleOwner,
-            @Assisted("taskDetailsViewModel") viewModel: DetailsViewModel,
-//            @Assisted("taskDetailsArgs") args: DetailsFragmentArgs,
-            @Assisted("taskDetailsArgs") args: Long,
-            @Assisted("taskDetailsSpinnerAdapter") spinnerAdapter: ArrayAdapter<String>,
-            @Assisted("taskDetailsDatePicker") datePicker: MaterialDatePicker<Long>,
+            @Assisted("taskDetailsViewModel") viewModel: DetailsViewModel
         ): DetailsController
     }
 
     fun setupViews() {
         setupModeScreenDetails()
         setupToolbar()
+        setupIsDone()
         setupText()
         setupImportance()
         setupDeadline()
@@ -50,15 +41,27 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupModeScreenDetails() {
+        fragment.setFragmentResultListener("importanceKey") { _, bundle ->
+            val result = bundle.getString("bundleKey")
+            result?.let { viewModel.setImportanceTask(it) }
+        }
         viewModel.observeModeScreenDetails(lifecycleOwner) { mode ->
             mode.apply(binding)
         }
     }
 
     private fun setupToolbar() {
-//        binding.ibCloseToolbar.setOnClickListener { viewModel.closeScreen() }
         binding.btnSaveTask.setOnClickListener {
             viewModel.saveTask()
+        }
+    }
+
+    private fun setupIsDone() {
+        viewModel.observeIsDone(lifecycleOwner) { isDone ->
+            binding.cbIsDoneTask.isChecked = isDone
+        }
+        binding.cbIsDoneTask.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setIsDone(isChecked)
         }
     }
 
@@ -77,39 +80,36 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupImportance() {
-        viewModel.observeImportance(lifecycleOwner) {
-            binding.spinImportanceTask.setSelection(spinnerAdapter.getPosition(it))
+        binding.llImportanceDetails.setOnClickListener {
+            viewModel.showImportanceModal()
         }
-        binding.spinImportanceTask.adapter = spinnerAdapter
-        binding.spinImportanceTask.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel.setImportanceTask(
-                        binding.spinImportanceTask.adapter.getItem(position).toString()
-                    )
-                }
-            }
+        viewModel.observeImportance(lifecycleOwner) {
+            binding.tvImportanceDetails.text = it
+        }
     }
 
     private fun setupDeadline() {
+        val datePicker: MaterialDatePicker<Long> = MaterialDatePicker
+            .Builder
+            .datePicker()
+            .setTitleText(resources.string(R.string.date_picker_title))
+            .build()
+
+        binding.llDeadlineDetails.setOnClickListener {
+            showDatePicker(datePicker)
+        }
+
+        binding.ivDeadlineClearDetails.setOnClickListener {
+            viewModel.setDeadlineTask(0L)
+        }
+
         viewModel.observeDeadlineState(lifecycleOwner) { state ->
-            state.apply(binding.tvDeadlineDate, binding.smDeadlineSwitch)
+            state.apply(binding.tvDeadlineDetails, binding.ivDeadlineClearDetails)
         }
 
-
-        binding.smDeadlineSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) showDatePicker(datePicker) else viewModel.setDeadlineTask()
-        }
     }
 
     private fun setupDelete() {
-//        if (args == TaskUI.NEW_TASK_ID) binding.btnDeleteTask.visibility = View.INVISIBLE
         binding.btnDeleteTask.setOnClickListener {
             viewModel.deleteTask()
         }

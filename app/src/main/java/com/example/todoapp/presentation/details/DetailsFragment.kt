@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.todoapp.App
-import com.example.todoapp.R
 import com.example.todoapp.appComponent
 import com.example.todoapp.databinding.FragmentDetailsBinding
 import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
-import com.google.android.material.datepicker.MaterialDatePicker
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
@@ -59,32 +56,13 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.item_spinner,
-            listOf("low", "basic", "important")
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_list_item_1)
-        }
-
-        val datePicker: MaterialDatePicker<Long> = MaterialDatePicker
-            .Builder
-            .datePicker()
-            .setTitleText("Select date of deadline")
-            .build()
-
         viewModel.init(savedInstanceState == null)
-
         detailsController =
             detailsControllerFactory.create(
                 this,
                 binding!!,
                 viewLifecycleOwner,
-                viewModel,
-//                args,
-                taskId,
-                spinnerAdapter,
-                datePicker,
+                viewModel
             )
         detailsController?.apply {
             setupViews()

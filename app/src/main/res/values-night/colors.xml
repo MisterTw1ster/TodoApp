@@ -34,6 +34,7 @@
     <color name="support_border_secondary">@color/color_gray</color>
     <color name="support_fill_primary">@color/color_dark_green_primary</color>
     <color name="support_fill_secondary">@color/color_green</color>
+    <color name="support_modal_background">#161816</color>
 
     <color name="mtrl_error">@color/support_error</color>
     <color name="mtrl_textinput_default_box_stroke_color">@color/support_border_primary</color>
