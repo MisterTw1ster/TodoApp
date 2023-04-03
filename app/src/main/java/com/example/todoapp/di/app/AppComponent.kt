@@ -10,6 +10,7 @@ import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
 import com.example.todoapp.di.filters.FiltersFragmentComponent
 import com.example.todoapp.di.mainactivity.MainActivityComponent
 import com.example.todoapp.di.scope.AppScope
+import com.example.todoapp.di.sorting.SortingFragmentComponent
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -32,5 +33,6 @@ interface AppComponent {
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
     fun detailsFragmentComponent(): DetailsFragmentComponent.Factory
     fun filtersFragmentComponent(): FiltersFragmentComponent.Factory
+    fun sortingFragmentComponent(): SortingFragmentComponent.Factory
 
 }

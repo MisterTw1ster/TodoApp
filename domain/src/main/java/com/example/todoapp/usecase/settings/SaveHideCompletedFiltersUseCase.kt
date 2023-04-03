@@ -5,7 +5,7 @@ import com.example.todoapp.repository.SettingsRepository
 import javax.inject.Inject
 
 @DomainScope
-class SaveSettingHideCompletedUseCase @Inject constructor(
+class SaveHideCompletedFiltersUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(onlyNotDone: Boolean) = settingsRepository.saveHideCompletedFilters(onlyNotDone)

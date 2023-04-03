@@ -13,6 +13,7 @@ import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
 import com.example.todoapp.di.filters.FiltersFragmentComponent
 import com.example.todoapp.di.mainactivity.MainActivityComponent
 import com.example.todoapp.di.scope.AppScope
+import com.example.todoapp.di.sorting.SortingFragmentComponent
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
 import dagger.Module
 import dagger.Provides
@@ -20,8 +21,10 @@ import dagger.Provides
 @Module(
     includes = [DatabaseModule::class, NetworkModule::class,
         DataBindModule::class, DomainBindModule::class],
-    subcomponents = [MainActivityComponent::class, SelectUserFragmentComponent::class, AuthFragmentComponent::class,
-        TasksFragmentComponent::class, DetailsFragmentComponent::class, FiltersFragmentComponent::class]
+    subcomponents = [MainActivityComponent::class, SelectUserFragmentComponent::class,
+        AuthFragmentComponent::class, TasksFragmentComponent::class,
+        DetailsFragmentComponent::class, FiltersFragmentComponent::class,
+        SortingFragmentComponent::class]
 )
 class AppModule {
     @Provides

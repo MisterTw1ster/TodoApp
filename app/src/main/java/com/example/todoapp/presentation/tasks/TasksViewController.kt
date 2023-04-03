@@ -108,7 +108,7 @@ class TasksViewController @AssistedInject constructor(
                     true
                 }
                 R.id.btm_sort -> {
-                    viewModel.showDetails()
+                    viewModel.showSorting()
                     true
                 }
                 R.id.btm_filter -> {

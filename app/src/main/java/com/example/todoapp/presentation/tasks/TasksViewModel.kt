@@ -12,13 +12,10 @@ import com.example.todoapp.presentation.common.navigation.newnav.Screen
 import com.example.todoapp.presentation.common.navigation.newnav.ScreenModal
 import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
-import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
 import com.example.todoapp.presentation.tasks.models.StateTasksUI
 import com.example.todoapp.presentation.tasks.models.TaskUI
 import com.example.todoapp.usecase.auth.GetCurrentUserUseCase
 import com.example.todoapp.usecase.auth.SignOutUseCase
-import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
-import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.tasks.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -142,6 +139,10 @@ class TasksViewModel(
 
     fun showFilters() {
         navigationCommunication.map(NavigationStrategy.Modal(ScreenModal.Filters))
+    }
+
+    fun showSorting() {
+        navigationCommunication.map(NavigationStrategy.Modal(ScreenModal.Sorting))
     }
 
 }

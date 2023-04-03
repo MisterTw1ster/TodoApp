@@ -9,8 +9,6 @@ import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.usecase.*
 import com.example.todoapp.usecase.auth.GetCurrentUserUseCase
 import com.example.todoapp.usecase.auth.SignOutUseCase
-import com.example.todoapp.usecase.settings.ObserveSettingHideCompletedUseCase
-import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
 import com.example.todoapp.usecase.tasks.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

@@ -22,4 +22,16 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsDataSource.saveHideCompletedFilters(hide)
     }
 
+    override suspend fun observeSortingTasks(): Flow<String> {
+        return settingsDataSource.observeTasksSorting()
+    }
+
+    override suspend fun getSortingTasks(): String {
+        return settingsDataSource.getTasksSorting()
+    }
+
+    override suspend fun saveSortingTasks(sortMode: String) {
+        settingsDataSource.saveTasksSorting(sortMode)
+    }
+
 }

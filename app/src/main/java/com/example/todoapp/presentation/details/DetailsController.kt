@@ -51,7 +51,7 @@ class DetailsController @AssistedInject constructor(
     }
 
     private fun setupSave() {
-        binding.btnSaveTask.setOnClickListener {
+        binding.btnSaveFilters.setOnClickListener {
             viewModel.saveTask()
         }
     }

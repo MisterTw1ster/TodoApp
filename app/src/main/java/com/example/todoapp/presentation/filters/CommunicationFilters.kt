@@ -3,11 +3,11 @@ package com.example.todoapp.presentation.filters
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.todoapp.presentation.filters.models.FilterSaveParamsUI
+import com.example.todoapp.models.FiltersDomain
 
 interface CommunicationFilters {
 
-    fun getSaveParams(): FilterSaveParamsUI
+    fun getSaveParams(): FiltersDomain
     fun getHideCompleted(): Boolean
 
     fun observeHideCompleted(owner: LifecycleOwner, observer: Observer<Boolean>)
@@ -22,8 +22,8 @@ interface CommunicationFilters {
     ) : CommunicationFilters {
 
 
-        override fun getSaveParams(): FilterSaveParamsUI {
-            return FilterSaveParamsUI(hideCompleted = hideCompleted.value!!)
+        override fun getSaveParams(): FiltersDomain {
+            return FiltersDomain(hideCompleted = hideCompleted.value!!)
         }
 
         override fun getHideCompleted(): Boolean {

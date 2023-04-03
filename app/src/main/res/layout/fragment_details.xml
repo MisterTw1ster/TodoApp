@@ -122,7 +122,7 @@
             <include layout="@layout/view_separator"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_save_task"
+                android:id="@+id/btn_save_filters"
                 style="@style/TextAppearance.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

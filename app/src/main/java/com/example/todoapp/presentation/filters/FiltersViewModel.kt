@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.usecase.settings.FetchFiltersUseCase
-import com.example.todoapp.usecase.settings.SaveSettingHideCompletedUseCase
+import com.example.todoapp.usecase.settings.SaveHideCompletedFiltersUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class FiltersViewModel(
     private val communicationFilters: CommunicationFilters,
     private val fetchTasksFiltersUseCase: FetchFiltersUseCase,
-    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase
+    private val saveHideCompletedFiltersUseCase: SaveHideCompletedFiltersUseCase
 ) : ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -22,7 +22,7 @@ class FiltersViewModel(
     fun init(isFirstRun: Boolean) {
         if (!isFirstRun) return
         viewModelScope.launch(Dispatchers.IO) {
-            val filters = fetchTasksFiltersUseCase.invoke()
+            val filters = fetchTasksFiltersUseCase()
             communicationFilters.mapHideCompleted(filters.hideCompleted)
         }
     }
@@ -30,7 +30,7 @@ class FiltersViewModel(
     fun saveFilters() {
         scope.launch {
             val saveParams = communicationFilters.getSaveParams()
-            saveSettingHideCompletedUseCase.invoke(saveParams.hideCompleted)
+            saveHideCompletedFiltersUseCase(saveParams.hideCompleted)
         }
         closeScreen()
     }

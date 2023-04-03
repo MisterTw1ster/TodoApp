@@ -7,6 +7,7 @@ import com.example.todoapp.presentation.details.DetailsFragment
 import com.example.todoapp.presentation.details.importancebottomsheet.ImportanceModalBottomSheetFragment
 import com.example.todoapp.presentation.tasks.TasksFragment
 import com.example.todoapp.presentation.filters.FiltersFragment
+import com.example.todoapp.presentation.sorting.SortingFragment
 
 sealed class Screen {
 
@@ -46,6 +47,12 @@ sealed class ScreenModal : Screen() {
         override fun getTag() = FiltersFragment.TAG
         override fun fragment(): Class<out Fragment> = FiltersFragment::class.java
         override fun getNewInstance() = FiltersFragment()
+    }
+
+    object Sorting : ScreenModal() {
+        override fun getTag() = SortingFragment.TAG
+        override fun fragment(): Class<out Fragment> = SortingFragment::class.java
+        override fun getNewInstance() = SortingFragment()
     }
 
     object Importance : ScreenModal() {

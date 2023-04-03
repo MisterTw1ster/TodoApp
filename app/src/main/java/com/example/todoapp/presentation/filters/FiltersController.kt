@@ -44,7 +44,7 @@ class FiltersController @AssistedInject constructor(
     }
 
     private fun setupSaveFilters() {
-        binding.btnSaveTask.setOnClickListener {
+        binding.btnSaveFilters.setOnClickListener {
             viewModel.saveFilters()
         }
     }
