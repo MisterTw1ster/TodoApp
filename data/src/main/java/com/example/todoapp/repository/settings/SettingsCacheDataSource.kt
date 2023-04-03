@@ -3,6 +3,7 @@ package com.example.todoapp.repository.settings
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsCacheDataSource {
-    suspend fun observeSettingHideCompleted(): Flow<Boolean>
-    suspend fun saveSettingHideCompleted(hide: Boolean)
+    suspend fun observeHideCompletedFilters(): Flow<Boolean>
+    suspend fun getHideCompletesFilters(): Boolean
+    suspend fun saveHideCompletedFilters(hide: Boolean)
 }

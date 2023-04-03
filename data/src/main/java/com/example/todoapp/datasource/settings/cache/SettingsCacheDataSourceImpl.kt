@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.todoapp.di.DataScope
 import com.example.todoapp.repository.settings.SettingsCacheDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -21,13 +22,19 @@ class SettingsCacheDataSourceImpl @Inject constructor(context: Context) : Settin
 
     private val dataStore = context.dataStore
 
-    override suspend fun observeSettingHideCompleted(): Flow<Boolean> {
+    override suspend fun observeHideCompletedFilters(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[HIDE_COMPLETED] ?: false
         }
     }
 
-    override suspend fun saveSettingHideCompleted(hide: Boolean) {
+    override suspend fun getHideCompletesFilters(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[HIDE_COMPLETED] ?: false
+        }.first()
+    }
+
+    override suspend fun saveHideCompletedFilters(hide: Boolean) {
         dataStore.edit { preferences ->
             preferences[HIDE_COMPLETED] = hide
         }

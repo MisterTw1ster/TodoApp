@@ -2,7 +2,6 @@ package com.example.todoapp.usecase.tasks
 
 import com.example.todoapp.di.DomainScope
 import com.example.todoapp.models.TaskDomain
-import com.example.todoapp.repository.AuthRepository
 import com.example.todoapp.repository.SettingsRepository
 import com.example.todoapp.repository.TasksRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +15,7 @@ class ObserveTasksUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(userId: String): Flow<List<TaskDomain>> {
         val tasksDomain = tasksRepository.observeTasks(userId)
-        val hideCompleted = settingsRepository.observeSettingHideCompleted()
+        val hideCompleted = settingsRepository.observeHideCompletedFilters()
         return tasksDomain.combine(hideCompleted) { tasks, filter ->
             tasks.takeIf { !filter }?.filter { !it.isDone } ?: tasks
         }

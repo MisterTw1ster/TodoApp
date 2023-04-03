@@ -9,6 +9,7 @@ import com.example.todoapp.presentation.auth.models.UserUI
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
 import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
 import com.example.todoapp.presentation.common.navigation.newnav.Screen
+import com.example.todoapp.presentation.common.navigation.newnav.ScreenModal
 import com.example.todoapp.presentation.tasks.mappers.TaskDomainToUIMapper
 import com.example.todoapp.presentation.tasks.mappers.TaskUIToDomainParamsMapper
 import com.example.todoapp.presentation.tasks.models.StateSettingHideCompletedUI
@@ -35,8 +36,8 @@ class TasksViewModel(
     private val observeCountNotCompletedTasksImportantUseCase: ObserveCountNotCompletedTasksImportantUseCase,
     private val observeCountNotCompletedTasksUseCase: ObserveCountNotCompletedTasksUseCase,
     private val editTaskUseCase: EditTaskUseCase,
-    private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
-    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
+//    private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
+//    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val userDomainToUIMapper: UserDomainToUIMapper
@@ -72,15 +73,15 @@ class TasksViewModel(
             }
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            observeSettingHideCompletedUseCase().collect { isEnabled ->
-                communication.mapFilterCompleted(
-                    StateSettingHideCompletedUI.Initial(
-                        isEnabled, ChooseStateHideCompletedTaskUI(isEnabled).map()
-                    )
-                )
-            }
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            observeSettingHideCompletedUseCase().collect { isEnabled ->
+//                communication.mapFilterCompleted(
+//                    StateSettingHideCompletedUI.Initial(
+//                        isEnabled, ChooseStateHideCompletedTaskUI(isEnabled).map()
+//                    )
+//                )
+//            }
+//        }
 
         viewModelScope.launch((Dispatchers.IO)) {
             val currentUser = getCurrentUserUseCase()
@@ -98,11 +99,11 @@ class TasksViewModel(
         }
     }
 
-    fun saveSettingHideCompleted(hideCompleted: Boolean) {
-        scope.launch  {
-            saveSettingHideCompletedUseCase(hideCompleted)
-        }
-    }
+//    fun saveSettingHideCompleted(hideCompleted: Boolean) {
+//        scope.launch  {
+//            saveSettingHideCompletedUseCase(hideCompleted)
+//        }
+//    }
 
     fun signOut() {
         navigationCommunication.map(NavigationStrategy.Replace(Screen.SelectUser))
@@ -131,21 +132,25 @@ class TasksViewModel(
         communication.observeCntTasksCompleted(owner, observer)
     }
 
-    fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>) {
-        communication.observeFilterCompleted(owner, observer)
-    }
+//    fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>) {
+//        communication.observeFilterCompleted(owner, observer)
+//    }
 
     fun showDetails(taskId: Long = TaskUI.NEW_TASK_ID) {
         navigationCommunication.map(NavigationStrategy.Add(Screen.Details(taskId, userId)))
     }
+
+    fun showFilters() {
+        navigationCommunication.map(NavigationStrategy.Modal(ScreenModal.Filters))
+    }
+
 }
 
-
-class ChooseStateHideCompletedTaskUI(private val source: Boolean) {
-    private val on: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.On }
-    private val off: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.Off }
-    fun map(): StateSettingHideCompletedUI = if (source) on else off
-}
+//class ChooseStateHideCompletedTaskUI(private val source: Boolean) {
+//    private val on: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.On }
+//    private val off: StateSettingHideCompletedUI by lazy { StateSettingHideCompletedUI.Off }
+//    fun map(): StateSettingHideCompletedUI = if (source) on else off
+//}
 
 class ChooseStateTaskUI(private val source: List<TaskUI>) {
     private val empty: StateTasksUI by lazy { StateTasksUI.Empty }

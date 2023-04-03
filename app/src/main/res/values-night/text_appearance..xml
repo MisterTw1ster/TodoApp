@@ -38,12 +38,6 @@
     <style name="label_tertiary_body" parent="text_body">
         <item name="android:textColor">@color/label_tertiary</item>
     </style>
-<!--    <style name="color_blue_subhead" parent="text_subhead">-->
-<!--        <item name="android:textColor">@color/color_blue</item>-->
-<!--    </style>-->
-<!--    <style name="support_overlay_button" parent="text_button">-->
-<!--        <item name="android:textColor">@color/support_overlay</item>-->
-<!--    </style>-->
     <style name="label_tertiary_button" parent="text_button">
         <item name="android:textColor">@color/label_tertiary</item>
     </style>

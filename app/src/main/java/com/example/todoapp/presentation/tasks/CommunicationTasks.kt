@@ -11,14 +11,14 @@ interface CommunicationTasks {
 
     fun observeUser(owner: LifecycleOwner, observer: Observer<UserUI>)
     fun observeTasks(owner: LifecycleOwner, observer: Observer<StateTasksUI>)
-    fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>)
+//    fun observeFilterCompleted(owner: LifecycleOwner, observer: Observer<StateSettingHideCompletedUI>)
     fun observeCntTasksImportantNotCompleted(owner: LifecycleOwner, observer: Observer<Int>)
     fun observeCntTasksNotCompleted(owner: LifecycleOwner, observer: Observer<Int>)
     fun observeCntTasksCompleted(owner: LifecycleOwner, observer: Observer<Int>)
 
     fun mapUser(source: UserUI)
     fun mapTasks(source: StateTasksUI)
-    fun mapFilterCompleted(source: StateSettingHideCompletedUI)
+//    fun mapFilterCompleted(source: StateSettingHideCompletedUI)
     fun mapCntTasksImportantNotCompleted(source: Int)
     fun mapCntTasksNotCompleted(source: Int)
     fun mapCntTasksCompleted(source: Int)
@@ -39,12 +39,12 @@ interface CommunicationTasks {
             tasks.observe(owner, observer)
         }
 
-        override fun observeFilterCompleted(
-            owner: LifecycleOwner,
-            observer: Observer<StateSettingHideCompletedUI>
-        ) {
-            filterCompleted.observe(owner, observer)
-        }
+//        override fun observeFilterCompleted(
+//            owner: LifecycleOwner,
+//            observer: Observer<StateSettingHideCompletedUI>
+//        ) {
+//            filterCompleted.observe(owner, observer)
+//        }
 
         override fun observeCntTasksImportantNotCompleted(
             owner: LifecycleOwner,
@@ -69,9 +69,9 @@ interface CommunicationTasks {
             tasks.postValue(source)
         }
 
-        override fun mapFilterCompleted(source: StateSettingHideCompletedUI) {
-            filterCompleted.postValue(source)
-        }
+//        override fun mapFilterCompleted(source: StateSettingHideCompletedUI) {
+//            filterCompleted.postValue(source)
+//        }
 
         override fun mapCntTasksImportantNotCompleted(source: Int) {
             cntTasksImportantNotCompleted.postValue(source)

@@ -35,12 +35,12 @@ class TasksViewController @AssistedInject constructor(
         setupBottomMenu()
 
         //TODO delete after add fragment filter
-        viewModel.observeFilterCompleted(lifecycleOwner) { state ->
-            state.apply(binding.cbHideCompleted)
-        }
-        binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveSettingHideCompleted(isChecked)
-        }
+//        viewModel.observeFilterCompleted(lifecycleOwner) { state ->
+//            state.apply(binding.cbHideCompleted)
+//        }
+//        binding.cbHideCompleted.setOnCheckedChangeListener { _, isChecked ->
+//            viewModel.saveSettingHideCompleted(isChecked)
+//        }
     }
 
     private fun setupTasks() {
@@ -112,7 +112,7 @@ class TasksViewController @AssistedInject constructor(
                     true
                 }
                 R.id.btm_filter -> {
-                    viewModel.showDetails()
+                    viewModel.showFilters()
                     true
                 }
                 else -> false

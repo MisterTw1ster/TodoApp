@@ -31,12 +31,12 @@ class DetailsController @AssistedInject constructor(
 
     fun setupViews() {
         setupModeScreenDetails()
-        setupToolbar()
         setupIsDone()
         setupText()
         setupImportance()
         setupDeadline()
         setupDelete()
+        setupSave()
         setupCloseScreen()
     }
 
@@ -50,7 +50,7 @@ class DetailsController @AssistedInject constructor(
         }
     }
 
-    private fun setupToolbar() {
+    private fun setupSave() {
         binding.btnSaveTask.setOnClickListener {
             viewModel.saveTask()
         }

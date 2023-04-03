@@ -27,8 +27,8 @@ class TasksViewModelFactory @AssistedInject constructor(
     private val observeCountNotCompletedTasksImportantUseCase: ObserveCountNotCompletedTasksImportantUseCase,
     private val observeCountNotCompletedTasksUseCase: ObserveCountNotCompletedTasksUseCase,
     private val editTaskUseCase: EditTaskUseCase,
-    private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
-    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
+//    private val observeSettingHideCompletedUseCase: ObserveSettingHideCompletedUseCase,
+//    private val saveSettingHideCompletedUseCase: SaveSettingHideCompletedUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val userDomainToUIMapper: UserDomainToUIMapper
@@ -47,8 +47,8 @@ class TasksViewModelFactory @AssistedInject constructor(
             observeCountNotCompletedTasksImportantUseCase,
             observeCountNotCompletedTasksUseCase,
             editTaskUseCase,
-            observeSettingHideCompletedUseCase,
-            saveSettingHideCompletedUseCase,
+//            observeSettingHideCompletedUseCase,
+//            saveSettingHideCompletedUseCase,
             getCurrentUserUseCase,
             signOutUseCase,
             userDomainToUIMapper

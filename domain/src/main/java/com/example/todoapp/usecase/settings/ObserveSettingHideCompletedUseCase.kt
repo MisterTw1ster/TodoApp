@@ -9,5 +9,5 @@ import javax.inject.Inject
 class ObserveSettingHideCompletedUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) {
-    suspend operator fun invoke(): Flow<Boolean> = settingsRepository.observeSettingHideCompleted()
+    suspend operator fun invoke(): Flow<Boolean> = settingsRepository.observeHideCompletedFilters()
 }

@@ -57,4 +57,14 @@
     <string name="save">сохранить</string>
     <string name="delete">удалить</string>
     <string name="content_description_back">назад</string>
+    <string name="filter">Фильтр</string>
+    <string name="hide_completed">Скрыть выполненные</string>
+    <string name="title_hide_completed_false">Показать</string>
+    <string name="title_hide_completed_true">Скрыть</string>
+    <string name="title_filters_other">Прочие отборы</string>
+    <string name="title_other_filter_1">фильтр 2</string>
+    <string name="content_description_hide_completed_filter">скрыть выполненные</string>
+    <string name="content_description_other_filter_1">прочие фильтры 1</string>
+    <string name="content_description_other_filter_2">прочие фильтры 2</string>
+    <string name="title_other_filter_2">фильтр 1</string>
 </resources>

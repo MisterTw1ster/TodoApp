@@ -10,12 +10,16 @@ class SettingsRepositoryImpl @Inject constructor(
     private val settingsDataSource: SettingsCacheDataSource,
 ): SettingsRepository {
 
-    override suspend fun observeSettingHideCompleted(): Flow<Boolean> {
-        return settingsDataSource.observeSettingHideCompleted()
+    override suspend fun observeHideCompletedFilters(): Flow<Boolean> {
+        return settingsDataSource.observeHideCompletedFilters()
     }
 
-    override suspend fun saveSettingHideCompleted(hide: Boolean) {
-        settingsDataSource.saveSettingHideCompleted(hide)
+    override suspend fun getHideCompletedFilters(): Boolean {
+        return settingsDataSource.getHideCompletesFilters()
+    }
+
+    override suspend fun saveHideCompletedFilters(hide: Boolean) {
+        settingsDataSource.saveHideCompletedFilters(hide)
     }
 
 }

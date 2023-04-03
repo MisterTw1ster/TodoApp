@@ -7,6 +7,7 @@ import com.example.todoapp.di.DomainScope
 import com.example.todoapp.di.authfragment.AuthFragmentComponent
 import com.example.todoapp.di.authfragment.SelectUserFragmentComponent
 import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
+import com.example.todoapp.di.filters.FiltersFragmentComponent
 import com.example.todoapp.di.mainactivity.MainActivityComponent
 import com.example.todoapp.di.scope.AppScope
 import com.example.todoapp.di.taskfragment.TasksFragmentComponent
@@ -30,5 +31,6 @@ interface AppComponent {
     fun authFragmentComponent(): AuthFragmentComponent.Factory
     fun tasksFragmentComponent(): TasksFragmentComponent.Factory
     fun detailsFragmentComponent(): DetailsFragmentComponent.Factory
+    fun filtersFragmentComponent(): FiltersFragmentComponent.Factory
 
 }

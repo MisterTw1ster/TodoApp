@@ -8,5 +8,5 @@ import javax.inject.Inject
 class SaveSettingHideCompletedUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) {
-    suspend operator fun invoke(onlyNotDone: Boolean) = settingsRepository.saveSettingHideCompleted(onlyNotDone)
+    suspend operator fun invoke(onlyNotDone: Boolean) = settingsRepository.saveHideCompletedFilters(onlyNotDone)
 }
