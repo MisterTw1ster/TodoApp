@@ -1,6 +1,8 @@
-package com.example.todoapp.di.mainactivity
+package com.example.components.di.mainactivity
 
 import dagger.Module
 
 @Module
-class MainActivityModule
+class MainActivityModule {
+
+}

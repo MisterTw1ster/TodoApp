@@ -2,40 +2,52 @@ package com.example.todoapp.di.app
 
 import android.app.Application
 import android.content.Context
-import android.net.ConnectivityManager
-import com.example.todoapp.di.DataBindModule
-import com.example.todoapp.di.DatabaseModule
-import com.example.todoapp.di.DomainBindModule
-import com.example.todoapp.di.NetworkModule
-import com.example.todoapp.di.authfragment.AuthFragmentComponent
-import com.example.todoapp.di.authfragment.SelectUserFragmentComponent
-import com.example.todoapp.di.detailsfragment.DetailsFragmentComponent
-import com.example.todoapp.di.filters.FiltersFragmentComponent
-import com.example.todoapp.di.mainactivity.MainActivityComponent
-import com.example.todoapp.di.scope.AppScope
-import com.example.todoapp.di.sorting.SortingFragmentComponent
-import com.example.todoapp.di.taskfragment.TasksFragmentComponent
+import com.example.components.di.mainactivity.MainActivityComponent
+import com.example.components.di.settings.SettingsBindsModule
+import com.example.components.di.tasks.TasksBindsModule
+import com.example.components.di.users.UsersBindsModule
+import com.example.todoapp.presentation.navigation.CommunicationNavigation
+import com.example.components.presentation.navigation.NavigationImpl
+import com.example.components.presentation.navigation.SingleLiveEvent
+import com.example.core.ManageResources
+import com.example.core.di.scope.AppScope
+import com.example.core_settings_data_source.di.SettingsDataBaseModule
+import com.example.core_task_data_source.di.TasksDatabaseModule
+import com.example.core_task_data_source.di.TasksNetworkModule
+import com.example.core_users_data_source.di.UsersDatabaseModule
+import com.example.core_users_data_source.di.UsersNetworkModule
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 
 @Module(
-    includes = [DatabaseModule::class, NetworkModule::class,
-        DataBindModule::class, DomainBindModule::class],
-    subcomponents = [MainActivityComponent::class, SelectUserFragmentComponent::class,
-        AuthFragmentComponent::class, TasksFragmentComponent::class,
-        DetailsFragmentComponent::class, FiltersFragmentComponent::class,
-        SortingFragmentComponent::class]
+    includes = [
+        TasksNetworkModule::class, TasksDatabaseModule::class, TasksBindsModule::class,
+        UsersNetworkModule::class, UsersDatabaseModule::class, UsersBindsModule::class,
+        SettingsDataBaseModule::class, SettingsBindsModule::class],
+    subcomponents = [MainActivityComponent::class]
 )
 class AppModule {
+
     @Provides
     @AppScope
     fun provideAppContext(app: Application): Context {
         return app.applicationContext
     }
 
-    @Provides
     @AppScope
-    fun provideConnectivityManager(appContext: Context): ConnectivityManager {
-        return appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    @Provides
+    fun provideNavigationCommunication(): CommunicationNavigation {
+        return CommunicationNavigation(SingleLiveEvent())
     }
+
+    @AppScope
+    @Provides
+    fun provideNavigation(communicationNavigation: CommunicationNavigation): NavigationImpl {
+        return NavigationImpl(communicationNavigation)
+    }
+
+    @Provides
+    @Reusable
+    fun provideManageResources(context: Context) = ManageResources(context)
 }

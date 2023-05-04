@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/back_primary"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/view_application_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/title_select_user"
+        android:textAppearance="@style/TextAppearance.Body"
+        android:textColor="@color/label_primary" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_local_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_user_select" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/back_primary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_add_new_user"
+            android:src="@drawable/ic_add_user"
+            app:tint="@color/support_fill_secondary" />
+
+        <TextView
+            android:id="@+id/tw_add_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/add_user"
+            android:textAppearance="@style/TextAppearance.Regular" />
+
+    </LinearLayout>
+
+</LinearLayout>

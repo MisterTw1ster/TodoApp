@@ -1,7 +1,6 @@
-package com.example.todoapp.di.mainactivity
+package com.example.components.di.mainactivity
 
-import com.example.todoapp.di.scope.MainActivityScope
-import com.example.todoapp.presentation.main.MainActivity
+import com.example.components.presentation.MainActivity
 import dagger.Subcomponent
 
 @Subcomponent(modules = [MainActivityModule::class])

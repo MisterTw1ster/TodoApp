@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_icon_app">иконка приложения</string>
+    <string name="content_description_user">пользователь</string>
+    <string name="title_error">отсутствует интернет</string>
+    <string name="content_description_minus_separator">минус разделитель</string>
+    <string name="content_description_back">назад</string>
+    <string name="cancel">отменить</string>
+    <string name="case_was_deleted">Задача удалена</string>
+</resources>

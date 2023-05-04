@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/back_primary"
+    android:layout_marginHorizontal="16dp">
+
+    <include
+        layout="@layout/view_user_icon" />
+
+    <TextView
+        android:id="@+id/tw_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:singleLine="false"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.Regular"
+        android:textColor="@color/label_primary"
+        tools:text="User@domain.ru" />
+
+</LinearLayout>

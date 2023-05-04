@@ -2,46 +2,30 @@ package com.example.todoapp
 
 import android.app.Application
 import android.content.Context
-import androidx.work.Configuration
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.WorkManager
-import androidx.work.WorkerFactory
 import com.example.todoapp.di.app.AppComponent
-import com.example.todoapp.di.app.DaggerAppComponent
-import com.example.todoapp.presentation.common.navigation.newnav.NavigationCommunication
-import com.example.todoapp.presentation.common.navigation.newnav.NavigationStrategy
-import com.example.todoapp.repository.TasksRepository
-import com.example.todoapp.workers.tasks.ProvidePeriodicRepository
-import com.example.todoapp.workers.tasks.SyncTasksWorker
-import javax.inject.Inject
+import com.example.components.di.app.DaggerAppComponent
+import com.example.details.di.TaskDetailsDepsStore
+import com.example.feature_list.di.ListDepsStore
+import com.example.feature_tasks_filters.di.TasksFiltersDepsStore
+import com.example.feature_tasks_sorting.di.TasksSortingDepsStore
+import com.example.feature_user_auth.di.UserAuthDepsStore
+import com.example.feature_user_select.di.UserSelectDepsStore
 
-class App : Application(), ProvidePeriodicRepository {
+class App : Application() {
 
-    lateinit var appComponent: AppComponent
-
-    @Inject
-    lateinit var repository: TasksRepository
-
-    val nav = NavigationCommunication.Base()
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.factory().create(this, "apiKey")
+    }
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.factory().create(this)
-        appComponent.inject(this)
-
-        val workManager = WorkManager.getInstance(this)
-        workManager.enqueueUniquePeriodicWork(
-            SyncTasksWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            SyncTasksWorker.makeRequest()
-        )
+        ListDepsStore.deps = appComponent
+        TaskDetailsDepsStore.deps = appComponent
+        UserSelectDepsStore.deps = appComponent
+        UserAuthDepsStore.deps = appComponent
+        TasksSortingDepsStore.deps = appComponent
+        TasksFiltersDepsStore.deps = appComponent
     }
-
-    override fun providePeriodicRepository(): TasksRepository {
-        return repository
-    }
-
-    fun provideNavigationCommunication(): NavigationCommunication.Base = nav
 
 }
 
@@ -50,5 +34,6 @@ val Context.appComponent: AppComponent
         is App -> appComponent
         else -> this.applicationContext.appComponent
     }
+
 
 
