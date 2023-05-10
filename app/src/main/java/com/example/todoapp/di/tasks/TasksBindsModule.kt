@@ -1,5 +1,6 @@
-package com.example.components.di.tasks
+package com.example.todoapp.di.tasks
 
+import com.example.core.di.qualifier.Tasks
 import com.example.core_domain.exception.HandleError
 import com.example.core_domain.exception.tasks.HandleDomainToStringError
 import com.example.core_domain.repository.TasksRepository
@@ -8,7 +9,6 @@ import com.example.core_task_data_source.cloud.TasksCloudDataSourceImpl
 import com.example.core_task_repository.TasksCacheDataSource
 import com.example.core_task_repository.TasksCloudDataSource
 import com.example.core_task_repository.TasksRepositoryImpl
-import com.example.core.di.qualifier.Tasks
 import com.example.core_task_repository.exception.TasksHandleDataToDomainError
 import dagger.Binds
 import dagger.Module

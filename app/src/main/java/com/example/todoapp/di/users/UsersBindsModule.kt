@@ -1,4 +1,4 @@
-package com.example.components.di.users
+package com.example.todoapp.di.users
 
 import com.example.core_domain.exception.HandleError
 import com.example.core_domain.exception.users.UsersHandleDomainToUsersResultError

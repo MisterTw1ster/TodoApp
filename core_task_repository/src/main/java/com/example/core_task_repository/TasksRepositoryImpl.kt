@@ -117,8 +117,7 @@ class TasksRepositoryImpl @Inject constructor(
             val tasksDataFromCloud = mutableListOf<TaskData>()
             try {
                 tasksDataFromCloud.addAll(taskCloudDataSource.fetchTasks(id))
-            } catch (e: Exception) {
-            }
+            } catch (_: Exception) { }
 
             val markDeleteTasksData = taskCacheDataSource.fetchOutOfSyncMarkDeleteTasks(id)
             markDeleteTasksData.forEach { taskDataCache ->

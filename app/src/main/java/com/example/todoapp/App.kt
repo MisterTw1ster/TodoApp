@@ -2,19 +2,19 @@ package com.example.todoapp
 
 import android.app.Application
 import android.content.Context
-import com.example.todoapp.di.app.AppComponent
-import com.example.components.di.app.DaggerAppComponent
 import com.example.details.di.TaskDetailsDepsStore
 import com.example.feature_list.di.ListDepsStore
 import com.example.feature_tasks_filters.di.TasksFiltersDepsStore
 import com.example.feature_tasks_sorting.di.TasksSortingDepsStore
 import com.example.feature_user_auth.di.UserAuthDepsStore
 import com.example.feature_user_select.di.UserSelectDepsStore
+import com.example.todoapp.di.app.AppComponent
+import com.example.todoapp.di.app.DaggerAppComponent
 
 class App : Application() {
 
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(this, "apiKey")
+        DaggerAppComponent.factory().create(this)
     }
 
     override fun onCreate() {

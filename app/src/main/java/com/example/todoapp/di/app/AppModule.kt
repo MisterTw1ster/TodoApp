@@ -2,10 +2,10 @@ package com.example.todoapp.di.app
 
 import android.app.Application
 import android.content.Context
-import com.example.components.di.mainactivity.MainActivityComponent
-import com.example.components.di.settings.SettingsBindsModule
-import com.example.components.di.tasks.TasksBindsModule
-import com.example.components.di.users.UsersBindsModule
+import com.example.todoapp.di.mainactivity.MainActivityComponent
+import com.example.todoapp.di.settings.SettingsBindsModule
+import com.example.todoapp.di.tasks.TasksBindsModule
+import com.example.todoapp.di.users.UsersBindsModule
 import com.example.todoapp.presentation.navigation.CommunicationNavigation
 import com.example.components.presentation.navigation.NavigationImpl
 import com.example.components.presentation.navigation.SingleLiveEvent

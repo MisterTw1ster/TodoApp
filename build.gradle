@@ -13,6 +13,7 @@ buildscript {
     ext.okhttp_version = "4.9.1"
     ext.retrofit_version = "2.9.0"
     ext.datastore_version = "1.0.0"
+    ext.work_runtime_version = "2.7.1"
 
 
     //

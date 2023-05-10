@@ -1,4 +1,4 @@
-package com.example.components.di.mainactivity
+package com.example.todoapp.di.mainactivity
 
 import com.example.components.presentation.MainActivity
 import dagger.Subcomponent

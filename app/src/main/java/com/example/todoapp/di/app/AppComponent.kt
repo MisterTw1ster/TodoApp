@@ -1,7 +1,6 @@
 package com.example.todoapp.di.app
 
 import android.app.Application
-import com.example.components.di.mainactivity.MainActivityComponent
 import com.example.core.ManageResources
 import com.example.core.di.scope.AppScope
 import com.example.core.navigation.Navigation
@@ -14,9 +13,9 @@ import com.example.feature_tasks_filters.di.TasksFiltersDeps
 import com.example.feature_tasks_sorting.di.TasksSortingDeps
 import com.example.feature_user_auth.di.UserAuthDeps
 import com.example.feature_user_select.di.UserSelectDeps
+import com.example.todoapp.di.mainactivity.MainActivityComponent
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Qualifier
 
 @AppScope
 @Component(modules = [AppModule::class, AppBindsModule::class])
@@ -52,12 +51,8 @@ interface AppComponent : ListDeps, TaskDetailsDeps, UserSelectDeps,
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance app: Application,
-            @[BindsInstance NewsApiKey] apiKey: String
+            @BindsInstance app: Application
         ): AppComponent
     }
 
 }
-
-@Qualifier
-annotation class NewsApiKey
