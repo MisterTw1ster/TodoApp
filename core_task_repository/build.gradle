@@ -37,12 +37,17 @@ dependencies {
     implementation project(':core')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:$test_junit_version"
 
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_core_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
 
     // Dagger 2
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    //mockk
+    testImplementation "io.mockk:mockk:$mockk_version"
 }

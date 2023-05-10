@@ -14,7 +14,7 @@ class ObserveTasksUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) {
     suspend operator fun invoke(userId: String): Flow<List<TaskDomain>> {
-        val tasksDomain = tasksRepository.observeTasks(userId)
+        val tasksDomain = tasksRepository.initAndObserveTasks(userId)
         val hideCompleted = settingsRepository.observeHideCompletedFilters()
         val sortMode = settingsRepository.observeSortingTasks()
         return combine(tasksDomain, hideCompleted, sortMode) {tasks, hideCompletedFilter, modeSort ->

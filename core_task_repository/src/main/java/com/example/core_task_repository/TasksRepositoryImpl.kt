@@ -21,12 +21,9 @@ class TasksRepositoryImpl @Inject constructor(
     private val tasksHandleDataRequest: TasksHandleDataRequest
 ) : TasksRepository {
 
-    override suspend fun observeTasks(userId: String): Flow<List<TaskDomain>> {
+    override suspend fun initAndObserveTasks(userId: String): Flow<List<TaskDomain>> {
         syncCacheToCloud(userId)
-        return taskCacheDataSource.observeTasks().map { tasks ->
-            tasks.filter { it.userId == userId }
-                 .map { task -> dataToDomainMapper.transform(task) }
-        }
+        return observeTask(userId)
     }
 
     override suspend fun getTaskById(id: Long): TaskDomain {
@@ -144,6 +141,13 @@ class TasksRepositoryImpl @Inject constructor(
             }
         }
 
+    }
+
+    internal suspend fun observeTask(userId: String): Flow<List<TaskDomain>> {
+        return taskCacheDataSource.observeTasks().map { tasks ->
+            tasks.filter { it.userId == userId }
+                .map { task -> dataToDomainMapper.transform(task) }
+        }
     }
 
 }
