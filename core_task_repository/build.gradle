@@ -1,3 +1,6 @@
+import com.example.utils.todoapp.Base
+import com.example.utils.todoapp.Deps
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
@@ -6,11 +9,11 @@ plugins {
 
 android {
     namespace 'com.example.core_task_data'
-    compileSdk 32
+    compileSdk Base.currentSDK
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
+        minSdk Base.minSDK
+        targetSdk Base.currentSDK
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -27,7 +30,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -36,18 +39,16 @@ dependencies {
     implementation project(':core_domain')
     implementation project(':core')
 
-    implementation "androidx.core:core-ktx:$core_ktx_version"
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test.ext:$test_junit_version"
+    implementation(Deps.Ktx.core)
 
-    // coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_core_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+    implementation(Deps.coroutinesCore)
 
-    // Dagger 2
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation(Deps.DI.dagger)
+    kapt(Deps.Kapt.dagger)
 
-    //mockk
-    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation(Deps.Test.junit)
+    androidTestImplementation(Deps.Test.junitTest)
+    testImplementation(Deps.Test.mockk)
+    testImplementation(Deps.Test.coroutinesTest)
+
 }
