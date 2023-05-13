@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="appContrastColor" format="reference" />
+
+    <declare-styleable name="ItemFilterView">
+        <attr name="text" format="string"/>
+        <attr name="src" format="reference|color"/>
+    </declare-styleable>
+
+</resources>
