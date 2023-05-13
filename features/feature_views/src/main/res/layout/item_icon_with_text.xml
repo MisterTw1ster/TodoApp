@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:parentTag="androidx.appcompat.widget.LinearLayoutCompat">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFilterIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        tools:src="@drawable/ic_application"
+        android:tint="@color/support_fill_secondary"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFilterText"
+        style="@style/TextRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        tools:text="Установить" />
+
+</merge>

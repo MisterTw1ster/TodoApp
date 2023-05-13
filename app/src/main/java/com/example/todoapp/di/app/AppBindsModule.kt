@@ -1,6 +1,6 @@
 package com.example.todoapp.di.app
 
-import com.example.components.presentation.navigation.NavigationImpl
+import com.example.todoapp.presentation.navigation.NavigationImpl
 import com.example.core.navigation.Navigation
 import dagger.Binds
 import dagger.Module

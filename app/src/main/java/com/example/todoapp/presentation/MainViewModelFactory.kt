@@ -1,9 +1,9 @@
-package com.example.components.presentation
+package com.example.todoapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.presentation.navigation.CommunicationNavigation
-import com.example.components.presentation.navigation.NavigationImpl
+import com.example.todoapp.presentation.navigation.NavigationImpl
 import com.example.core_domain.usecase.users.FetchUsersUseCase
 import com.example.core_domain.usecase.users.GetCurrentUserUseCase
 import javax.inject.Inject

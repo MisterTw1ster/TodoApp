@@ -7,4 +7,26 @@
     <string name="content_description_back">назад</string>
     <string name="cancel">отменить</string>
     <string name="case_was_deleted">Задача удалена</string>
+
+    //
+    <string name="dialog_title">Заголовок</string>
+    <string name="save">сохранить</string>
+
+    <string name="title_hide_completed_false">Показать</string>
+    <string name="title_hide_completed_true">Скрыть</string>
+    <string name="title_filters">Фильтр</string>
+    <string name="hide_completed">Скрыть выполненные</string>
+    <string name="content_description_hide_completed_filter">Скрыть выполненные</string>
+    <string name="title_filters_other">Прочие отборы</string>
+    <string name="content_description_other_filter_1">Фильтр 1</string>
+    <string name="title_other_filter_2">Фильтр 2</string>
+    <string name="content_description_other_filter_2">Фильтр 2</string>
+    <string name="title_other_filter_1">Фильтр 1</string>
+
+    <string name="title_sorting">Сортировка</string>
+    <string name="sort_created_at_desc">дата создания (убыв)</string>
+    <string name="sort_created_at_inc">дата создания (возр)</string>
+    <string name="sort_change_at_desc">дата изменения (убыв)</string>
+    <string name="sort_change_at_inc">дата изменения (возр)</string>
+
 </resources>

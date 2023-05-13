@@ -1,11 +1,11 @@
-package com.example.components.presentation
+package com.example.todoapp.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.presentation.navigation.CommunicationNavigation
-import com.example.components.presentation.navigation.NavigationStrategy
+import com.example.todoapp.presentation.navigation.NavigationStrategy
 import com.example.core.navigation.Navigation
 import com.example.core_domain.usecase.users.FetchUsersUseCase
 import com.example.core_domain.usecase.users.GetCurrentUserUseCase

@@ -1,7 +1,6 @@
-package com.example.components.presentation.navigation
+package com.example.todoapp.presentation.navigation
 
 import com.example.core.navigation.Navigation
-import com.example.todoapp.presentation.navigation.CommunicationNavigation
 
 class NavigationImpl(
     private val communicationNavigation: CommunicationNavigation
@@ -27,22 +26,19 @@ class NavigationImpl(
         communicationNavigation.map(NavigationStrategy.Add(Screen.UserAuth))
     }
 
-    override fun showTasksSortingModal() {
-        communicationNavigation.map(NavigationStrategy.Modal(ScreenModal.Sorting))
-    }
-
-    override fun showTasksFiltersModal() {
-        communicationNavigation.map(NavigationStrategy.Modal(ScreenModal.Filters))
-    }
-
     override fun showImportanceTaskDetails() {
         communicationNavigation.map(NavigationStrategy.Modal(ScreenModal.Importance))
     }
-
 
     override fun pop() {
         communicationNavigation.map(NavigationStrategy.Pop)
     }
 
+    override fun showFilter() {
+        communicationNavigation.map(NavigationStrategy.Modal(ScreenModal.Filter))
+    }
 
+    override fun showSorting() {
+        communicationNavigation.map(NavigationStrategy.Modal(ScreenModal.Sorting))
+    }
 }

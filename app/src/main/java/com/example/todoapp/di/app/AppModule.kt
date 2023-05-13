@@ -7,8 +7,8 @@ import com.example.todoapp.di.settings.SettingsBindsModule
 import com.example.todoapp.di.tasks.TasksBindsModule
 import com.example.todoapp.di.users.UsersBindsModule
 import com.example.todoapp.presentation.navigation.CommunicationNavigation
-import com.example.components.presentation.navigation.NavigationImpl
-import com.example.components.presentation.navigation.SingleLiveEvent
+import com.example.todoapp.presentation.navigation.NavigationImpl
+import com.example.todoapp.presentation.navigation.SingleLiveEvent
 import com.example.core.ManageResources
 import com.example.core.di.scope.AppScope
 import com.example.core_settings_data_source.di.SettingsDataBaseModule

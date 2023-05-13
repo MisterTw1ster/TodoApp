@@ -6,8 +6,9 @@ interface Navigation {
     fun showUserSelectReplace()
     fun showAuthUserReplace()
     fun showAuthUserAdd()
-    fun showTasksSortingModal()
-    fun showTasksFiltersModal()
     fun showImportanceTaskDetails()
     fun pop()
+    fun showFilter()
+    fun showSorting()
+
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shp_rounded_bottom_sheet"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp">
+
+    <include layout="@layout/view_minus_line_divider" />
+
+    <include
+        android:id="@+id/dialogTitle"
+        layout="@layout/view_dialog_title" />
+
+    <RadioGroup
+        android:id="@+id/sortingRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:checkedButton="@+id/createdAtDescSort">
+
+        <RadioButton
+            android:id="@+id/createdAtDescSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/support_fill_secondary"
+            android:text="@string/sort_created_at_desc" />
+
+        <RadioButton
+            android:id="@+id/createdAtIncSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/support_fill_secondary"
+            android:text="@string/sort_created_at_inc" />
+
+        <RadioButton
+            android:id="@+id/changeAtDescSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/support_fill_secondary"
+            android:text="@string/sort_change_at_desc" />
+
+        <RadioButton
+            android:id="@+id/changeAtIncSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:buttonTint="@color/support_fill_secondary"
+            android:text="@string/sort_change_at_inc" />
+
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSaveSorting"
+        style="@style/ButtonPrimary"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/save" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

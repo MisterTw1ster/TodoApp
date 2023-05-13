@@ -111,11 +111,13 @@ class ListViewModel(
     }
 
     fun showFilters() {
-        navigation.showTasksFiltersModal()
+        navigation.showFilter()
+//        navigation.showTasksFiltersModal()
     }
 
     fun showSorting() {
-        navigation.showTasksSortingModal()
+        navigation.showSorting()
+//        navigation.showTasksSortingModal()
     }
 
     fun searchTaskByText(text: String) {

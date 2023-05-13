@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="title_sorting">Сортировка</string>
-    <string name="sort_created_at_desc">дата создания (убыв)</string>
-    <string name="sort_created_at_inc">дата создания (возр)</string>
-    <string name="sort_change_at_desc">дата изменения (убыв)</string>
-    <string name="sort_change_at_inc">дата изменения (возр)</string>
-    <string name="save">сохранить</string>
-</resources>

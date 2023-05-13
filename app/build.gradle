@@ -45,8 +45,6 @@ dependencies {
     implementation project(':feature_user_auth')
     implementation project(':feature_list')
     implementation project(':feature_details')
-    implementation project(':feature_tasks_sorting')
-    implementation project(':feature_tasks_filters')
     implementation project(':core_domain')
     implementation project(':core')
     implementation project(':core_task_data_source')
@@ -55,6 +53,8 @@ dependencies {
     implementation project(':core_users_repository')
     implementation project(':core_settings_data_source')
     implementation project(':core_settings_repository')
+
+    implementation project(':feature_dialogs')
 
     implementation(Deps.Ktx.core)
     implementation(Deps.Ktx.fragment)
