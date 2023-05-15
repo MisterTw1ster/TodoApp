@@ -6,6 +6,13 @@
     <declare-styleable name="ItemFilterView">
         <attr name="text" format="string"/>
         <attr name="src" format="reference|color"/>
+        <attr name="srcPadding" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="IconWithTextBelow">
+        <attr name="textITB" format="string"/>
+        <attr name="srcColorITB" format="reference|color"/>
+        <attr name="srcITB" format="reference|color"/>
     </declare-styleable>
 
 </resources>

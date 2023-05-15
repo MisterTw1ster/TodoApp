@@ -12,10 +12,6 @@
 
     <style name="ButtonSecondary">
         <item name="android:background">@drawable/shp_rounded_button_secondary</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">10sp</item>
         <item name="textAllCaps">true</item>

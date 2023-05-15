@@ -16,7 +16,6 @@ rootProject.name = "TodoApp"
 include(
     "app",
     "feature_list",
-    "feature_details",
     "core",
     "core_task_data_source",
     "core_task_repository",

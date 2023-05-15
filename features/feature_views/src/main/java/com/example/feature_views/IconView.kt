@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.setPadding
 import com.example.feature_views.databinding.ItemIconWithTextBinding
 
 class IconView @JvmOverloads constructor(
@@ -20,7 +21,7 @@ class IconView @JvmOverloads constructor(
     }
 
     fun setText(text: String?) {
-       binding.tvFilterText.text = text
+        binding.tvFilterText.text = text
     }
 
     private fun initAttrs(attrs: AttributeSet?, defStyleAttr: Int) {
@@ -31,9 +32,19 @@ class IconView @JvmOverloads constructor(
         val src =
             typedArray.getResourceId(R.styleable.ItemFilterView_src, R.drawable.minus_line_divider)
 
+        val paddingSrc = typedArray.getDimension(
+            R.styleable.ItemFilterView_srcPadding,
+            DEFAULT_DIMENSION_PADDING_ICON
+        )
+
         setText(text)
         binding.ivFilterIcon.setImageResource(src)
+        binding.ivFilterIcon.setPadding(paddingSrc.toInt())
 
         typedArray.recycle()
+    }
+
+    companion object {
+        const val DEFAULT_DIMENSION_PADDING_ICON = 8F
     }
 }

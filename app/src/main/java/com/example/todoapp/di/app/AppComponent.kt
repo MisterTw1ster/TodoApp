@@ -7,12 +7,13 @@ import com.example.core.navigation.Navigation
 import com.example.core_domain.usecase.settings.*
 import com.example.core_domain.usecase.tasks.*
 import com.example.core_domain.usecase.users.*
-import com.example.details.di.TaskDetailsDeps
 import com.example.feature_dialogs.taskFilter.di.TaskFilterDeps
+import com.example.feature_dialogs.taskImportance.di.TaskImportanceDeps
 import com.example.feature_dialogs.taskSorting.di.TaskSortingDeps
 import com.example.feature_list.di.ListDeps
 import com.example.feature_user_auth.di.UserAuthDeps
 import com.example.feature_user_select.di.UserSelectDeps
+import com.example.task_details.di.TaskDetailsDeps
 import com.example.todoapp.di.mainactivity.MainActivityComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -20,7 +21,7 @@ import dagger.Component
 @AppScope
 @Component(modules = [AppModule::class, AppBindsModule::class])
 interface AppComponent : ListDeps, TaskDetailsDeps, UserSelectDeps,
-        UserAuthDeps, TaskSortingDeps, TaskFilterDeps
+        UserAuthDeps, TaskSortingDeps, TaskFilterDeps, TaskImportanceDeps
 {
 
     override val navigation: Navigation

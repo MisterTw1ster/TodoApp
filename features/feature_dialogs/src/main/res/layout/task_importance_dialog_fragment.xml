@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shp_rounded_bottom_sheet"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp">
+
+    <include layout="@layout/view_minus_line_divider" />
+
+    <include
+        android:id="@+id/dialogTitle"
+        layout="@layout/view_dialog_title" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <com.example.feature_views.IconWithTextBelow
+            android:id="@+id/llLowGroup"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shp_rounded_label"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            app:textITB="@string/importance_low"
+            app:srcITB="@drawable/important"
+            app:srcColorITB="@color/color_green"/>
+
+        <com.example.feature_views.IconWithTextBelow
+            android:id="@+id/llBasicGroup"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shp_rounded_label"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            app:textITB="@string/importance_basic"
+            app:srcITB="@drawable/important"
+            app:srcColorITB="@color/white"/>
+
+        <com.example.feature_views.IconWithTextBelow
+            android:id="@+id/llImportantGroup"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shp_rounded_label"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            app:textITB="@string/importance_important"
+            app:srcITB="@drawable/important"
+            app:srcColorITB="@color/color_coral"/>
+
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:id="@+id/llLowGroup"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/shp_rounded_label"-->
+        <!--            android:backgroundTint="@color/label_primary"-->
+        <!--            android:gravity="center_horizontal"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <ImageView-->
+        <!--                app:tint="@color/color_green"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_marginTop="8dp"-->
+        <!--                android:contentDescription="@string/content_description_importance"-->
+        <!--                android:src="@drawable/important" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginVertical="8dp"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:text="@string/importance_low"-->
+        <!--                android:textAppearance="@style/TextAppearance.Body" />-->
+
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:id="@+id/llBasicGroup"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/shp_rounded_label"-->
+        <!--            android:backgroundTint="@color/label_primary"-->
+        <!--            android:gravity="center_horizontal"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <ImageView-->
+        <!--                app:tint="@color/white"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_marginTop="8dp"-->
+        <!--                android:contentDescription="@string/content_description_importance"-->
+        <!--                android:src="@drawable/important" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginVertical="8dp"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:text="@string/importance_basic"-->
+        <!--                android:textAppearance="@style/TextAppearance.Body" />-->
+
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:id="@+id/llImportantGroup"-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/shp_rounded_label"-->
+        <!--            android:backgroundTint="@color/label_primary"-->
+        <!--            android:gravity="center_horizontal"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <ImageView-->
+        <!--                app:tint="@color/color_coral"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_marginTop="8dp"-->
+        <!--                android:contentDescription="@string/content_description_importance"-->
+        <!--                android:src="@drawable/important" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginVertical="8dp"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:text="@string/importance_important"-->
+        <!--                android:textAppearance="@style/TextAppearance.Body" />-->
+
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

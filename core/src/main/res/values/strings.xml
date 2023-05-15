@@ -9,6 +9,20 @@
     <string name="case_was_deleted">Задача удалена</string>
 
     //
+
+    <string name="tint_task_text">Введите задачу</string>
+    <string name="content_description_deadline">срок выполнения</string>
+    <string name="tools_deadline_title">Выбрать дату</string>
+    <string name="content_description_close">закрыть</string>
+    <string name="delete">удалить</string>
+    <string name="date_picker_title">выбрать дату</string>
+
+    <string name="importance_low">низкая</string>
+    <string name="importance_basic">обычная</string>
+    <string name="importance_important">высокая</string>
+    <string name="importance">Важность</string>
+    <string name="content_description_importance">важность</string>
+
     <string name="dialog_title">Заголовок</string>
     <string name="save">сохранить</string>
 

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="8dp"
     android:background="@drawable/shp_rounded_bottom_sheet"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp">
 
     <include layout="@layout/view_minus_line_divider" />
 
@@ -22,11 +22,12 @@
 
     <com.example.feature_views.IconView
         android:id="@+id/ifvHideCompletedFilter"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/title_hide_completed_false"
-        app:src="@drawable/ic_visibility_on" />
+        android:layout_marginTop="8dp"
+        app:src="@drawable/ic_visibility_on"
+        app:srcPadding="8dp"
+        app:text="@string/title_hide_completed_false" />
 
     <TextView
         style="@style/TextSmallTitle"
@@ -36,26 +37,28 @@
         android:text="@string/title_filters_other" />
 
     <com.example.feature_views.IconView
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/title_other_filter_1"
-        app:src="@drawable/ic_filter" />
+        android:layout_marginTop="8dp"
+        app:src="@drawable/ic_filter"
+        app:srcPadding="8dp"
+        app:text="@string/title_other_filter_1" />
 
     <com.example.feature_views.IconView
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/title_other_filter_2"
-        app:src="@drawable/ic_filter" />
+        android:layout_marginTop="8dp"
+        app:src="@drawable/ic_filter"
+        app:srcPadding="8dp"
+        app:text="@string/title_other_filter_2" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSaveFilters"
         style="@style/ButtonPrimary"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center"
         android:text="@string/save" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

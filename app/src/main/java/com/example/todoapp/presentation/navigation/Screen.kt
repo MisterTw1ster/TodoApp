@@ -1,13 +1,14 @@
 package com.example.todoapp.presentation.navigation
 
 import androidx.fragment.app.Fragment
-import com.example.details.TaskDetailsFragment
-import com.example.details.importancebottomsheet.ImportanceModalBottomSheetFragment
+
 import com.example.feature_dialogs.taskFilter.view.TaskFilterDialogFragment
+import com.example.feature_dialogs.taskImportance.view.TaskImportanceDialogFragment
 import com.example.feature_dialogs.taskSorting.view.TaskSortingDialogFragment
 import com.example.feature_list.ListFragment
 import com.example.feature_user_auth.UserAuthFragment
 import com.example.feature_user_select.UserSelectFragment
+import com.example.task_details.view.TaskDetailsFragment
 
 sealed class Screen {
 
@@ -58,9 +59,9 @@ sealed class ScreenModal : Screen() {
     }
 
     object Importance : ScreenModal() {
-        override fun getTag() = ImportanceModalBottomSheetFragment.TAG
-        override fun fragment(): Class<out Fragment> = ImportanceModalBottomSheetFragment::class.java
-        override fun getNewInstance() = ImportanceModalBottomSheetFragment()
+        override fun getTag() = TaskImportanceDialogFragment.TAG
+        override fun fragment(): Class<out Fragment> = TaskImportanceDialogFragment::class.java
+        override fun getNewInstance() = TaskImportanceDialogFragment()
     }
 
 

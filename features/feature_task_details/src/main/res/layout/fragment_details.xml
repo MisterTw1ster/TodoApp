@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/back_primary"
+    android:backgroundTint="@color/back_primary"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/standardToolbar"
+        layout="@layout/view_standard_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="8dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="4dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/cbIsDoneTask"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:buttonTint="@color/support_fill_secondary"
+                        android:button="@drawable/is_done_checkbox"/>
+
+                    <EditText
+                        android:id="@+id/etTextTask"
+                        style="@style/label_primary_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape"
+                        android:gravity="start"
+                        android:hint="@string/tint_task_text" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.example.feature_views.IconView
+                    android:id="@+id/ivImportanceDetails"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:text="@string/importance"
+                    app:src="@drawable/important"
+                    app:srcPadding = "4dp"/>
+
+                <include layout="@layout/view_line_divider" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llDeadlineDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:src="@drawable/calendar"
+                        android:contentDescription="@string/content_description_deadline"
+                        app:tint="@color/support_border_primary" />
+
+                    <TextView
+                        android:id="@+id/tvDeadlineDetails"
+                        style="@style/label_primary_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        tools:text="@string/tools_deadline_title" />
+
+                    <ImageView
+                        android:id="@+id/ivDeadlineClearDetails"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="6dp"
+                        android:src="@drawable/close"
+                        android:contentDescription="@string/content_description_close"
+                        app:tint="@color/support_border_primary" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include layout="@layout/view_line_divider"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSaveFilters"
+                style="@style/ButtonPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/save"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDeleteTask"
+                style="@style/ButtonSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/delete" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
