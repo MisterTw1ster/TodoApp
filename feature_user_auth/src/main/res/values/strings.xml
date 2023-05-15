@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hint_login">Логин</string>
-    <string name="hint_password">Пароль</string>
-    <string name="title_sigh_in">Войти</string>
-    <string name="title_registration">регистрация</string>
-</resources>

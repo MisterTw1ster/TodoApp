@@ -1,9 +1,9 @@
 package com.example.todoapp.di.users
 
-import com.example.core_domain.exception.HandleError
-import com.example.core_domain.exception.users.UsersHandleDomainToUsersResultError
-import com.example.core_domain.exception.users.UserResult
-import com.example.core_domain.repository.UsersRepository
+import com.example.domain.exception.HandleError
+import com.example.domain.exception.users.UsersHandleDomainToUsersResultError
+import com.example.domain.exception.users.UserResult
+import com.example.domain.repository.UsersRepository
 import com.example.core_users_data_source.cache.UsersCacheDataSourceImpl
 import com.example.core_users_data_source.cloud.UsersCloudDataSourceImpl
 import com.example.core_users_repository.UsersCacheDataSource

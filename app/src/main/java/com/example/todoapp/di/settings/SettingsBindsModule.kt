@@ -1,6 +1,6 @@
 package com.example.todoapp.di.settings
 
-import com.example.core_domain.repository.SettingsRepository
+import com.example.domain.repository.SettingsRepository
 import com.example.core_settings_data_source.SettingsCacheDataSourceImpl
 import com.example.core_settings_repository.SettingsCacheDataSource
 import com.example.core_settings_repository.SettingsRepositoryImpl

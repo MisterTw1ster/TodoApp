@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.core.DateLongToString
-import com.example.core_domain.models.TaskDomainParams
+import com.example.domain.models.TaskDomainParams
 import com.example.task_details.models.TaskUI
 import com.example.task_details.models.ModeScreenDetails
 import com.example.task_details.models.StateDeadlineUI

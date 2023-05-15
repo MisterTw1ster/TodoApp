@@ -1,6 +1,6 @@
 package com.example.core_task_repository.mappers
 
-import com.example.core_domain.models.TaskDomain
+import com.example.domain.models.TaskDomain
 import com.example.core_task_repository.models.TaskData
 import dagger.Reusable
 import javax.inject.Inject

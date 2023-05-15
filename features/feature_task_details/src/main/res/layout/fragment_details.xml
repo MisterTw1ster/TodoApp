@@ -42,7 +42,7 @@
                         android:layout_height="48dp"
                         android:layout_gravity="center_vertical"
                         android:buttonTint="@color/support_fill_secondary"
-                        android:button="@drawable/is_done_checkbox"/>
+                        android:button="@drawable/done_checkbox"/>
 
                     <EditText
                         android:id="@+id/etTextTask"

@@ -1,9 +1,9 @@
 package com.example.core_task_repository
 
 import com.example.core.di.scope.AppScope
-import com.example.core_domain.models.TaskDomain
-import com.example.core_domain.models.TaskDomainParams
-import com.example.core_domain.repository.TasksRepository
+import com.example.domain.models.TaskDomain
+import com.example.domain.models.TaskDomainParams
+import com.example.domain.repository.TasksRepository
 import com.example.core_task_repository.exception.TasksHandleDataRequest
 import com.example.core_task_repository.mappers.TaskDataToDomainMapper
 import com.example.core_task_repository.mappers.TaskDomainParamsToDataMapper

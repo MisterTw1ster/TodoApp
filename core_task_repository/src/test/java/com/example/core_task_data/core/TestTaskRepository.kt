@@ -1,7 +1,7 @@
 package com.example.core_task_data.core
 
-import com.example.core_domain.models.TaskDomain
-import com.example.core_domain.models.TaskDomainParams
+import com.example.domain.models.TaskDomain
+import com.example.domain.models.TaskDomainParams
 import com.example.core_task_repository.models.TaskData
 
 fun testTaskData(

@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import com.example.feature_dialogs.taskFilter.view.TaskFilterDialogFragment
 import com.example.feature_dialogs.taskImportance.view.TaskImportanceDialogFragment
 import com.example.feature_dialogs.taskSorting.view.TaskSortingDialogFragment
-import com.example.feature_list.ListFragment
-import com.example.feature_user_auth.UserAuthFragment
-import com.example.feature_user_select.UserSelectFragment
+import com.example.task_list.view.ListFragment
+import com.example.user_auth.view.UserAuthFragment
+import com.example.user_select.view.UserSelectFragment
 import com.example.task_details.view.TaskDetailsFragment
 
 sealed class Screen {

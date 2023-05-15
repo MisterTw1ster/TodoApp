@@ -2,8 +2,8 @@ package com.example.feature_dialogs.taskFilter.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core_domain.usecase.settings.FetchFiltersUseCase
-import com.example.core_domain.usecase.settings.SaveHideCompletedFiltersUseCase
+import com.example.domain.usecase.settings.FetchFiltersUseCase
+import com.example.domain.usecase.settings.SaveHideCompletedFiltersUseCase
 import com.example.feature_dialogs.taskFilter.view.CommunicationTaskFilter
 import javax.inject.Inject
 

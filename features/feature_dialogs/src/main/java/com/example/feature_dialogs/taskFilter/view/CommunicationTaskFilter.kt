@@ -3,7 +3,7 @@ package com.example.feature_dialogs.taskFilter.view
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.core_domain.models.FiltersDomain
+import com.example.domain.models.FiltersDomain
 
 class CommunicationTaskFilter constructor(
     private val hideCompleted: MutableLiveData<Boolean> = MutableLiveData(),

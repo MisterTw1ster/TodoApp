@@ -1,7 +1,7 @@
 package com.example.core_task_repository.exception
 
-import com.example.core_domain.exception.HandleError
-import com.example.core_domain.models.TaskDomain
+import com.example.domain.exception.HandleError
+import com.example.domain.models.TaskDomain
 import com.example.core.di.qualifier.Tasks
 import dagger.Reusable
 import javax.inject.Inject

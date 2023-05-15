@@ -3,10 +3,10 @@ package com.example.task_details.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.core.navigation.Navigation
-import com.example.core_domain.usecase.tasks.AddTaskUseCase
-import com.example.core_domain.usecase.tasks.DeleteTaskUseCase
-import com.example.core_domain.usecase.tasks.EditTaskUseCase
-import com.example.core_domain.usecase.tasks.GetTaskByIdUseCase
+import com.example.domain.usecase.tasks.AddTaskUseCase
+import com.example.domain.usecase.tasks.DeleteTaskUseCase
+import com.example.domain.usecase.tasks.EditTaskUseCase
+import com.example.domain.usecase.tasks.GetTaskByIdUseCase
 import com.example.task_details.view.CommunicationTaskDetails
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

@@ -4,8 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core_domain.usecase.settings.GetTasksSortingUseCase
-import com.example.core_domain.usecase.settings.SaveTasksSortingUseCase
+import com.example.domain.usecase.settings.GetTasksSortingUseCase
+import com.example.domain.usecase.settings.SaveTasksSortingUseCase
 import com.example.feature_dialogs.taskSorting.view.CommunicationTaskSorting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

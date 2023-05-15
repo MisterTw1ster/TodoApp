@@ -27,7 +27,7 @@ android {
 dependencies {
 
     implementation(project(":core_settings_repository"))
-    implementation(project(":core_domain"))
+    implementation(project(":domain"))
     implementation(project(":core"))
     implementation(project(":feature_views"))
 

@@ -15,15 +15,12 @@ dependencyResolutionManagement {
 rootProject.name = "TodoApp"
 include(
     "app",
-    "feature_list",
     "core",
     "core_task_data_source",
     "core_task_repository",
-    "core_domain",
+    "domain",
     "core_users_data_source",
     "core_users_repository",
-    "feature_user_select",
-    "feature_user_auth",
     "core_settings_repository",
     "core_settings_data_source"
 )

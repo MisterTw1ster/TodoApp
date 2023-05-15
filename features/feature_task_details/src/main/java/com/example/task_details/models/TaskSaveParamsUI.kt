@@ -1,6 +1,6 @@
 package com.example.task_details.models
 
-import com.example.core_domain.models.TaskDomainParams
+import com.example.domain.models.TaskDomainParams
 
 class TaskSaveParamsUI(
     val mode: ModeScreenDetails,

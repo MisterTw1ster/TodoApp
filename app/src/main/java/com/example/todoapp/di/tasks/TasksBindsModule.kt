@@ -1,9 +1,9 @@
 package com.example.todoapp.di.tasks
 
 import com.example.core.di.qualifier.Tasks
-import com.example.core_domain.exception.HandleError
-import com.example.core_domain.exception.tasks.HandleDomainToStringError
-import com.example.core_domain.repository.TasksRepository
+import com.example.domain.exception.HandleError
+import com.example.domain.exception.tasks.HandleDomainToStringError
+import com.example.domain.repository.TasksRepository
 import com.example.core_task_data_source.cache.TasksCacheDataSourceImpl
 import com.example.core_task_data_source.cloud.TasksCloudDataSourceImpl
 import com.example.core_task_repository.TasksCacheDataSource

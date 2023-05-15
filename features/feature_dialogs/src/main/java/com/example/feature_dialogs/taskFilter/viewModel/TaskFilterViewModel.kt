@@ -4,8 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core_domain.usecase.settings.FetchFiltersUseCase
-import com.example.core_domain.usecase.settings.SaveHideCompletedFiltersUseCase
+import com.example.domain.usecase.settings.FetchFiltersUseCase
+import com.example.domain.usecase.settings.SaveHideCompletedFiltersUseCase
 import com.example.feature_dialogs.taskFilter.view.CommunicationTaskFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

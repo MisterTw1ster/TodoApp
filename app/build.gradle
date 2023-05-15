@@ -41,10 +41,7 @@ android {
 }
 dependencies {
 
-    implementation project(':feature_user_select')
-    implementation project(':feature_user_auth')
-    implementation project(':feature_list')
-    implementation project(':core_domain')
+    implementation project(':domain')
     implementation project(':core')
     implementation project(':core_task_data_source')
     implementation project(':core_task_repository')
@@ -54,7 +51,10 @@ dependencies {
     implementation project(':core_settings_repository')
 
     implementation project(':feature_dialogs')
+    implementation project(':feature_task_list')
     implementation project(':feature_task_details')
+    implementation project(':feature_user_select')
+    implementation project(':feature_user_auth')
 
     implementation(Deps.Ktx.core)
     implementation(Deps.Ktx.fragment)

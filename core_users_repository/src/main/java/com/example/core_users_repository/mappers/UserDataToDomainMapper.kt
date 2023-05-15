@@ -1,6 +1,6 @@
 package com.example.core_users_repository.mappers
 
-import com.example.core_domain.models.UserDomain
+import com.example.domain.models.UserDomain
 import com.example.core_users_repository.models.UserData
 import dagger.Reusable
 import javax.inject.Inject

@@ -2,8 +2,8 @@ package com.example.feature_dialogs.taskSorting.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core_domain.usecase.settings.GetTasksSortingUseCase
-import com.example.core_domain.usecase.settings.SaveTasksSortingUseCase
+import com.example.domain.usecase.settings.GetTasksSortingUseCase
+import com.example.domain.usecase.settings.SaveTasksSortingUseCase
 import com.example.feature_dialogs.taskSorting.view.CommunicationTaskSorting
 import javax.inject.Inject
 

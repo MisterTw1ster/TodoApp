@@ -10,7 +10,7 @@
     app:titleTextColor="@color/label_primary">
 
     <ImageButton
-        android:id="@+id/ib_toolbar_close"
+        android:id="@+id/ibToolbarClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -18,10 +18,10 @@
         android:contentDescription="@string/content_description_back"
         android:background="@color/back_secondary"
         app:tint="@color/label_primary"
-        android:src="@drawable/ic_arrow_back" />
+        android:src="@drawable/arrow_back" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"

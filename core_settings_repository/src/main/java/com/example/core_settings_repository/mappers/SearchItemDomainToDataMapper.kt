@@ -1,6 +1,6 @@
 package com.example.core_settings_repository.mappers
 
-import com.example.core_domain.models.SearchItemDomain
+import com.example.domain.models.SearchItemDomain
 import com.example.core_settings_repository.models.SearchItemData
 import dagger.Reusable
 import javax.inject.Inject

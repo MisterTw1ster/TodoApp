@@ -1,6 +1,6 @@
 package com.example.core_task_data
 
-import com.example.core_domain.exception.tasks.NoInternetConnectionException
+import com.example.domain.exception.tasks.NoInternetConnectionException
 import com.example.core_task_data.core.testTaskData
 import com.example.core_task_data.core.testTaskDomain
 import com.example.core_task_data.core.testTaskDomainParams

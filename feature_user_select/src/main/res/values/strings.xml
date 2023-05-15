@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="title_select_user">Выберите аккаунт для входа</string>
-    <string name="content_description_add_new_user">добавить нового пользователя</string>
-    <string name="add_user">Добавить аккаунт</string>
-</resources>

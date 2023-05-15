@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль</string>
+    <string name="title_sigh_in">Войти</string>
+    <string name="title_registration">регистрация</string>
+
+    <string name="title_select_user">Выберите аккаунт для входа</string>
+    <string name="content_description_add_new_user">добавить нового пользователя</string>
+    <string name="add_user">Добавить аккаунт</string>
+
     <string name="content_description_icon_app">иконка приложения</string>
     <string name="content_description_user">пользователь</string>
     <string name="title_error">отсутствует интернет</string>
@@ -7,8 +17,6 @@
     <string name="content_description_back">назад</string>
     <string name="cancel">отменить</string>
     <string name="case_was_deleted">Задача удалена</string>
-
-    //
 
     <string name="tint_task_text">Введите задачу</string>
     <string name="content_description_deadline">срок выполнения</string>
@@ -42,5 +50,46 @@
     <string name="sort_created_at_inc">дата создания (возр)</string>
     <string name="sort_change_at_desc">дата изменения (убыв)</string>
     <string name="sort_change_at_inc">дата изменения (возр)</string>
+
+    <string name="app_name">Мои дела</string>
+    <string name="service_unavailable_message">Сервис нe доступен</string>
+    <string name="no_connection_message">Отсутствует интернет соединение</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_navigation_example" />
+    <string name="isDone">isDone</string>
+    <string name="todo_item_title" />
+    <string name="button_save">Сохранить</string>
+    <string name="themes">Тема</string>
+    <string name="sort_by">Сортировать</string>
+    <string name="service_is_unavailable">Сервис недоступен</string>
+    <string name="title">Задачи</string>
+    <string name="number_of_completed">Выполнено - 1</string>
+    <string name="empty_list">Список пуст</string>
+    <string name="menu_sign_out">Выйти</string>
+
+    <string name="menu_home">home</string>
+    <string name="menu_gallery">gallery</string>
+    <string name="menu_slideshow">slideshow</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="title_search">поиск</string>
+    <string name="title_sort">сортировка</string>
+    <string name="title_filter">фильтр</string>
+    <string name="report_in_work_title">в работе</string>
+    <string name="report_important_title">важные</string>
+    <string name="report_is_done_title">выполнено</string>
+    <string name="content_description_menu">menu</string>
+    <string name="content_description_add_task">add</string>
+    <string name="content_description_current_user">текущий пользователь</string>
+    <string name="low_importance">низная</string>
+    <string name="basic_importance">обычная</string>
+    <string name="important_importance">высокая</string>
+    <string name="searchbar_hint">Найти задачу</string>
+    <string name="sort">Сортировать</string>
+    <string name="filters">Фильтры</string>
 
 </resources>

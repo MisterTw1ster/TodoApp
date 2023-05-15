@@ -1,8 +1,8 @@
 package com.example.core_settings_repository
 
 import com.example.core.di.scope.AppScope
-import com.example.core_domain.models.SearchItemDomain
-import com.example.core_domain.repository.SettingsRepository
+import com.example.domain.models.SearchItemDomain
+import com.example.domain.repository.SettingsRepository
 import com.example.core_settings_repository.mappers.SearchItemDataToDomainMapper
 import com.example.core_settings_repository.mappers.SearchItemDomainToDataMapper
 import kotlinx.coroutines.flow.Flow

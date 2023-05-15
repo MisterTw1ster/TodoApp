@@ -1,9 +1,9 @@
 package com.example.core_users_repository
 
 import com.example.core.di.scope.AppScope
-import com.example.core_domain.models.UserDomain
-import com.example.core_domain.models.UserDomainParams
-import com.example.core_domain.repository.UsersRepository
+import com.example.domain.models.UserDomain
+import com.example.domain.models.UserDomainParams
+import com.example.domain.repository.UsersRepository
 import com.example.core_users_repository.exception.UsersHandleDataRequest
 import com.example.core_users_repository.mappers.UserDataToDomainMapper
 import kotlinx.coroutines.flow.Flow

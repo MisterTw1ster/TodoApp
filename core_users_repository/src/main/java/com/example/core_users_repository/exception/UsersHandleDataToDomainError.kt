@@ -1,7 +1,7 @@
 package com.example.core_users_repository.exception
 
-import com.example.core_domain.exception.HandleError
-import com.example.core_domain.exception.users.*
+import com.example.domain.exception.HandleError
+import com.example.domain.exception.users.*
 import dagger.Reusable
 import java.net.UnknownHostException
 import javax.inject.Inject
